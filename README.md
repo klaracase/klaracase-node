@@ -270,7 +270,8 @@ line. In tests, call `resetDeprecationWarnings()` to reset the guard.
 
 Most calls cost credits. The organization of the token pays.
 
-- `decisions.search`, `search`, `decisions.get` and `norms.get` cost 1 credit.
+- `decisions.search` and `search` cost 1 credit per distinct query and filter set per calendar month; a repeat costs 0.
+- `decisions.get` and `norms.get` cost 1 credit per decision or norm per calendar month; a repeat costs 0.
 - `decisions.citations` costs 2 credits. `datapackages.create` costs 5.
 - `citationChecks.create` costs `max(2, ceil(characters / 5000))` credits.
 - `corpus.coverage`, `corpus.facets`, uploads and reading a run or an upload are free.
@@ -298,6 +299,11 @@ const { text } = await generateText({
 Pass `{ tools: ["searchDecisions", "getNorm"] }` to expose only some tools. See
 [`packages/ai-sdk`](packages/ai-sdk).
 
+### Agents
+
+For frameworks other than the Vercel AI SDK, connect the Klaracase MCP server at
+<https://klaracase.de/mcp> with the same token. The client itself does not speak MCP.
+
 ## Smoke test
 
 `pnpm smoke` calls the two free endpoints with a real token. It needs a build first.
@@ -306,6 +312,16 @@ Pass `{ tools: ["searchDecisions", "getNorm"] }` to expose only some tools. See
 pnpm build
 KLARACASE_API_TOKEN=<token> pnpm smoke
 ```
+
+## Development
+
+```sh
+pnpm install
+pnpm typecheck && pnpm lint && pnpm test && pnpm build
+```
+
+TODO org: the package manifests have no `repository` field yet. Add it when the GitHub
+organization is confirmed.
 
 ## More
 

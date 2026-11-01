@@ -88,7 +88,10 @@ export interface ResponseMeta {
   readonly status: number;
   /** Value of `X-Klaracase-Api-Release`, or `null` when the header was absent. */
   readonly api_release: string | null;
-  /** Seconds the final HTTP exchange took, from request start to the end of the body. */
+  /**
+   * Seconds the final HTTP attempt took, from request start to the end of the body. Earlier
+   * attempts and retry waits are not counted.
+   */
   readonly request_duration: number;
 }
 
