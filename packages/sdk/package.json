@@ -47,6 +47,7 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "smoke": "node scripts/smoke.mjs",
-    "check-dist": "node scripts/check-dist.mjs"
+    "check-dist": "node scripts/check-dist.mjs",
+    "prepack": "node ../../scripts/copy-package-docs.mjs"
   }
 }

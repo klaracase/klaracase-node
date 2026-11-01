@@ -5,3 +5,8 @@ coverage/
 .env
 .env.*
 .DS_Store
+
+# Copied from the repo root by `prepack`
+packages/*/LICENSE
+packages/*/CHANGELOG.md
+packages/sdk/README.md
