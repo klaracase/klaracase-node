@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "Workspace for the official Klaracase TypeScript SDK packages.",
   "license": "MIT",
+  "type": "module",
   "packageManager": "pnpm@10.32.1",
   "engines": {
     "node": ">=22"

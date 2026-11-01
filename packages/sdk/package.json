@@ -2,7 +2,13 @@
   "name": "@klaracase/sdk",
   "version": "0.1.0",
   "description": "Official TypeScript and Node.js client for the Klaracase REST API (German case law and statutes).",
-  "keywords": ["klaracase", "german law", "legal research", "citation check", "api client"],
+  "keywords": [
+    "klaracase",
+    "german law",
+    "legal research",
+    "citation check",
+    "api client"
+  ],
   "license": "MIT",
   "author": "SPARQ VENTURES UG",
   "homepage": "https://klaracase.de/docs/api",
@@ -24,7 +30,12 @@
     },
     "./package.json": "./package.json"
   },
-  "files": ["dist", "README.md", "LICENSE", "CHANGELOG.md"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
   "engines": {
     "node": ">=22"
   },
