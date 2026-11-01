@@ -4,6 +4,14 @@
   "version": "0.1.0",
   "description": "Workspace for the official Klaracase TypeScript SDK packages.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klaracase/klaracase-node.git"
+  },
+  "homepage": "https://klaracase.de",
+  "bugs": {
+    "url": "https://github.com/klaracase/klaracase-node/issues"
+  },
   "type": "module",
   "packageManager": "pnpm@10.32.1",
   "engines": {

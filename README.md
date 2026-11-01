@@ -320,9 +320,6 @@ pnpm install
 pnpm typecheck && pnpm lint && pnpm test && pnpm build
 ```
 
-TODO org: the package manifests have no `repository` field yet. Add it when the GitHub
-organization is confirmed.
-
 ## More
 
 - API reference: <https://klaracase.de/docs/api>

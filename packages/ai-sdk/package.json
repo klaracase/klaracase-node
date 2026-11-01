@@ -13,6 +13,14 @@
   "license": "MIT",
   "author": "SPARQ VENTURES UG",
   "homepage": "https://klaracase.de",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klaracase/klaracase-node.git",
+    "directory": "packages/ai-sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/klaracase/klaracase-node/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
