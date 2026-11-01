@@ -168,7 +168,7 @@ export class CitationChecks {
 
   /**
    * Check the citations in a German legal text, or in a ready upload. Synchronous: the answer is
-   * the finished run. Costs 2 to 4 credits by length. The same text again in the same month is free.
+   * the finished run. Costs 2 to 4 credits by length. The same text again in the same credit period is free.
    */
   create(
     params: CitationCheckCreateParams,

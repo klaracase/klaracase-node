@@ -69,6 +69,10 @@ All notable changes to this project are documented in this file. The format foll
   logging, schemas and validation, tools for agents, advanced use and semantic versioning (the 0.x
   policy).
 
+### Docs
+
+- Docs: credit period wording. Credits renew per credit period: the UTC calendar month for free organizations, the paid billing period for subscribers. Unused credits do not roll over. The docs said "calendar month" for every organization.
+
 ### Changed
 
 - Documentation correction: paging the same query within a credit period costs no extra credits, so

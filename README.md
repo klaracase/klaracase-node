@@ -371,7 +371,7 @@ The client retries at most `maxRetries` times (default 2).
   `RateLimitError` and you decide. The daily `volume_cap` is handled this way.
 - It never retries 402 or any other 4xx, and it does not retry 500 or 502.
 - It retries a transport error on GET only. A POST whose connection dropped after it was sent is
-  not retried. The same check repeated in the same month costs nothing more, so you can repeat it
+  not retried. The same check repeated in the same credit period costs nothing more, so you can repeat it
   by hand.
 
 `timeout` is in seconds for each attempt (default 30). You can set `timeout`, `maxRetries` and an
@@ -462,14 +462,15 @@ const proxied = new Klaracase({
 
 Most calls cost credits. The organization of the token pays.
 
-- `decisions.search` and `search` cost 1 credit per distinct query and filter set per calendar month; a repeat costs 0.
-- `decisions.get` and `norms.get` cost 1 credit per decision or norm per calendar month; a repeat costs 0.
+- `decisions.search` and `search` cost 1 credit per distinct query and filter set per credit period; a repeat costs 0.
+- `decisions.get` and `norms.get` cost 1 credit per decision or norm per credit period; a repeat costs 0.
 - `decisions.citations` costs 2 credits. `datapackages.create` costs 5.
 - `citationChecks.create` costs `max(2, ceil(characters / 5000))` credits.
 - `corpus.coverage`, `corpus.facets`, uploads and reading a run or an upload are free.
 
-One charge applies per operation, organization, subject and calendar month (UTC). The same text
-checked again in the same month costs 0. The response `credits` field shows the cost of each call.
+One charge applies per operation, organization, subject and credit period. The same text
+checked again in the same credit period costs 0. The response `credits` field shows the cost of each call.
+Credits renew per credit period: the UTC calendar month for free organizations, the paid billing period for subscribers. Unused credits do not roll over.
 
 ## Schemas and validation
 
@@ -532,7 +533,7 @@ options `signal`, `timeout`, `maxRetries` and `headers`.
   such as an abort, are thrown.
 - A `budget` stops an agent from spending more than you allow. `{ credits: 10 }` is a shared
   counter: `callTool` takes the cost of each answer off it, and it does not send a call whose price
-  does not fit. A repeat in the same month costs nothing.
+  does not fit. A repeat in the same credit period costs nothing.
 
 ```ts
 import { callTool } from "@klaracase/sdk/tools";

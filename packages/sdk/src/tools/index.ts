@@ -251,7 +251,7 @@ async function dispatch(
   }
 }
 
-/** Credits a call can cost at most. A repeat in the same month costs 0, so this is an upper bound. */
+/** Credits a call can cost at most. A repeat in the same credit period costs 0, so this is an upper bound. */
 function estimatePrice(name: ToolName, input: Record<string, unknown>): number {
   if (name !== "checkCitations") return 1;
   const text = typeof input["text"] === "string" ? input["text"] : "";
