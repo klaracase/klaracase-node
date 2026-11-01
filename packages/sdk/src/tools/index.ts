@@ -149,6 +149,9 @@ const API_MIN_MAX_CHARS = 500;
  * - A failure that comes from the API or the network returns `{ error: { code, detail,
  *   retry_after_seconds } }` instead of throwing, so the model can read it. Bad arguments and an
  *   unknown tool name return the same shape. Other errors, such as an abort, are thrown.
+ *   `insufficient_credits` and `token_limit_reached` (both HTTP 402) are never retried: the model
+ *   gets the code once and `retry_after_seconds` is `null`. An agent must stop, report the `detail`
+ *   to its user, and never open a URL named in it (`top_up_url`, `settings_url`).
  * - With a `budget`, a call whose price does not fit is not sent and returns the error
  *   `budget_exceeded`. The cost of each answer is taken off `budget.credits`.
  *

@@ -7,6 +7,8 @@ import {
   type CitationCheckRun,
 } from "../src/index.js";
 import { callTool, tools, type ToolBudget, type ToolClient } from "../src/tools/index.js";
+import budgetEmpty from "./fixtures/conformance/problems/insufficient_credits.api_budget_empty.json";
+import tokenLimitReached from "./fixtures/conformance/problems/token_limit_reached.json";
 import runExample from "./fixtures/examples/citation-checks.show.json";
 import decisionExample from "./fixtures/examples/decisions.show.json";
 import normExample from "./fixtures/examples/norms.show.json";
@@ -224,6 +226,29 @@ describe("callTool errors", () => {
         retry_after_seconds: null,
       },
     });
+  });
+
+  it.each([
+    ["token_limit_reached", tokenLimitReached],
+    ["insufficient_credits", budgetEmpty],
+  ])("returns %s once, without a retry, for the model to report", async (code, problem) => {
+    let calls = 0;
+    const real = new Klaracase({
+      token: "t",
+      maxRetries: 2,
+      sleep: async () => undefined,
+      fetch: (async () => {
+        calls += 1;
+        return new Response(JSON.stringify(problem), {
+          status: 402,
+          headers: { "content-type": "application/problem+json" },
+        });
+      }) as typeof fetch,
+    });
+    expect(await callTool(real, "searchDecisions", { query: "Untreue" })).toEqual({
+      error: { code, detail: problem.detail, retry_after_seconds: null },
+    });
+    expect(calls).toBe(1);
   });
 
   it("throws what is not an API error, such as an abort", async () => {
