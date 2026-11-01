@@ -57,6 +57,20 @@ All notable changes to this project are documented in this file. The format foll
   `CITATION_DIRECTIONS`, `DECISION_SECTIONS`, `FACET_FIELDS`, `MAX_CITED_STATUTES`.
 - Whole-input types such as `SearchDecisionsInput` and `GetDecisionInput`.
 
+- API release 0.96.0, additive: `Credits.api_budget` (`cents`, `rate_cents_per_credit`,
+  `credits_at_rate`, all integers), absent when the organization has no budget and may not load
+  one, never `null`. The type `ApiBudget` and its zod and JSON Schema twins. Unknown keys are kept.
+- `InsufficientCreditsError.reason` (open: `api_budget_empty`, `api_budget_not_available`, and the
+  reserved `plan_credits_exhausted`) and `InsufficientCreditsError.topUpUrl`. The README says the
+  URL is for a human admin and an agent must never open it.
+- `TokenLimitReachedError` for the 402 code `token_limit_reached`, with `unit`, `cap`, `spent`,
+  `resets_at`, `resetsAt` (a `Date`) and `settingsUrl`. It extends `InsufficientCreditsError`, so
+  existing handlers still catch it. `cost` and `balance` are `null` on it.
+- `callTool` and the retry policy treat `token_limit_reached` like `insufficient_credits`: never
+  retried, returned once for the agent to report to its user.
+- README section "Credits, API budget and limits". The conformance pack has 106 cases (four new),
+  and the drift guards cover the new body.
+
 - `api.md`, the API reference, generated with typedoc from the JSDoc. Every exported class,
   function, interface, type alias and variable must have JSDoc, and `pnpm docs:api` fails when one
   has none. `pnpm docs:check` fails when `api.md` is out of date.

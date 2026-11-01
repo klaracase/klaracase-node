@@ -69,7 +69,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -123,7 +123,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -193,7 +193,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -278,7 +278,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -332,7 +332,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -402,7 +402,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -605,7 +605,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -659,7 +659,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -741,7 +741,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -978,7 +978,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1032,7 +1032,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1102,7 +1102,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1428,7 +1428,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1494,7 +1494,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1564,7 +1564,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1653,7 +1653,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1713,7 +1713,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1783,7 +1783,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1816,11 +1816,22 @@ to `instanceof` when your app may load the ESM and the CJS build, or two version
 
 #### InsufficientCreditsError
 
-402. The organization has too few credits. Never retried.
+402. The organization has too few credits, so the call did not run and nothing was charged.
+Never retried.
+
+Read `reason` to tell the cases apart. Show `topUpUrl` to a human organization admin. A program
+or an AI agent must never open it or follow it.
+
+[TokenLimitReachedError](#tokenlimitreachederror) extends this class, because it is a 402 too. It has no `cost` and
+no `balance`, so both can be `null` here.
 
 ##### Extends
 
 - [`KlaracaseError`](#klaracaseerror)
+
+##### Extended by
+
+- [`TokenLimitReachedError`](#tokenlimitreachederror)
 
 ##### Constructors
 
@@ -1858,6 +1869,8 @@ Value of the `X-Klaracase-Api-Release` header, or `null` when it was absent.
 
 > `readonly` **balance**: `number` \| `null`
 
+The plan credits left in the credit period, or `null` when the body names none.
+
 ###### candidates
 
 > `readonly` **candidates**: [`AmbiguousCandidate`](#ambiguouscandidate)[] \| `undefined`
@@ -1872,7 +1885,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1889,6 +1902,8 @@ The size of the cap, for `volume_cap`.
 ###### cost
 
 > `readonly` **cost**: `number` \| `null`
+
+What the call would have cost in credits, or `null` when the body names no cost.
 
 ###### detail
 
@@ -1926,11 +1941,18 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 `KlaracaseError.name`
 
+###### reason
+
+> `readonly` **reason**: [`InsufficientCreditsReason`](#insufficientcreditsreason) \| `undefined`
+
+Why the call could not be paid, when the body says so. Only served while the prepaid API
+budget is available. `undefined` when the body has no `reason`.
+
 ###### resets\_at
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -1986,6 +2008,14 @@ The statute that replaced the cited one, for `statute_superseded`.
 
 [`KlaracaseError`](#klaracaseerror).[`title`](#title-7)
 
+###### topUpUrl
+
+> `readonly` **topUpUrl**: `string` \| `undefined`
+
+The page where a human organization admin loads the API budget. `undefined` when the
+organization may not load one. For a human: never open or follow this URL in a program or an
+agent, only show it to the user.
+
 ###### type
 
 > `readonly` **type**: `string`
@@ -2000,7 +2030,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -2196,7 +2226,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### code
 
@@ -2222,7 +2252,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### retryable
 
@@ -2264,7 +2294,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ##### Methods
 
@@ -2373,7 +2403,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -2427,7 +2457,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -2497,7 +2527,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -2582,7 +2612,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -2642,7 +2672,7 @@ The ability the endpoint needs, when the code is `token_ability_missing`.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -2712,7 +2742,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -2797,7 +2827,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -2851,7 +2881,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -2927,7 +2957,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3012,7 +3042,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3066,7 +3096,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3136,7 +3166,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3221,7 +3251,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3275,7 +3305,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3345,7 +3375,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3402,7 +3432,7 @@ The answer took longer than the `timeout` option.
 
 ###### Overrides
 
-[`TransportError`](#transporterror).[`constructor`](#constructor-16)
+[`TransportError`](#transporterror).[`constructor`](#constructor-17)
 
 ##### Properties
 
@@ -3414,7 +3444,7 @@ Value of the `X-Klaracase-Api-Release` header, or `null` when it was absent.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`api_release`](#api_release-14)
+[`TransportError`](#transporterror).[`api_release`](#api_release-15)
 
 ###### candidates
 
@@ -3424,17 +3454,17 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`candidates`](#candidates-14)
+[`TransportError`](#transporterror).[`candidates`](#candidates-15)
 
 ###### cap
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`cap`](#cap-14)
+[`TransportError`](#transporterror).[`cap`](#cap-15)
 
 ###### code
 
@@ -3442,7 +3472,7 @@ The size of the cap, for `volume_cap`.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`code`](#code-15)
+[`TransportError`](#transporterror).[`code`](#code-16)
 
 ###### detail
 
@@ -3450,7 +3480,7 @@ The size of the cap, for `volume_cap`.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`detail`](#detail-14)
+[`TransportError`](#transporterror).[`detail`](#detail-15)
 
 ###### extra
 
@@ -3460,7 +3490,7 @@ Every problem member that is not `type`, `title`, `status`, `detail` or `code`.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`extra`](#extra-14)
+[`TransportError`](#transporterror).[`extra`](#extra-15)
 
 ###### headers
 
@@ -3470,7 +3500,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`headers`](#headers-14)
+[`TransportError`](#transporterror).[`headers`](#headers-15)
 
 ###### name
 
@@ -3478,17 +3508,17 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 ###### Overrides
 
-[`TransportError`](#transporterror).[`name`](#name-13)
+[`TransportError`](#transporterror).[`name`](#name-14)
 
 ###### resets\_at
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`resets_at`](#resets_at-14)
+[`TransportError`](#transporterror).[`resets_at`](#resets_at-15)
 
 ###### retryable
 
@@ -3500,7 +3530,7 @@ other 5xx, or a transport error. False for every other 4xx. The client already r
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`retryable`](#retryable-14)
+[`TransportError`](#transporterror).[`retryable`](#retryable-15)
 
 ###### retryAfterSeconds
 
@@ -3510,7 +3540,7 @@ Seconds the server asked you to wait: the body value, else `Retry-After`, else `
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`retryAfterSeconds`](#retryafterseconds-14)
+[`TransportError`](#transporterror).[`retryAfterSeconds`](#retryafterseconds-15)
 
 ###### status
 
@@ -3520,7 +3550,7 @@ HTTP status, or `null` when there was no answer or the error is raised on the cl
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`status`](#status-14)
+[`TransportError`](#transporterror).[`status`](#status-15)
 
 ###### successor
 
@@ -3530,7 +3560,7 @@ The statute that replaced the cited one, for `statute_superseded`.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`successor`](#successor-14)
+[`TransportError`](#transporterror).[`successor`](#successor-15)
 
 ###### title
 
@@ -3538,7 +3568,7 @@ The statute that replaced the cited one, for `statute_superseded`.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`title`](#title-14)
+[`TransportError`](#transporterror).[`title`](#title-15)
 
 ###### type
 
@@ -3548,17 +3578,17 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`type`](#type-14)
+[`TransportError`](#transporterror).[`type`](#type-15)
 
 ###### unit
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`unit`](#unit-14)
+[`TransportError`](#transporterror).[`unit`](#unit-15)
 
 ##### Methods
 
@@ -3581,7 +3611,286 @@ to `instanceof` when your app may load the ESM and the CJS build, or two version
 
 ###### Inherited from
 
-[`TransportError`](#transporterror).[`is`](#is-15)
+[`TransportError`](#transporterror).[`is`](#is-16)
+
+***
+
+#### TokenLimitReachedError
+
+402 with the code `token_limit_reached` (API release 0.96.0). The credit limit that an
+organization admin set for this API key is used up for the period. The call did not run and
+nothing was charged. Never retried: the limit stays until `resetsAt` or until an admin changes
+it.
+
+It extends [InsufficientCreditsError](#insufficientcreditserror), because the HTTP status is 402. Unlike that class
+it has no `cost` and no `balance`: both are `null`. The inherited `unit` (always `credits`),
+`cap` and `resets_at` (the raw string) are set too. Stop, and tell your user. Show `settingsUrl`
+to a human admin. A program or an AI agent must never open it.
+
+##### Extends
+
+- [`InsufficientCreditsError`](#insufficientcreditserror)
+
+##### Constructors
+
+###### Constructor
+
+> **new TokenLimitReachedError**(`init?`): [`TokenLimitReachedError`](#tokenlimitreachederror)
+
+###### Parameters
+
+###### init?
+
+[`ProblemInit`](#probleminit) = `{}`
+
+###### Returns
+
+[`TokenLimitReachedError`](#tokenlimitreachederror)
+
+###### Overrides
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`constructor`](#constructor-7)
+
+##### Properties
+
+###### api\_release
+
+> `readonly` **api\_release**: `string` \| `null`
+
+Value of the `X-Klaracase-Api-Release` header, or `null` when it was absent.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`api_release`](#api_release-6)
+
+###### balance
+
+> `readonly` **balance**: `number` \| `null`
+
+The plan credits left in the credit period, or `null` when the body names none.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`balance`](#balance)
+
+###### candidates
+
+> `readonly` **candidates**: [`AmbiguousCandidate`](#ambiguouscandidate)[] \| `undefined`
+
+The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`candidates`](#candidates-6)
+
+###### cap
+
+> `readonly` **cap**: `number` \| `undefined`
+
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`cap`](#cap-6)
+
+###### code
+
+> `readonly` **code**: [`ErrorCode`](#errorcode) \| `null`
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`code`](#code-7)
+
+###### cost
+
+> `readonly` **cost**: `number` \| `null`
+
+What the call would have cost in credits, or `null` when the body names no cost.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`cost`](#cost)
+
+###### detail
+
+> `readonly` **detail**: `string`
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`detail`](#detail-6)
+
+###### extra
+
+> `readonly` **extra**: `Record`\<`string`, `unknown`\>
+
+Every problem member that is not `type`, `title`, `status`, `detail` or `code`.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`extra`](#extra-6)
+
+###### headers
+
+> `readonly` **headers**: `Headers` \| `null`
+
+The response headers of the failed answer, or `null` when there was no answer.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`headers`](#headers-6)
+
+###### name
+
+> **name**: `string` = `"TokenLimitReachedError"`
+
+###### Overrides
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`name`](#name-6)
+
+###### reason
+
+> `readonly` **reason**: [`InsufficientCreditsReason`](#insufficientcreditsreason) \| `undefined`
+
+Why the call could not be paid, when the body says so. Only served while the prepaid API
+budget is available. `undefined` when the body has no `reason`.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`reason`](#reason)
+
+###### resets\_at
+
+> `readonly` **resets\_at**: `string` \| `undefined`
+
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`resets_at`](#resets_at-6)
+
+###### resetsAt
+
+> `readonly` **resetsAt**: `Date` \| `undefined`
+
+When the limit resets, parsed from `resets_at`. `undefined` when the body has none or the
+value is not a date. The raw string is `resets_at`.
+
+###### retryable
+
+> `readonly` **retryable**: `boolean`
+
+True when sending the same request again later can succeed: a 429 (wait first), a 503, any
+other 5xx, or a transport error. False for every other 4xx. The client already retried
+`maxRetries` times before it threw.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`retryable`](#retryable-6)
+
+###### retryAfterSeconds
+
+> `readonly` **retryAfterSeconds**: `number` \| `null`
+
+Seconds the server asked you to wait: the body value, else `Retry-After`, else `null`.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`retryAfterSeconds`](#retryafterseconds-6)
+
+###### settingsUrl
+
+> `readonly` **settingsUrl**: `string` \| `undefined`
+
+Where a human organization admin changes the limit. Never open it from a program.
+
+###### spent
+
+> `readonly` **spent**: `number` \| `undefined`
+
+The credits this key used in the period, plan credits and API budget together.
+
+###### status
+
+> `readonly` **status**: `number` \| `null`
+
+HTTP status, or `null` when there was no answer or the error is raised on the client.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`status`](#status-6)
+
+###### successor
+
+> `readonly` **successor**: `string` \| `undefined`
+
+The statute that replaced the cited one, for `statute_superseded`.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`successor`](#successor-6)
+
+###### title
+
+> `readonly` **title**: `string`
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`title`](#title-6)
+
+###### topUpUrl
+
+> `readonly` **topUpUrl**: `string` \| `undefined`
+
+The page where a human organization admin loads the API budget. `undefined` when the
+organization may not load one. For a human: never open or follow this URL in a program or an
+agent, only show it to the user.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`topUpUrl`](#topupurl)
+
+###### type
+
+> `readonly` **type**: `string`
+
+Problem type URI. `about:blank` when the answer was not a problem body.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`type`](#type-6)
+
+###### unit
+
+> `readonly` **unit**: `string` \| `undefined`
+
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`unit`](#unit-6)
+
+##### Methods
+
+###### is()
+
+> `static` **is**(`error`): `error is KlaracaseError`
+
+True for any [KlaracaseError](#klaracaseerror), also one made by another copy of this package. Prefer it
+to `instanceof` when your app may load the ESM and the CJS build, or two versions.
+
+###### Parameters
+
+###### error
+
+`unknown`
+
+###### Returns
+
+`error is KlaracaseError`
+
+###### Inherited from
+
+[`InsufficientCreditsError`](#insufficientcreditserror).[`is`](#is-7)
 
 ***
 
@@ -3643,7 +3952,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3697,7 +4006,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3767,7 +4076,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3853,7 +4162,7 @@ The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`.
 
 > `readonly` **cap**: `number` \| `undefined`
 
-The size of the cap, for `volume_cap`.
+The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3913,7 +4222,7 @@ The response headers of the failed answer, or `null` when there was no answer.
 
 > `readonly` **resets\_at**: `string` \| `undefined`
 
-When the cap resets, an ISO 8601 time, for `volume_cap`.
+When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`.
 
 ###### Inherited from
 
@@ -3983,7 +4292,7 @@ Problem type URI. `about:blank` when the answer was not a problem body.
 
 > `readonly` **unit**: `string` \| `undefined`
 
-What the cap counts (for example `rows`), for `volume_cap`.
+What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`.
 
 ###### Inherited from
 
@@ -4035,6 +4344,34 @@ One decision that matches an ambiguous Aktenzeichen (`code` `ambiguous_aktenzeic
 ###### id
 
 > **id**: `string`
+
+***
+
+#### ApiBudget
+
+The prepaid API budget of the organization after one call (API release 0.96.0). It pays for API
+and MCP calls once the plan credits are used up. The web app never draws on it. All values are
+integers.
+
+##### Properties
+
+###### cents
+
+> **cents**: `number`
+
+The budget after this call, in euro cents. It can be negative after a lost payment.
+
+###### credits\_at\_rate
+
+> **credits\_at\_rate**: `number`
+
+How many further credits the spendable part of the budget pays for. 0 when empty or on hold.
+
+###### rate\_cents\_per\_credit
+
+> **rate\_cents\_per\_credit**: `number`
+
+What one credit costs from the budget, in whole euro cents, for this organization.
 
 ***
 
@@ -5038,7 +5375,7 @@ replace `Authorization`.
 
 ###### Inherited from
 
-[`UploadOptions`](#uploadoptions).[`headers`](#headers-21)
+[`UploadOptions`](#uploadoptions).[`headers`](#headers-22)
 
 ###### maxRetries?
 
@@ -5100,7 +5437,17 @@ Seconds to wait in total. Default 120.
 
 Credit use of one call. `cost` and `credits_remaining` are `null` for an unmetered caller.
 
+`cost` counts plan credits and API budget credits together. `credits_remaining` is the plan
+credits left in the credit period and never counts the API budget.
+
 ##### Properties
+
+###### api\_budget?
+
+> `optional` **api\_budget?**: [`ApiBudget`](#apibudget)
+
+The prepaid API budget. The key is absent when the organization has no budget and may not
+load one. It is never `null`. Check with `credits.api_budget !== undefined`.
 
 ###### cost
 
@@ -6982,7 +7329,7 @@ Case-insensitive prefix filter on the facet value.
 
 ###### Inherited from
 
-[`CorpusFacetsOptions`](#corpusfacetsoptions).[`type`](#type-17)
+[`CorpusFacetsOptions`](#corpusfacetsoptions).[`type`](#type-18)
 
 ***
 
@@ -7329,7 +7676,7 @@ replace `Authorization`.
 
 ###### Inherited from
 
-[`RequestOptions`](#requestoptions).[`headers`](#headers-19)
+[`RequestOptions`](#requestoptions).[`headers`](#headers-20)
 
 ###### maxPages
 
@@ -7774,7 +8121,7 @@ replace `Authorization`.
 
 ###### Inherited from
 
-[`RequestOptions`](#requestoptions).[`headers`](#headers-19)
+[`RequestOptions`](#requestoptions).[`headers`](#headers-20)
 
 ###### maxRetries?
 
@@ -8004,9 +8351,25 @@ Findings by verdict. Every known verdict has a list, empty when nothing got that
 
 ***
 
+#### InsufficientCreditsReason
+
+> **InsufficientCreditsReason** = `"api_budget_empty"` \| `"api_budget_not_available"` \| `"plan_credits_exhausted"` \| `string` & `object`
+
+Why a 402 `insufficient_credits` call could not be paid (API release 0.96.0). The list is open:
+a later release may add a value. Treat a value you do not know like `api_budget_not_available`.
+
+- `api_budget_empty`: the organization may load an API budget, and what it holds does not cover
+  this call.
+- `api_budget_not_available`: the organization has no API budget to draw on, or the budget is on
+  hold, and its plan does not allow a top-up.
+- `plan_credits_exhausted`: reserved for a refusal where the API budget plays no part. The API
+  does not serve it today.
+
+***
+
 #### KlaracaseErrorCode
 
-> **KlaracaseErrorCode** = `"unauthenticated"` \| `"personal_access_token_required"` \| `"token_org_missing"` \| `"token_org_membership_lost"` \| `"pseudonymizer_token_refused"` \| `"two_factor_required"` \| `"token_ability_missing"` \| `"validation_failed"` \| `"rate_limited"` \| `"volume_cap"` \| `"insufficient_credits"` \| `"backend_unavailable"` \| `"service_unavailable"` \| `"internal_error"` \| `"bad_request"` \| `"forbidden"` \| `"not_found"` \| `"not_found_under_filter"` \| `"method_not_allowed"` \| `"conflict"` \| `"payload_too_large"` \| `"unsupported_media_type"` \| `"client_error"` \| `"statute_superseded"` \| `"section_not_in_current_text"` \| `"document_unavailable"` \| `"search_timeout"` \| `"index_unavailable"` \| `"norm_family_unavailable"` \| `"ambiguous_aktenzeichen"` \| `"ids_unresolved"` \| `"page_undefined_at_this_depth"` \| `"text_too_long"` \| `"not_german_legal_text"` \| `"unrecognisable_norm_token"` \| `"invalid_reference"` \| `"range_not_supported"` \| `"historical_version_unavailable"` \| `"ambiguous"` \| `"sections_unavailable"` \| `"section_not_found"` \| `"rn_range_not_found"` \| `"official_headnote_not_located"` \| `"document_leitsatz_not_located"` \| `"client_validation"` \| `"wait_timeout"` \| `"citation_check_incomplete"` \| `"unknown"`
+> **KlaracaseErrorCode** = `"unauthenticated"` \| `"personal_access_token_required"` \| `"token_org_missing"` \| `"token_org_membership_lost"` \| `"pseudonymizer_token_refused"` \| `"two_factor_required"` \| `"token_ability_missing"` \| `"validation_failed"` \| `"rate_limited"` \| `"volume_cap"` \| `"insufficient_credits"` \| `"token_limit_reached"` \| `"backend_unavailable"` \| `"service_unavailable"` \| `"internal_error"` \| `"bad_request"` \| `"forbidden"` \| `"not_found"` \| `"not_found_under_filter"` \| `"method_not_allowed"` \| `"conflict"` \| `"payload_too_large"` \| `"unsupported_media_type"` \| `"client_error"` \| `"statute_superseded"` \| `"section_not_in_current_text"` \| `"document_unavailable"` \| `"search_timeout"` \| `"index_unavailable"` \| `"norm_family_unavailable"` \| `"ambiguous_aktenzeichen"` \| `"ids_unresolved"` \| `"page_undefined_at_this_depth"` \| `"text_too_long"` \| `"not_german_legal_text"` \| `"unrecognisable_norm_token"` \| `"invalid_reference"` \| `"range_not_supported"` \| `"historical_version_unavailable"` \| `"ambiguous"` \| `"sections_unavailable"` \| `"section_not_found"` \| `"rn_range_not_found"` \| `"official_headnote_not_located"` \| `"document_leitsatz_not_located"` \| `"client_validation"` \| `"wait_timeout"` \| `"citation_check_incomplete"` \| `"unknown"`
 
 Error codes the API and the SDK use. Unknown codes are possible, so the type stays open.
 
@@ -8389,6 +8752,14 @@ cases.
 
 ### Variables
 
+#### apiBudgetSchema
+
+> `const` **apiBudgetSchema**: `ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>
+
+The prepaid API budget after one call (API release 0.96.0).
+
+***
+
 #### branchSchema
 
 > `const` **branchSchema**: `ZodMiniEnum`\<\{ `arbeit`: `"arbeit"`; `finanz`: `"finanz"`; `ordentlich`: `"ordentlich"`; `patent`: `"patent"`; `sozial`: `"sozial"`; `unbekannt`: `"unbekannt"`; `verfassung`: `"verfassung"`; `verwaltung`: `"verwaltung"`; \}\>
@@ -8415,7 +8786,7 @@ Body of `POST /citation-checks`: exactly one of `text` and `document_id`.
 
 #### citationCheckRunSchema
 
-> `const` **citationCheckRunSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `completed_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `created_at`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `extraction`: `ZodMiniObject`\<\{ `detected`: `ZodMiniNumber`\<`number`\>; `dropped`: `ZodMiniNumber`\<`number`\>; `dropped_by_token`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `dropped_refused_collision`: `ZodMiniNumber`\<`number`\>; `dropped_stacked_subdivision`: `ZodMiniNumber`\<`number`\>; `dropped_trailing_noun`: `ZodMiniNumber`\<`number`\>; `dropped_truncation`: `ZodMiniNumber`\<`number`\>; `dropped_unreadable`: `ZodMiniNumber`\<`number`\>; `dropped_unreadable_texts`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `not_verifiable`: `ZodMiniNumber`\<`number`\>; `not_verifiable_by_type`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `possible_citations_unparsed`: `ZodMiniNumber`\<`number`\>; `possible_citations_unparsed_texts`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `refused_contract_collision`: `ZodMiniArray`\<`ZodMiniUnknown`\>; \}, `$loose`\>; `findings`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `ambiguity_advisory`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `canonical`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `check_scope`: `ZodMiniObject`\<\{ `article_text_available`: `ZodMiniNullable`\<`ZodMiniBoolean`\<`boolean`\>\>; `article_text_read`: `ZodMiniBoolean`\<`boolean`\>; `court`: `ZodMiniCustom`\<[`Open`](#open)\<`"checked"`\>, [`Open`](#open)\<`"checked"`\>\>; `subdivision`: `ZodMiniCustom`\<[`Open`](#open)\<`"not_applicable"`\>, [`Open`](#open)\<`"not_applicable"`\>\>; \}, `$loose`\>; `confidence`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `coverage`: `ZodMiniNullable`\<`ZodMiniRecord`\<`ZodMiniString`\<`string`\>, `ZodMiniUnknown`\>\>; `coverage_advisory`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `coverage_boundary`: `ZodMiniNullable`\<`ZodMiniRecord`\<`ZodMiniString`\<`string`\>, `ZodMiniUnknown`\>\>; `disputed_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `end_offset`: `ZodMiniNumber`\<`number`\>; `evidence`: `ZodMiniObject`\<\{ `match_strength`: `ZodMiniCustom`\<[`Open`](#open)\<`"exact"`\>, [`Open`](#open)\<`"exact"`\>\>; `reason`: `ZodMiniCustom`\<[`Open`](#open)\<`"exact_match"`\>, [`Open`](#open)\<`"exact_match"`\>\>; \}, `$loose`\>; `external_status`: `ZodMiniCustom`\<[`Open`](#open)\<`"skipped"`\>, [`Open`](#open)\<`"skipped"`\>\>; `id`: `ZodMiniString`\<`string`\>; `matched_decision`: `ZodMiniNullable`\<`ZodMiniObject`\<\{ `artifact_id`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `occurrence_index`: `ZodMiniNumber`\<`number`\>; `raw_text`: `ZodMiniString`\<`string`\>; `role`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `start_offset`: `ZodMiniNumber`\<`number`\>; `subdivision_advisory`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `subdivision_check`: `ZodMiniCustom`\<[`Open`](#open)\<`"not_checked"`\>, [`Open`](#open)\<`"not_checked"`\>\>; `type`: `ZodMiniCustom`\<[`Open`](#open)\<`"case"` \| `"statute"`\>, [`Open`](#open)\<`"case"` \| `"statute"`\>\>; `verdict`: `ZodMiniCustom`\<[`Open`](#open)\<`"not_found"` \| `"ambiguous"` \| `"verified_corpus"` \| `"verified_external"` \| `"out_of_coverage"` \| `"unverifiable"` \| `"discrepancy"`\>, [`Open`](#open)\<`"not_found"` \| `"ambiguous"` \| `"verified_corpus"` \| `"verified_external"` \| `"out_of_coverage"` \| `"unverifiable"` \| `"discrepancy"`\>\>; \}, `$loose`\>\>; `findings_purged_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `findings_unavailable_reason`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `id`: `ZodMiniString`\<`string`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `notes`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `partial`: `ZodMiniBoolean`\<`boolean`\>; `payload_truncated`: `ZodMiniBoolean`\<`boolean`\>; `progress`: `ZodMiniObject`\<\{ `citations_checked`: `ZodMiniNumber`\<`number`\>; `citations_total`: `ZodMiniNumber`\<`number`\>; `unique_citations_total`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `reason_counts`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `category`: `ZodMiniCustom`\<[`Open`](#open)\<`"statute_unknown"`\>, [`Open`](#open)\<`"statute_unknown"`\>\>; `count`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `source`: `ZodMiniCustom`\<[`Open`](#open)\<`"api_v1"`\>, [`Open`](#open)\<`"api_v1"`\>\>; `status`: `ZodMiniCustom`\<[`Open`](#open)\<`"pending"` \| `"gating"` \| `"extracting"` \| `"resolving"` \| `"checking_external"` \| `"complete"` \| `"rejected"` \| `"failed"`\>, [`Open`](#open)\<`"pending"` \| `"gating"` \| `"extracting"` \| `"resolving"` \| `"checking_external"` \| `"complete"` \| `"rejected"` \| `"failed"`\>\>; `submitted_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `unique_citations`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `canonical`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `key_basis`: `ZodMiniCustom`\<[`Open`](#open)\<`"matched_decision"` \| `"canonical"`\>, [`Open`](#open)\<`"matched_decision"` \| `"canonical"`\>\>; `occurrences`: `ZodMiniNumber`\<`number`\>; `reference_type`: `ZodMiniCustom`\<[`Open`](#open)\<`"case"` \| `"statute"`\>, [`Open`](#open)\<`"case"` \| `"statute"`\>\>; `spellings`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `target_artifact_id`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `verdict`: `ZodMiniCustom`\<[`Open`](#open)\<`"not_found"` \| `"ambiguous"` \| `"verified_corpus"` \| `"verified_external"` \| `"out_of_coverage"` \| `"unverifiable"` \| `"discrepancy"`\>, [`Open`](#open)\<`"not_found"` \| `"ambiguous"` \| `"verified_corpus"` \| `"verified_external"` \| `"out_of_coverage"` \| `"unverifiable"` \| `"discrepancy"`\>\>; \}, `$loose`\>\>; `unverified_count`: `ZodMiniNumber`\<`number`\>; `verdict_counts`: `ZodMiniRecord`\<`ZodMiniString`\<`string`\>, `ZodMiniNumber`\<`number`\>\>; \}, `$loose`\>
+> `const` **citationCheckRunSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `completed_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `created_at`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `extraction`: `ZodMiniObject`\<\{ `detected`: `ZodMiniNumber`\<`number`\>; `dropped`: `ZodMiniNumber`\<`number`\>; `dropped_by_token`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `dropped_refused_collision`: `ZodMiniNumber`\<`number`\>; `dropped_stacked_subdivision`: `ZodMiniNumber`\<`number`\>; `dropped_trailing_noun`: `ZodMiniNumber`\<`number`\>; `dropped_truncation`: `ZodMiniNumber`\<`number`\>; `dropped_unreadable`: `ZodMiniNumber`\<`number`\>; `dropped_unreadable_texts`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `not_verifiable`: `ZodMiniNumber`\<`number`\>; `not_verifiable_by_type`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `possible_citations_unparsed`: `ZodMiniNumber`\<`number`\>; `possible_citations_unparsed_texts`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `refused_contract_collision`: `ZodMiniArray`\<`ZodMiniUnknown`\>; \}, `$loose`\>; `findings`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `ambiguity_advisory`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `canonical`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `check_scope`: `ZodMiniObject`\<\{ `article_text_available`: `ZodMiniNullable`\<`ZodMiniBoolean`\<`boolean`\>\>; `article_text_read`: `ZodMiniBoolean`\<`boolean`\>; `court`: `ZodMiniCustom`\<[`Open`](#open)\<`"checked"`\>, [`Open`](#open)\<`"checked"`\>\>; `subdivision`: `ZodMiniCustom`\<[`Open`](#open)\<`"not_applicable"`\>, [`Open`](#open)\<`"not_applicable"`\>\>; \}, `$loose`\>; `confidence`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `coverage`: `ZodMiniNullable`\<`ZodMiniRecord`\<`ZodMiniString`\<`string`\>, `ZodMiniUnknown`\>\>; `coverage_advisory`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `coverage_boundary`: `ZodMiniNullable`\<`ZodMiniRecord`\<`ZodMiniString`\<`string`\>, `ZodMiniUnknown`\>\>; `disputed_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `end_offset`: `ZodMiniNumber`\<`number`\>; `evidence`: `ZodMiniObject`\<\{ `match_strength`: `ZodMiniCustom`\<[`Open`](#open)\<`"exact"`\>, [`Open`](#open)\<`"exact"`\>\>; `reason`: `ZodMiniCustom`\<[`Open`](#open)\<`"exact_match"`\>, [`Open`](#open)\<`"exact_match"`\>\>; \}, `$loose`\>; `external_status`: `ZodMiniCustom`\<[`Open`](#open)\<`"skipped"`\>, [`Open`](#open)\<`"skipped"`\>\>; `id`: `ZodMiniString`\<`string`\>; `matched_decision`: `ZodMiniNullable`\<`ZodMiniObject`\<\{ `artifact_id`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `occurrence_index`: `ZodMiniNumber`\<`number`\>; `raw_text`: `ZodMiniString`\<`string`\>; `role`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `start_offset`: `ZodMiniNumber`\<`number`\>; `subdivision_advisory`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `subdivision_check`: `ZodMiniCustom`\<[`Open`](#open)\<`"not_checked"`\>, [`Open`](#open)\<`"not_checked"`\>\>; `type`: `ZodMiniCustom`\<[`Open`](#open)\<`"case"` \| `"statute"`\>, [`Open`](#open)\<`"case"` \| `"statute"`\>\>; `verdict`: `ZodMiniCustom`\<[`Open`](#open)\<`"not_found"` \| `"ambiguous"` \| `"verified_corpus"` \| `"verified_external"` \| `"out_of_coverage"` \| `"unverifiable"` \| `"discrepancy"`\>, [`Open`](#open)\<`"not_found"` \| `"ambiguous"` \| `"verified_corpus"` \| `"verified_external"` \| `"out_of_coverage"` \| `"unverifiable"` \| `"discrepancy"`\>\>; \}, `$loose`\>\>; `findings_purged_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `findings_unavailable_reason`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `id`: `ZodMiniString`\<`string`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `notes`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `partial`: `ZodMiniBoolean`\<`boolean`\>; `payload_truncated`: `ZodMiniBoolean`\<`boolean`\>; `progress`: `ZodMiniObject`\<\{ `citations_checked`: `ZodMiniNumber`\<`number`\>; `citations_total`: `ZodMiniNumber`\<`number`\>; `unique_citations_total`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `reason_counts`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `category`: `ZodMiniCustom`\<[`Open`](#open)\<`"statute_unknown"`\>, [`Open`](#open)\<`"statute_unknown"`\>\>; `count`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `source`: `ZodMiniCustom`\<[`Open`](#open)\<`"api_v1"`\>, [`Open`](#open)\<`"api_v1"`\>\>; `status`: `ZodMiniCustom`\<[`Open`](#open)\<`"pending"` \| `"gating"` \| `"extracting"` \| `"resolving"` \| `"checking_external"` \| `"complete"` \| `"rejected"` \| `"failed"`\>, [`Open`](#open)\<`"pending"` \| `"gating"` \| `"extracting"` \| `"resolving"` \| `"checking_external"` \| `"complete"` \| `"rejected"` \| `"failed"`\>\>; `submitted_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `unique_citations`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `canonical`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `key_basis`: `ZodMiniCustom`\<[`Open`](#open)\<`"matched_decision"` \| `"canonical"`\>, [`Open`](#open)\<`"matched_decision"` \| `"canonical"`\>\>; `occurrences`: `ZodMiniNumber`\<`number`\>; `reference_type`: `ZodMiniCustom`\<[`Open`](#open)\<`"case"` \| `"statute"`\>, [`Open`](#open)\<`"case"` \| `"statute"`\>\>; `spellings`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `target_artifact_id`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `verdict`: `ZodMiniCustom`\<[`Open`](#open)\<`"not_found"` \| `"ambiguous"` \| `"verified_corpus"` \| `"verified_external"` \| `"out_of_coverage"` \| `"unverifiable"` \| `"discrepancy"`\>, [`Open`](#open)\<`"not_found"` \| `"ambiguous"` \| `"verified_corpus"` \| `"verified_external"` \| `"out_of_coverage"` \| `"unverifiable"` \| `"discrepancy"`\>\>; \}, `$loose`\>\>; `unverified_count`: `ZodMiniNumber`\<`number`\>; `verdict_counts`: `ZodMiniRecord`\<`ZodMiniString`\<`string`\>, `ZodMiniNumber`\<`number`\>\>; \}, `$loose`\>
 
 Body of `POST /citation-checks` and `GET /citation-checks/{run}`.
 
@@ -8455,7 +8826,7 @@ Options of `GET /corpus/coverage`.
 
 #### corpusCoverageResponseSchema
 
-> `const` **corpusCoverageResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `as_of`: `ZodMiniString`\<`string`\>; `branches`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `branch`: `ZodMiniCustom`\<[`Open`](#open)\<`"ordentlich"` \| `"verwaltung"` \| `"sozial"` \| `"arbeit"` \| `"finanz"` \| `"verfassung"` \| `"patent"` \| `"unbekannt"`\>, [`Open`](#open)\<`"ordentlich"` \| `"verwaltung"` \| `"sozial"` \| `"arbeit"` \| `"finanz"` \| `"verfassung"` \| `"patent"` \| `"unbekannt"`\>\>; `count`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `court_founding_basis`: `ZodMiniCustom`\<[`Open`](#open)\<`"branch_wide_weakest_court_floor"`\>, [`Open`](#open)\<`"branch_wide_weakest_court_floor"`\>\>; `court_founding_year`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `earliest`: `ZodMiniString`\<`string`\>; `has_dates_below_floor`: `ZodMiniBoolean`\<`boolean`\>; `instance_mix`: `ZodMiniObject`\<\{ `appellate`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `federal`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `first_instance_and_regional`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `note`: `ZodMiniString`\<`string`\>; `other`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; \}, `$loose`\>; `latest`: `ZodMiniString`\<`string`\>; `top_courts`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `count`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<...\>; `value`: `ZodMiniNumber`\<...\>; \}, `$loose`\>; `court`: `ZodMiniString`\<`string`\>; `earliest`: `ZodMiniString`\<`string`\>; `latest`: `ZodMiniString`\<`string`\>; \}, `$loose`\>\>; \}, `$loose`\>\>; `changelog_url`: `ZodMiniString`\<`string`\>; `corpus_floors`: `ZodMiniString`\<`string`\>; `courts`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `branch`: `ZodMiniCustom`\<[`Open`](#open)\<`"ordentlich"` \| `"verwaltung"` \| `"sozial"` \| `"arbeit"` \| `"finanz"` \| `"verfassung"` \| `"patent"` \| `"unbekannt"`\>, [`Open`](#open)\<`"ordentlich"` \| `"verwaltung"` \| `"sozial"` \| `"arbeit"` \| `"finanz"` \| `"verfassung"` \| `"patent"` \| `"unbekannt"`\>\>; `count`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `court`: `ZodMiniString`\<`string`\>; `court_founding_basis`: `ZodMiniCustom`\<[`Open`](#open)\<`"court_floor"`\>, [`Open`](#open)\<`"court_floor"`\>\>; `court_founding_year`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `earliest`: `ZodMiniString`\<`string`\>; `has_dates_below_floor`: `ZodMiniBoolean`\<`boolean`\>; `latest`: `ZodMiniString`\<`string`\>; \}, `$loose`\>\>; `courts_returned`: `ZodMiniNumber`\<`number`\>; `courts_total`: `ZodMiniNumber`\<`number`\>; `coverage_ranges`: `ZodMiniObject`\<\{ `note`: `ZodMiniString`\<`string`\>; `ranges`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `bucket`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniString`\<`string`\>; `exhaustive`: `ZodMiniBoolean`\<`boolean`\>; `from`: `ZodMiniString`\<`string`\>; `holdings_earliest`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `label`: `ZodMiniString`\<`string`\>; `note`: `ZodMiniString`\<`string`\>; `ocr`: `ZodMiniBoolean`\<`boolean`\>; `sources`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `until`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `scope`: `ZodMiniCustom`\<[`Open`](#open)\<`"all"`\>, [`Open`](#open)\<`"all"`\>\>; `verified_at`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `credits`: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `filter_coverage_caveats`: `ZodMiniString`\<`string`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `law_coverage`: `ZodMiniObject`\<\{ `eu`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `international`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `note`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `total_decisions`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; \}, `$loose`\>
+> `const` **corpusCoverageResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `as_of`: `ZodMiniString`\<`string`\>; `branches`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `branch`: `ZodMiniCustom`\<[`Open`](#open)\<`"ordentlich"` \| `"verwaltung"` \| `"sozial"` \| `"arbeit"` \| `"finanz"` \| `"verfassung"` \| `"patent"` \| `"unbekannt"`\>, [`Open`](#open)\<`"ordentlich"` \| `"verwaltung"` \| `"sozial"` \| `"arbeit"` \| `"finanz"` \| `"verfassung"` \| `"patent"` \| `"unbekannt"`\>\>; `count`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `court_founding_basis`: `ZodMiniCustom`\<[`Open`](#open)\<`"branch_wide_weakest_court_floor"`\>, [`Open`](#open)\<`"branch_wide_weakest_court_floor"`\>\>; `court_founding_year`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `earliest`: `ZodMiniString`\<`string`\>; `has_dates_below_floor`: `ZodMiniBoolean`\<`boolean`\>; `instance_mix`: `ZodMiniObject`\<\{ `appellate`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `federal`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `first_instance_and_regional`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `note`: `ZodMiniString`\<`string`\>; `other`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; \}, `$loose`\>; `latest`: `ZodMiniString`\<`string`\>; `top_courts`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `count`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<...\>; `value`: `ZodMiniNumber`\<...\>; \}, `$loose`\>; `court`: `ZodMiniString`\<`string`\>; `earliest`: `ZodMiniString`\<`string`\>; `latest`: `ZodMiniString`\<`string`\>; \}, `$loose`\>\>; \}, `$loose`\>\>; `changelog_url`: `ZodMiniString`\<`string`\>; `corpus_floors`: `ZodMiniString`\<`string`\>; `courts`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `branch`: `ZodMiniCustom`\<[`Open`](#open)\<`"ordentlich"` \| `"verwaltung"` \| `"sozial"` \| `"arbeit"` \| `"finanz"` \| `"verfassung"` \| `"patent"` \| `"unbekannt"`\>, [`Open`](#open)\<`"ordentlich"` \| `"verwaltung"` \| `"sozial"` \| `"arbeit"` \| `"finanz"` \| `"verfassung"` \| `"patent"` \| `"unbekannt"`\>\>; `count`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `court`: `ZodMiniString`\<`string`\>; `court_founding_basis`: `ZodMiniCustom`\<[`Open`](#open)\<`"court_floor"`\>, [`Open`](#open)\<`"court_floor"`\>\>; `court_founding_year`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `earliest`: `ZodMiniString`\<`string`\>; `has_dates_below_floor`: `ZodMiniBoolean`\<`boolean`\>; `latest`: `ZodMiniString`\<`string`\>; \}, `$loose`\>\>; `courts_returned`: `ZodMiniNumber`\<`number`\>; `courts_total`: `ZodMiniNumber`\<`number`\>; `coverage_ranges`: `ZodMiniObject`\<\{ `note`: `ZodMiniString`\<`string`\>; `ranges`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `bucket`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniString`\<`string`\>; `exhaustive`: `ZodMiniBoolean`\<`boolean`\>; `from`: `ZodMiniString`\<`string`\>; `holdings_earliest`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `label`: `ZodMiniString`\<`string`\>; `note`: `ZodMiniString`\<`string`\>; `ocr`: `ZodMiniBoolean`\<`boolean`\>; `sources`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `until`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `scope`: `ZodMiniCustom`\<[`Open`](#open)\<`"all"`\>, [`Open`](#open)\<`"all"`\>\>; `verified_at`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `credits`: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `filter_coverage_caveats`: `ZodMiniString`\<`string`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `law_coverage`: `ZodMiniObject`\<\{ `eu`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `international`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `note`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `total_decisions`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; \}, `$loose`\>
 
 Body of `GET /corpus/coverage`.
 
@@ -8471,7 +8842,7 @@ Options of `GET /corpus/facets/{field}`.
 
 #### corpusFacetsResponseSchema
 
-> `const` **corpusFacetsResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `applies_to`: `ZodMiniCustom`\<[`Open`](#open)\<`"DECISION"` \| `"LAW"`\>, [`Open`](#open)\<`"DECISION"` \| `"LAW"`\>\>; `as_of`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `count_basis`: `ZodMiniCustom`\<[`Open`](#open)\<`"indexed_passages"`\>, [`Open`](#open)\<`"indexed_passages"`\>\>; `credits`: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `field`: `ZodMiniCustom`\<[`Open`](#open)\<`"court_name"` \| `"court_branch"` \| `"document_type"` \| `"jurisdiction"` \| `"law_type"` \| `"cited_norms"`\>, [`Open`](#open)\<`"court_name"` \| `"court_branch"` \| `"document_type"` \| `"jurisdiction"` \| `"law_type"` \| `"cited_norms"`\>\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `norm`: `ZodMiniOptional`\<`ZodMiniString`\<`string`\>\>; `total_values`: `ZodMiniNumber`\<`number`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; `value_limit`: `ZodMiniNumber`\<`number`\>; `values`: `ZodMiniRecord`\<`ZodMiniString`\<`string`\>, `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; \}, `$loose`\>
+> `const` **corpusFacetsResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `applies_to`: `ZodMiniCustom`\<[`Open`](#open)\<`"DECISION"` \| `"LAW"`\>, [`Open`](#open)\<`"DECISION"` \| `"LAW"`\>\>; `as_of`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `count_basis`: `ZodMiniCustom`\<[`Open`](#open)\<`"indexed_passages"`\>, [`Open`](#open)\<`"indexed_passages"`\>\>; `credits`: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `field`: `ZodMiniCustom`\<[`Open`](#open)\<`"court_name"` \| `"court_branch"` \| `"document_type"` \| `"jurisdiction"` \| `"law_type"` \| `"cited_norms"`\>, [`Open`](#open)\<`"court_name"` \| `"court_branch"` \| `"document_type"` \| `"jurisdiction"` \| `"law_type"` \| `"cited_norms"`\>\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `norm`: `ZodMiniOptional`\<`ZodMiniString`\<`string`\>\>; `total_values`: `ZodMiniNumber`\<`number`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; `value_limit`: `ZodMiniNumber`\<`number`\>; `values`: `ZodMiniRecord`\<`ZodMiniString`\<`string`\>, `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; \}, `$loose`\>
 
 Body of `GET /corpus/facets/{field}`.
 
@@ -8487,9 +8858,9 @@ A count that may be a lower bound.
 
 #### creditsSchema
 
-> `const` **creditsSchema**: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>
+> `const` **creditsSchema**: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>
 
-Credit use of one call.
+Credit use of one call. `api_budget` is absent, never `null`, when there is no budget.
 
 ***
 
@@ -8511,7 +8882,7 @@ Input of `search` (laws and decisions together).
 
 #### crossTypeSearchResponseSchema
 
-> `const` **crossTypeSearchResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `frequently_cited_by_results`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `limit`: `ZodMiniNumber`\<`number`\>; `mode`: `ZodMiniCustom`\<[`Open`](#open)\<`"keyword"` \| `"semantic"` \| `"hybrid"`\>, [`Open`](#open)\<`"keyword"` \| `"semantic"` \| `"hybrid"`\>\>; `norms_cited_by_decision_results`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `pool_exhaustive`: `ZodMiniBoolean`\<`boolean`\>; `query_expansion`: `ZodMiniObject`\<\{ `applied`: `ZodMiniBoolean`\<`boolean`\>; `note`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `reason`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"no_lay_term"`\>, [`Open`](#open)\<`"no_lay_term"`\>\>\>; `status`: `ZodMiniCustom`\<[`Open`](#open)\<`"abstained"` \| `"applied"`\>, [`Open`](#open)\<`"abstained"` \| `"applied"`\>\>; \}, `$loose`\>; `section_totals`: `ZodMiniObject`\<\{ `decisions`: `ZodMiniObject`\<\{ `candidate_pool`: `ZodMiniNumber`\<`number`\>; `pool_exhaustive`: `ZodMiniBoolean`\<`boolean`\>; `total_available`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `total_available_basis`: `ZodMiniString`\<`string`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `laws`: `ZodMiniObject`\<\{ `candidate_pool`: `ZodMiniNumber`\<`number`\>; `pool_exhaustive`: `ZodMiniBoolean`\<`boolean`\>; `total_available`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `total_available_basis`: `ZodMiniString`\<`string`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; \}, `$loose`\>; `sections`: `ZodMiniObject`\<\{ `decisions`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `aktenzeichen`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `artifact_type`: `ZodMiniLiteral`\<`"DECISION"`\>; `chunk_title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `confidence`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<... \| ... \| ...\>, [`Open`](#open)\<... \| ... \| ...\>\>\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<... \| ... \| ... \| ... \| ... \| ...\>, [`Open`](#open)\<... \| ... \| ... \| ... \| ... \| ...\>\>\>; `fortgeltung_checked`: `ZodMiniBoolean`\<`boolean`\>; `fortgeltung_note`: `ZodMiniString`\<`string`\>; `fundstelle`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `id`: `ZodMiniString`\<`string`\>; `rn_range`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippet`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippets`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `rn`: `ZodMiniOptional`\<...\>; `text`: `ZodMiniString`\<...\>; \}, `$loose`\>\>; `title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `laws`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `abbreviation`: `ZodMiniString`\<`string`\>; `aktenzeichen`: `ZodMiniNull`; `artifact_type`: `ZodMiniLiteral`\<`"LAW"`\>; `breadcrumb`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `chunk_title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `confidence`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<... \| ... \| ...\>, [`Open`](#open)\<... \| ... \| ...\>\>\>; `court`: `ZodMiniNull`; `date`: `ZodMiniNull`; `document_type`: `ZodMiniNull`; `fundstelle`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `id`: `ZodMiniString`\<`string`\>; `jurisdiction`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `law_type`: `ZodMiniString`\<`string`\>; `rn_range`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippet`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippets`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `rn`: `ZodMiniOptional`\<...\>; `text`: `ZodMiniString`\<...\>; \}, `$loose`\>\>; `title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; \}, `$loose`\>; `top_confidence`: `ZodMiniOptional`\<`ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>, [`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>\>\>\>; `total_available`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `total_available_basis`: `ZodMiniString`\<`string`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>
+> `const` **crossTypeSearchResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `frequently_cited_by_results`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `limit`: `ZodMiniNumber`\<`number`\>; `mode`: `ZodMiniCustom`\<[`Open`](#open)\<`"keyword"` \| `"semantic"` \| `"hybrid"`\>, [`Open`](#open)\<`"keyword"` \| `"semantic"` \| `"hybrid"`\>\>; `norms_cited_by_decision_results`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `pool_exhaustive`: `ZodMiniBoolean`\<`boolean`\>; `query_expansion`: `ZodMiniObject`\<\{ `applied`: `ZodMiniBoolean`\<`boolean`\>; `note`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `reason`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"no_lay_term"`\>, [`Open`](#open)\<`"no_lay_term"`\>\>\>; `status`: `ZodMiniCustom`\<[`Open`](#open)\<`"abstained"` \| `"applied"`\>, [`Open`](#open)\<`"abstained"` \| `"applied"`\>\>; \}, `$loose`\>; `section_totals`: `ZodMiniObject`\<\{ `decisions`: `ZodMiniObject`\<\{ `candidate_pool`: `ZodMiniNumber`\<`number`\>; `pool_exhaustive`: `ZodMiniBoolean`\<`boolean`\>; `total_available`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `total_available_basis`: `ZodMiniString`\<`string`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `laws`: `ZodMiniObject`\<\{ `candidate_pool`: `ZodMiniNumber`\<`number`\>; `pool_exhaustive`: `ZodMiniBoolean`\<`boolean`\>; `total_available`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `total_available_basis`: `ZodMiniString`\<`string`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; \}, `$loose`\>; `sections`: `ZodMiniObject`\<\{ `decisions`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `aktenzeichen`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `artifact_type`: `ZodMiniLiteral`\<`"DECISION"`\>; `chunk_title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `confidence`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<... \| ... \| ...\>, [`Open`](#open)\<... \| ... \| ...\>\>\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<... \| ... \| ... \| ... \| ... \| ...\>, [`Open`](#open)\<... \| ... \| ... \| ... \| ... \| ...\>\>\>; `fortgeltung_checked`: `ZodMiniBoolean`\<`boolean`\>; `fortgeltung_note`: `ZodMiniString`\<`string`\>; `fundstelle`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `id`: `ZodMiniString`\<`string`\>; `rn_range`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippet`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippets`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `rn`: `ZodMiniOptional`\<...\>; `text`: `ZodMiniString`\<...\>; \}, `$loose`\>\>; `title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `laws`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `abbreviation`: `ZodMiniString`\<`string`\>; `aktenzeichen`: `ZodMiniNull`; `artifact_type`: `ZodMiniLiteral`\<`"LAW"`\>; `breadcrumb`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `chunk_title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `confidence`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<... \| ... \| ...\>, [`Open`](#open)\<... \| ... \| ...\>\>\>; `court`: `ZodMiniNull`; `date`: `ZodMiniNull`; `document_type`: `ZodMiniNull`; `fundstelle`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `id`: `ZodMiniString`\<`string`\>; `jurisdiction`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `law_type`: `ZodMiniString`\<`string`\>; `rn_range`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippet`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippets`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `rn`: `ZodMiniOptional`\<...\>; `text`: `ZodMiniString`\<...\>; \}, `$loose`\>\>; `title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; \}, `$loose`\>; `top_confidence`: `ZodMiniOptional`\<`ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>, [`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>\>\>\>; `total_available`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `total_available_basis`: `ZodMiniString`\<`string`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>
 
 Body of `GET /search`.
 
@@ -8527,7 +8898,7 @@ Body of `POST /datapackages`.
 
 #### datapackageResponseSchema
 
-> `const` **datapackageResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `assembled_at`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `citation_edges`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `corpus`: `ZodMiniNullable`\<`ZodMiniObject`\<\{ `artifact_id`: `ZodMiniString`\<`string`\>; `az`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `corpus_url`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `from_artifact_id`: `ZodMiniString`\<`string`\>; `hop`: `ZodMiniOptional`\<`ZodMiniNumber`\<`number`\>\>; `in_corpus`: `ZodMiniBoolean`\<`boolean`\>; `reference_canonical`: `ZodMiniString`\<`string`\>; `reference_role`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"leitentscheidung"`\>, [`Open`](#open)\<`"leitentscheidung"`\>\>\>; `resolution_status`: `ZodMiniCustom`\<[`Open`](#open)\<`"resolved"` \| `"unresolved"`\>, [`Open`](#open)\<`"resolved"` \| `"unresolved"`\>\>; \}, `$loose`\>\>; `credits`: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `decisions`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `aktenzeichen`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>, [`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `excerpt`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `excerpt_span`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"document_start"`\>, [`Open`](#open)\<`"document_start"`\>\>\>; `fortgeltung_checked`: `ZodMiniBoolean`\<`boolean`\>; `fortgeltung_note`: `ZodMiniString`\<`string`\>; `id`: `ZodMiniString`\<`string`\>; `jurisdiction`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `text_length`: `ZodMiniNumber`\<`number`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>\>; `deduped`: `ZodMiniNumber`\<`number`\>; `edge_accounting`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `edges_included`: `ZodMiniNumber`\<`number`\>; `edges_resolved_included`: `ZodMiniNumber`\<`number`\>; `edges_resolved_total`: `ZodMiniNumber`\<`number`\>; `edges_total`: `ZodMiniNumber`\<`number`\>; `edges_unresolved_included`: `ZodMiniNumber`\<`number`\>; `edges_unresolved_total`: `ZodMiniNumber`\<`number`\>; `from_artifact_id`: `ZodMiniString`\<`string`\>; `targets_resolved_included`: `ZodMiniNumber`\<`number`\>; `targets_resolved_total`: `ZodMiniNumber`\<`number`\>; `unit`: `ZodMiniCustom`\<[`Open`](#open)\<`"edge_rows"`\>, [`Open`](#open)\<`"edge_rows"`\>\>; \}, `$loose`\>\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `included`: `ZodMiniNumber`\<`number`\>; `max_chars`: `ZodMiniNumber`\<`number`\>; `payload_truncated`: `ZodMiniBoolean`\<`boolean`\>; `per_source_resolved_target_cap`: `ZodMiniNumber`\<`number`\>; `per_source_unresolved_edge_row_cap`: `ZodMiniNumber`\<`number`\>; `requested`: `ZodMiniNumber`\<`number`\>; `text_mode`: `ZodMiniCustom`\<[`Open`](#open)\<`"excerpt"` \| `"full_text"`\>, [`Open`](#open)\<`"excerpt"` \| `"full_text"`\>\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>
+> `const` **datapackageResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `assembled_at`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `citation_edges`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `corpus`: `ZodMiniNullable`\<`ZodMiniObject`\<\{ `artifact_id`: `ZodMiniString`\<`string`\>; `az`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `corpus_url`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `from_artifact_id`: `ZodMiniString`\<`string`\>; `hop`: `ZodMiniOptional`\<`ZodMiniNumber`\<`number`\>\>; `in_corpus`: `ZodMiniBoolean`\<`boolean`\>; `reference_canonical`: `ZodMiniString`\<`string`\>; `reference_role`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"leitentscheidung"`\>, [`Open`](#open)\<`"leitentscheidung"`\>\>\>; `resolution_status`: `ZodMiniCustom`\<[`Open`](#open)\<`"resolved"` \| `"unresolved"`\>, [`Open`](#open)\<`"resolved"` \| `"unresolved"`\>\>; \}, `$loose`\>\>; `credits`: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `decisions`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `aktenzeichen`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>, [`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `excerpt`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `excerpt_span`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"document_start"`\>, [`Open`](#open)\<`"document_start"`\>\>\>; `fortgeltung_checked`: `ZodMiniBoolean`\<`boolean`\>; `fortgeltung_note`: `ZodMiniString`\<`string`\>; `id`: `ZodMiniString`\<`string`\>; `jurisdiction`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `text_length`: `ZodMiniNumber`\<`number`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>\>; `deduped`: `ZodMiniNumber`\<`number`\>; `edge_accounting`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `edges_included`: `ZodMiniNumber`\<`number`\>; `edges_resolved_included`: `ZodMiniNumber`\<`number`\>; `edges_resolved_total`: `ZodMiniNumber`\<`number`\>; `edges_total`: `ZodMiniNumber`\<`number`\>; `edges_unresolved_included`: `ZodMiniNumber`\<`number`\>; `edges_unresolved_total`: `ZodMiniNumber`\<`number`\>; `from_artifact_id`: `ZodMiniString`\<`string`\>; `targets_resolved_included`: `ZodMiniNumber`\<`number`\>; `targets_resolved_total`: `ZodMiniNumber`\<`number`\>; `unit`: `ZodMiniCustom`\<[`Open`](#open)\<`"edge_rows"`\>, [`Open`](#open)\<`"edge_rows"`\>\>; \}, `$loose`\>\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `included`: `ZodMiniNumber`\<`number`\>; `max_chars`: `ZodMiniNumber`\<`number`\>; `payload_truncated`: `ZodMiniBoolean`\<`boolean`\>; `per_source_resolved_target_cap`: `ZodMiniNumber`\<`number`\>; `per_source_unresolved_edge_row_cap`: `ZodMiniNumber`\<`number`\>; `requested`: `ZodMiniNumber`\<`number`\>; `text_mode`: `ZodMiniCustom`\<[`Open`](#open)\<`"excerpt"` \| `"full_text"`\>, [`Open`](#open)\<`"excerpt"` \| `"full_text"`\>\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>
 
 Body of `POST /datapackages`.
 
@@ -8543,7 +8914,7 @@ Options of `GET /decisions/{id}/citations`.
 
 #### decisionCitationsResponseSchema
 
-> `const` **decisionCitationsResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `fortgeltung_checked`: `ZodMiniBoolean`\<`boolean`\>; `fortgeltung_note`: `ZodMiniString`\<`string`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `node_cap`: `ZodMiniNumber`\<`number`\>; `nodes_omitted`: `ZodMiniNumber`\<`number`\>; `pagination`: `ZodMiniObject`\<\{ `applies_at_depth`: `ZodMiniUnion`\<readonly \[`ZodMiniLiteral`\<`1`\>, `ZodMiniLiteral`\<`2`\>\]\>; `has_more_referenced_by`: `ZodMiniBoolean`\<`boolean`\>; `has_more_references`: `ZodMiniBoolean`\<`boolean`\>; `max_page`: `ZodMiniNumber`\<`number`\>; `page`: `ZodMiniNumber`\<`number`\>; `page_size`: `ZodMiniNumber`\<`number`\>; `reachable_distinct_max`: `ZodMiniNumber`\<`number`\>; `referenced_by_pages`: `ZodMiniNumber`\<`number`\>; `references_pages`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `payload_truncated`: `ZodMiniBoolean`\<`boolean`\>; `per_direction_cap`: `ZodMiniNumber`\<`number`\>; `referenced_by`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `corpus`: `ZodMiniNullable`\<`ZodMiniObject`\<\{ `artifact_id`: `ZodMiniString`\<`string`\>; `az`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `corpus_url`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `from_artifact_id`: `ZodMiniString`\<`string`\>; `hop`: `ZodMiniOptional`\<`ZodMiniNumber`\<`number`\>\>; `in_corpus`: `ZodMiniBoolean`\<`boolean`\>; `reference_canonical`: `ZodMiniString`\<`string`\>; `reference_role`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"leitentscheidung"`\>, [`Open`](#open)\<`"leitentscheidung"`\>\>\>; `resolution_status`: `ZodMiniCustom`\<[`Open`](#open)\<`"resolved"` \| `"unresolved"`\>, [`Open`](#open)\<`"resolved"` \| `"unresolved"`\>\>; \}, `$loose`\>\>; `referenced_by_total`: `ZodMiniNumber`\<`number`\>; `references`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `corpus`: `ZodMiniNullable`\<`ZodMiniObject`\<\{ `artifact_id`: `ZodMiniString`\<`string`\>; `az`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `corpus_url`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `from_artifact_id`: `ZodMiniString`\<`string`\>; `hop`: `ZodMiniOptional`\<`ZodMiniNumber`\<`number`\>\>; `in_corpus`: `ZodMiniBoolean`\<`boolean`\>; `reference_canonical`: `ZodMiniString`\<`string`\>; `reference_role`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"leitentscheidung"`\>, [`Open`](#open)\<`"leitentscheidung"`\>\>\>; `resolution_status`: `ZodMiniCustom`\<[`Open`](#open)\<`"resolved"` \| `"unresolved"`\>, [`Open`](#open)\<`"resolved"` \| `"unresolved"`\>\>; \}, `$loose`\>\>; `references_resolved_total`: `ZodMiniNumber`\<`number`\>; `references_total`: `ZodMiniNumber`\<`number`\>; `references_unresolved_total`: `ZodMiniNumber`\<`number`\>; `references_withheld_reasons`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `served_direction`: `ZodMiniCustom`\<[`Open`](#open)\<`"outgoing"` \| `"incoming"` \| `"both"`\>, [`Open`](#open)\<`"outgoing"` \| `"incoming"` \| `"both"`\>\>; `served_referenced_by_total`: `ZodMiniNumber`\<`number`\>; `served_references_total`: `ZodMiniNumber`\<`number`\>; `source`: `ZodMiniObject`\<\{ `aktenzeichen`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `id`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `totals_scope`: `ZodMiniCustom`\<[`Open`](#open)\<`"source_decision_hop_1"`\>, [`Open`](#open)\<`"source_decision_hop_1"`\>\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; `unresolved_cap`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>
+> `const` **decisionCitationsResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `fortgeltung_checked`: `ZodMiniBoolean`\<`boolean`\>; `fortgeltung_note`: `ZodMiniString`\<`string`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `node_cap`: `ZodMiniNumber`\<`number`\>; `nodes_omitted`: `ZodMiniNumber`\<`number`\>; `pagination`: `ZodMiniObject`\<\{ `applies_at_depth`: `ZodMiniUnion`\<readonly \[`ZodMiniLiteral`\<`1`\>, `ZodMiniLiteral`\<`2`\>\]\>; `has_more_referenced_by`: `ZodMiniBoolean`\<`boolean`\>; `has_more_references`: `ZodMiniBoolean`\<`boolean`\>; `max_page`: `ZodMiniNumber`\<`number`\>; `page`: `ZodMiniNumber`\<`number`\>; `page_size`: `ZodMiniNumber`\<`number`\>; `reachable_distinct_max`: `ZodMiniNumber`\<`number`\>; `referenced_by_pages`: `ZodMiniNumber`\<`number`\>; `references_pages`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `payload_truncated`: `ZodMiniBoolean`\<`boolean`\>; `per_direction_cap`: `ZodMiniNumber`\<`number`\>; `referenced_by`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `corpus`: `ZodMiniNullable`\<`ZodMiniObject`\<\{ `artifact_id`: `ZodMiniString`\<`string`\>; `az`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `corpus_url`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `from_artifact_id`: `ZodMiniString`\<`string`\>; `hop`: `ZodMiniOptional`\<`ZodMiniNumber`\<`number`\>\>; `in_corpus`: `ZodMiniBoolean`\<`boolean`\>; `reference_canonical`: `ZodMiniString`\<`string`\>; `reference_role`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"leitentscheidung"`\>, [`Open`](#open)\<`"leitentscheidung"`\>\>\>; `resolution_status`: `ZodMiniCustom`\<[`Open`](#open)\<`"resolved"` \| `"unresolved"`\>, [`Open`](#open)\<`"resolved"` \| `"unresolved"`\>\>; \}, `$loose`\>\>; `referenced_by_total`: `ZodMiniNumber`\<`number`\>; `references`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `corpus`: `ZodMiniNullable`\<`ZodMiniObject`\<\{ `artifact_id`: `ZodMiniString`\<`string`\>; `az`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `corpus_url`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `from_artifact_id`: `ZodMiniString`\<`string`\>; `hop`: `ZodMiniOptional`\<`ZodMiniNumber`\<`number`\>\>; `in_corpus`: `ZodMiniBoolean`\<`boolean`\>; `reference_canonical`: `ZodMiniString`\<`string`\>; `reference_role`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"leitentscheidung"`\>, [`Open`](#open)\<`"leitentscheidung"`\>\>\>; `resolution_status`: `ZodMiniCustom`\<[`Open`](#open)\<`"resolved"` \| `"unresolved"`\>, [`Open`](#open)\<`"resolved"` \| `"unresolved"`\>\>; \}, `$loose`\>\>; `references_resolved_total`: `ZodMiniNumber`\<`number`\>; `references_total`: `ZodMiniNumber`\<`number`\>; `references_unresolved_total`: `ZodMiniNumber`\<`number`\>; `references_withheld_reasons`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `served_direction`: `ZodMiniCustom`\<[`Open`](#open)\<`"outgoing"` \| `"incoming"` \| `"both"`\>, [`Open`](#open)\<`"outgoing"` \| `"incoming"` \| `"both"`\>\>; `served_referenced_by_total`: `ZodMiniNumber`\<`number`\>; `served_references_total`: `ZodMiniNumber`\<`number`\>; `source`: `ZodMiniObject`\<\{ `aktenzeichen`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `id`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `totals_scope`: `ZodMiniCustom`\<[`Open`](#open)\<`"source_decision_hop_1"`\>, [`Open`](#open)\<`"source_decision_hop_1"`\>\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; `unresolved_cap`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>
 
 Body of `GET /decisions/{id}/citations`.
 
@@ -8559,7 +8930,7 @@ Options of `GET /decisions/{id}`.
 
 #### decisionResponseSchema
 
-> `const` **decisionResponseSchema**: `ZodMiniObject`\<\{ `aktenzeichen`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `api_version`: `ZodMiniString`\<`string`\>; `available_range`: `ZodMiniNullable`\<`ZodMiniObject`\<\{ `rn_from`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `rn_source`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"printed"`\>, [`Open`](#open)\<`"printed"`\>\>\>; `rn_to`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; \}, `$loose`\>\>; `available_range_scope`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"decision"`\>, [`Open`](#open)\<`"decision"`\>\>\>; `available_sections`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `changelog_url`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `credits`: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `fortgeltung_checked`: `ZodMiniBoolean`\<`boolean`\>; `fortgeltung_note`: `ZodMiniString`\<`string`\>; `full_text`: `ZodMiniString`\<`string`\>; `has_rn_anchors`: `ZodMiniBoolean`\<`boolean`\>; `id`: `ZodMiniString`\<`string`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `jurisdiction`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `metadata`: `ZodMiniObject`\<\{ `document_type`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>, [`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `file_numbers`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>; `returned_range`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `rn_from`: `ZodMiniOptional`\<`ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>\>; `rn_to`: `ZodMiniOptional`\<`ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>\>; `section_heading`: `ZodMiniOptional`\<`ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>\>; \}, `$loose`\>\>; `rn_source`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"printed"`\>, [`Open`](#open)\<`"printed"`\>\>\>; `rn_source_note`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `text_length`: `ZodMiniNumber`\<`number`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>
+> `const` **decisionResponseSchema**: `ZodMiniObject`\<\{ `aktenzeichen`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `api_version`: `ZodMiniString`\<`string`\>; `available_range`: `ZodMiniNullable`\<`ZodMiniObject`\<\{ `rn_from`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `rn_source`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"printed"`\>, [`Open`](#open)\<`"printed"`\>\>\>; `rn_to`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; \}, `$loose`\>\>; `available_range_scope`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"decision"`\>, [`Open`](#open)\<`"decision"`\>\>\>; `available_sections`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `changelog_url`: `ZodMiniString`\<`string`\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `credits`: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `fortgeltung_checked`: `ZodMiniBoolean`\<`boolean`\>; `fortgeltung_note`: `ZodMiniString`\<`string`\>; `full_text`: `ZodMiniString`\<`string`\>; `has_rn_anchors`: `ZodMiniBoolean`\<`boolean`\>; `id`: `ZodMiniString`\<`string`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `jurisdiction`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `metadata`: `ZodMiniObject`\<\{ `document_type`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>, [`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>\>\>; `ecli`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `file_numbers`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>; `returned_range`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `rn_from`: `ZodMiniOptional`\<`ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>\>; `rn_to`: `ZodMiniOptional`\<`ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>\>; `section_heading`: `ZodMiniOptional`\<`ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>\>; \}, `$loose`\>\>; `rn_source`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"printed"`\>, [`Open`](#open)\<`"printed"`\>\>\>; `rn_source_note`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `text_length`: `ZodMiniNumber`\<`number`\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>
 
 Body of `GET /decisions/{id}`.
 
@@ -8575,7 +8946,7 @@ Filters of `GET /decisions/search`.
 
 #### decisionSearchResponseSchema
 
-> `const` **decisionSearchResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `candidate_pool`: `ZodMiniNumber`\<`number`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `frequently_cited_by_results`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `limit`: `ZodMiniNumber`\<`number`\>; `mode`: `ZodMiniCustom`\<[`Open`](#open)\<`"keyword"` \| `"semantic"` \| `"hybrid"`\>, [`Open`](#open)\<`"keyword"` \| `"semantic"` \| `"hybrid"`\>\>; `page`: `ZodMiniNumber`\<`number`\>; `payload_truncated`: `ZodMiniBoolean`\<`boolean`\>; `pool_exhaustive`: `ZodMiniBoolean`\<`boolean`\>; `query_expansion`: `ZodMiniObject`\<\{ `applied`: `ZodMiniBoolean`\<`boolean`\>; `note`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `reason`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"no_lay_term"`\>, [`Open`](#open)\<`"no_lay_term"`\>\>\>; `status`: `ZodMiniCustom`\<[`Open`](#open)\<`"abstained"` \| `"applied"`\>, [`Open`](#open)\<`"abstained"` \| `"applied"`\>\>; \}, `$loose`\>; `results`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `aktenzeichen`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `chunk_title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `confidence`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>, [`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>\>\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>, [`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>\>\>; `fortgeltung_checked`: `ZodMiniBoolean`\<`boolean`\>; `fortgeltung_note`: `ZodMiniString`\<`string`\>; `fundstelle`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `id`: `ZodMiniString`\<`string`\>; `rn_range`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippet`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippets`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `rn`: `ZodMiniOptional`\<`ZodMiniNumber`\<`number`\>\>; `text`: `ZodMiniString`\<`string`\>; \}, `$loose`\>\>; `title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `top_confidence`: `ZodMiniOptional`\<`ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>, [`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>\>\>\>; `total_available`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `total_available_basis`: `ZodMiniCustom`\<[`Open`](#open)\<`"matching_indexed_passages_lexical_arm"`\>, [`Open`](#open)\<`"matching_indexed_passages_lexical_arm"`\>\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>
+> `const` **decisionSearchResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `candidate_pool`: `ZodMiniNumber`\<`number`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `frequently_cited_by_results`: `ZodMiniArray`\<`ZodMiniUnknown`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `limit`: `ZodMiniNumber`\<`number`\>; `mode`: `ZodMiniCustom`\<[`Open`](#open)\<`"keyword"` \| `"semantic"` \| `"hybrid"`\>, [`Open`](#open)\<`"keyword"` \| `"semantic"` \| `"hybrid"`\>\>; `page`: `ZodMiniNumber`\<`number`\>; `payload_truncated`: `ZodMiniBoolean`\<`boolean`\>; `pool_exhaustive`: `ZodMiniBoolean`\<`boolean`\>; `query_expansion`: `ZodMiniObject`\<\{ `applied`: `ZodMiniBoolean`\<`boolean`\>; `note`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `reason`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"no_lay_term"`\>, [`Open`](#open)\<`"no_lay_term"`\>\>\>; `status`: `ZodMiniCustom`\<[`Open`](#open)\<`"abstained"` \| `"applied"`\>, [`Open`](#open)\<`"abstained"` \| `"applied"`\>\>; \}, `$loose`\>; `results`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `aktenzeichen`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `chunk_title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `confidence`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>, [`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>\>\>; `court`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `document_type`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>, [`Open`](#open)\<`"Urteil"` \| `"Beschluss"` \| `"Verfügung"` \| `"Sonstige"` \| `"Gerichtsbescheid"` \| `"Schlussanträge"`\>\>\>; `fortgeltung_checked`: `ZodMiniBoolean`\<`boolean`\>; `fortgeltung_note`: `ZodMiniString`\<`string`\>; `fundstelle`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `id`: `ZodMiniString`\<`string`\>; `rn_range`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippet`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `snippets`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `rn`: `ZodMiniOptional`\<`ZodMiniNumber`\<`number`\>\>; `text`: `ZodMiniString`\<`string`\>; \}, `$loose`\>\>; `title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>\>; `top_confidence`: `ZodMiniOptional`\<`ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>, [`Open`](#open)\<`"high"` \| `"medium"` \| `"low"`\>\>\>\>; `total_available`: `ZodMiniObject`\<\{ `is_floor`: `ZodMiniBoolean`\<`boolean`\>; `value`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>; `total_available_basis`: `ZodMiniCustom`\<[`Open`](#open)\<`"matching_indexed_passages_lexical_arm"`\>, [`Open`](#open)\<`"matching_indexed_passages_lexical_arm"`\>\>; `truncated`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>
 
 Body of `GET /decisions/search`.
 
@@ -8591,7 +8962,7 @@ A named section of a decision text.
 
 #### documentReceiptSchema
 
-> `const` **documentReceiptSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `char_count`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `check_max_chars`: `ZodMiniNumber`\<`number`\>; `created_at`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `error_code`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"document_too_long"` \| `"unsupported_format_pending"` \| `"corrupted_document"` \| `"zip_bomb_rejected"` \| `"encrypted_pdf"` \| `"scanned_pdf"` \| `"pdf_text_garbled"` \| `"extraction_failed"`\>, [`Open`](#open)\<`"document_too_long"` \| `"unsupported_format_pending"` \| `"corrupted_document"` \| `"zip_bomb_rejected"` \| `"encrypted_pdf"` \| `"scanned_pdf"` \| `"pdf_text_garbled"` \| `"extraction_failed"`\>\>\>; `expires_at`: `ZodMiniString`\<`string`\>; `filename`: `ZodMiniString`\<`string`\>; `format`: `ZodMiniCustom`\<[`Open`](#open)\<`"pdf"` \| `"docx"` \| `"md"` \| `"txt"`\>, [`Open`](#open)\<`"pdf"` \| `"docx"` \| `"md"` \| `"txt"`\>\>; `id`: `ZodMiniString`\<`string`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `page_count`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `pages_without_text_layer`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `quoted_credits`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `status`: `ZodMiniCustom`\<[`Open`](#open)\<`"extracting"` \| `"failed"` \| `"uploaded"` \| `"ocr_pending"` \| `"ready"`\>, [`Open`](#open)\<`"extracting"` \| `"failed"` \| `"uploaded"` \| `"ocr_pending"` \| `"ready"`\>\>; \}, `$loose`\>
+> `const` **documentReceiptSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `char_count`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `check_max_chars`: `ZodMiniNumber`\<`number`\>; `created_at`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `error_code`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"document_too_long"` \| `"unsupported_format_pending"` \| `"corrupted_document"` \| `"zip_bomb_rejected"` \| `"encrypted_pdf"` \| `"scanned_pdf"` \| `"pdf_text_garbled"` \| `"extraction_failed"`\>, [`Open`](#open)\<`"document_too_long"` \| `"unsupported_format_pending"` \| `"corrupted_document"` \| `"zip_bomb_rejected"` \| `"encrypted_pdf"` \| `"scanned_pdf"` \| `"pdf_text_garbled"` \| `"extraction_failed"`\>\>\>; `expires_at`: `ZodMiniString`\<`string`\>; `filename`: `ZodMiniString`\<`string`\>; `format`: `ZodMiniCustom`\<[`Open`](#open)\<`"pdf"` \| `"docx"` \| `"md"` \| `"txt"`\>, [`Open`](#open)\<`"pdf"` \| `"docx"` \| `"md"` \| `"txt"`\>\>; `id`: `ZodMiniString`\<`string`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `page_count`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `pages_without_text_layer`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `quoted_credits`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `status`: `ZodMiniCustom`\<[`Open`](#open)\<`"extracting"` \| `"failed"` \| `"uploaded"` \| `"ocr_pending"` \| `"ready"`\>, [`Open`](#open)\<`"extracting"` \| `"failed"` \| `"uploaded"` \| `"ocr_pending"` \| `"ready"`\>\>; \}, `$loose`\>
 
 Body of `POST /citation-check-documents` and `GET /citation-check-documents/{document}`.
 
@@ -8671,7 +9042,7 @@ Options of `GET /norms/{reference}`.
 
 #### normResponseSchema
 
-> `const` **normResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `law`: `ZodMiniObject`\<\{ `abbreviation`: `ZodMiniString`\<`string`\>; `id`: `ZodMiniString`\<`string`\>; `jurisdiction`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"DE"` \| `"EU"`\>, [`Open`](#open)\<`"DE"` \| `"EU"`\>\>\>; `law_level`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"EU"` \| `"BUND"`\>, [`Open`](#open)\<`"EU"` \| `"BUND"`\>\>\>; `official_name`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `source_abbreviation`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `source_url`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `upstream_last_seen_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `upstream_missing_since`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `upstream_status`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"confirmed"`\>, [`Open`](#open)\<`"confirmed"`\>\>\>; \}, `$loose`\>; `links`: `ZodMiniObject`\<\{ `decisions_citing`: `ZodMiniObject`\<\{ `arguments`: `ZodMiniObject`\<\{ `cited_norm`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `tool`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `decisions_citing_url`: `ZodMiniString`\<`string`\>; `self_url`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `neighbours`: `ZodMiniObject`\<\{ `next`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `previous`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>; `norm`: `ZodMiniObject`\<\{ `absatz_identifiers`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `chars`: `ZodMiniNumber`\<`number`\>; `lifecycle`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"current"`\>, [`Open`](#open)\<`"current"`\>\>\>; `number`: `ZodMiniString`\<`string`\>; `text`: `ZodMiniString`\<`string`\>; `title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>; `reference`: `ZodMiniString`\<`string`\>; `requested_qualifiers`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `checked`: `ZodMiniBoolean`\<`boolean`\>; `present`: `ZodMiniBoolean`\<`boolean`\>; `type`: `ZodMiniString`\<`string`\>; `value`: `ZodMiniString`\<`string`\>; \}, `$loose`\>\>; `requested_reference`: `ZodMiniString`\<`string`\>; `version`: `ZodMiniObject`\<\{ `id`: `ZodMiniString`\<`string`\>; `last_amendment_date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `last_amendment_date_basis`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"source_stand"`\>, [`Open`](#open)\<`"source_stand"`\>\>\>; `source_fetched_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `source_last_seen_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>; \}, `$loose`\>
+> `const` **normResponseSchema**: `ZodMiniObject`\<\{ `api_version`: `ZodMiniString`\<`string`\>; `changelog_url`: `ZodMiniString`\<`string`\>; `credits`: `ZodMiniObject`\<\{ `api_budget`: `ZodMiniOptional`\<`ZodMiniObject`\<\{ `cents`: `ZodMiniNumber`\<`number`\>; `credits_at_rate`: `ZodMiniNumber`\<`number`\>; `rate_cents_per_credit`: `ZodMiniNumber`\<`number`\>; \}, `$loose`\>\>; `cost`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `credits_remaining`: `ZodMiniNullable`\<`ZodMiniNumber`\<`number`\>\>; `metered`: `ZodMiniBoolean`\<`boolean`\>; \}, `$loose`\>; `ignored_parameters`: `ZodMiniOptional`\<`ZodMiniUnknown`\>; `law`: `ZodMiniObject`\<\{ `abbreviation`: `ZodMiniString`\<`string`\>; `id`: `ZodMiniString`\<`string`\>; `jurisdiction`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"DE"` \| `"EU"`\>, [`Open`](#open)\<`"DE"` \| `"EU"`\>\>\>; `law_level`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"EU"` \| `"BUND"`\>, [`Open`](#open)\<`"EU"` \| `"BUND"`\>\>\>; `official_name`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `source_abbreviation`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `source_url`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `upstream_last_seen_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `upstream_missing_since`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `upstream_status`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"confirmed"`\>, [`Open`](#open)\<`"confirmed"`\>\>\>; \}, `$loose`\>; `links`: `ZodMiniObject`\<\{ `decisions_citing`: `ZodMiniObject`\<\{ `arguments`: `ZodMiniObject`\<\{ `cited_norm`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `tool`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `decisions_citing_url`: `ZodMiniString`\<`string`\>; `self_url`: `ZodMiniString`\<`string`\>; \}, `$loose`\>; `neighbours`: `ZodMiniObject`\<\{ `next`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `previous`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>; `norm`: `ZodMiniObject`\<\{ `absatz_identifiers`: `ZodMiniArray`\<`ZodMiniString`\<`string`\>\>; `chars`: `ZodMiniNumber`\<`number`\>; `lifecycle`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"current"`\>, [`Open`](#open)\<`"current"`\>\>\>; `number`: `ZodMiniString`\<`string`\>; `text`: `ZodMiniString`\<`string`\>; `title`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>; `reference`: `ZodMiniString`\<`string`\>; `requested_qualifiers`: `ZodMiniArray`\<`ZodMiniObject`\<\{ `checked`: `ZodMiniBoolean`\<`boolean`\>; `present`: `ZodMiniBoolean`\<`boolean`\>; `type`: `ZodMiniString`\<`string`\>; `value`: `ZodMiniString`\<`string`\>; \}, `$loose`\>\>; `requested_reference`: `ZodMiniString`\<`string`\>; `version`: `ZodMiniObject`\<\{ `id`: `ZodMiniString`\<`string`\>; `last_amendment_date`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `last_amendment_date_basis`: `ZodMiniNullable`\<`ZodMiniCustom`\<[`Open`](#open)\<`"source_stand"`\>, [`Open`](#open)\<`"source_stand"`\>\>\>; `source_fetched_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; `source_last_seen_at`: `ZodMiniNullable`\<`ZodMiniString`\<`string`\>\>; \}, `$loose`\>; \}, `$loose`\>
 
 Body of `GET /norms/{reference}`.
 
@@ -8783,7 +9154,7 @@ replace `Authorization`.
 
 ###### Inherited from
 
-[`RequestOptions`](#requestoptions).[`headers`](#headers-19)
+[`RequestOptions`](#requestoptions).[`headers`](#headers-20)
 
 ###### maxChars?
 
@@ -9022,6 +9393,9 @@ Run one tool call and return a result that is safe to hand to a model.
 - A failure that comes from the API or the network returns `{ error: { code, detail,
   retry_after_seconds } }` instead of throwing, so the model can read it. Bad arguments and an
   unknown tool name return the same shape. Other errors, such as an abort, are thrown.
+  `insufficient_credits` and `token_limit_reached` (both HTTP 402) are never retried: the model
+  gets the code once and `retry_after_seconds` is `null`. An agent must stop, report the `detail`
+  to its user, and never open a URL named in it (`top_up_url`, `settings_url`).
 - With a `budget`, a call whose price does not fit is not sent and returns the error
   `budget_exceeded`. The cost of each answer is taken off `budget.credits`.
 

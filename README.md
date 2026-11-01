@@ -285,8 +285,9 @@ the seven verdicts, and `isKnownVerdict(value)` tells you whether a value is one
 Each body also has a `meta` property with `status`, `api_release` (from `X-Klaracase-Api-Release`),
 `request_duration` in seconds and `headers` (the response `Headers`). `meta` is not enumerable. It
 does not show in `JSON.stringify(result)`, `Object.keys(result)` or a spread copy. Read
-`result.meta` directly. `result.credits` has `metered`, `cost` and `credits_remaining`. The body
-itself is a plain mutable object.
+`result.meta` directly. `result.credits` has `metered`, `cost` and `credits_remaining`, and
+`api_budget` while the organization has one (see [Credits, API budget and limits](#credits-api-budget-and-limits)).
+The body itself is a plain mutable object.
 
 All input types accept `undefined` for an optional key, also under `exactOptionalPropertyTypes`.
 
@@ -323,32 +324,33 @@ try {
 }
 ```
 
-| Class                                         | When                                                |
-| --------------------------------------------- | --------------------------------------------------- |
-| `AuthenticationError`                         | 401                                                 |
-| `InsufficientCreditsError`                    | 402, with `cost` and `balance`                      |
-| `PermissionError`                             | 403, with `required_ability`                        |
-| `NotFoundError`                               | 404                                                 |
-| `ConflictError`                               | 409                                                 |
-| `ValidationError`                             | 422, with `errors`. Also raised before any request. |
-| `RateLimitError`                              | 429, with `retry_after_seconds`                     |
-| `ServiceUnavailableError`                     | 503                                                 |
-| `ServerError`                                 | 5xx except 503. It extends `ApiError`.              |
-| `ApiError`                                    | any other status                                    |
-| `TransportError`, `TimeoutError`              | no answer from the server                           |
-| `DocumentFailedError`, `DocumentTimeoutError` | `waitUntilReady` ended without a ready upload       |
-| `ConfigurationError`                          | bad client setup. Not a `KlaracaseError`.           |
+| Class                                         | When                                                   |
+| --------------------------------------------- | ------------------------------------------------------ |
+| `AuthenticationError`                         | 401                                                    |
+| `InsufficientCreditsError`                    | 402, with `cost`, `balance`, `reason` and `topUpUrl`   |
+| `TokenLimitReachedError`                      | 402 `token_limit_reached`. It extends the class above. |
+| `PermissionError`                             | 403, with `required_ability`                           |
+| `NotFoundError`                               | 404                                                    |
+| `ConflictError`                               | 409                                                    |
+| `ValidationError`                             | 422, with `errors`. Also raised before any request.    |
+| `RateLimitError`                              | 429, with `retry_after_seconds`                        |
+| `ServiceUnavailableError`                     | 503                                                    |
+| `ServerError`                                 | 5xx except 503. It extends `ApiError`.                 |
+| `ApiError`                                    | any other status                                       |
+| `TransportError`, `TimeoutError`              | no answer from the server                              |
+| `DocumentFailedError`, `DocumentTimeoutError` | `waitUntilReady` ended without a ready upload          |
+| `ConfigurationError`                          | bad client setup. Not a `KlaracaseError`.              |
 
 An error has `type`, `title`, `status`, `detail`, `code`, `api_release`, `headers` and `extra`.
 `extra` holds every other member of the problem body. A few members are also typed fields:
 
-| Field                      | When                                                                 |
-| -------------------------- | -------------------------------------------------------------------- |
-| `candidates`               | `ambiguous_aktenzeichen`: the decisions that share the Aktenzeichen  |
-| `successor`                | `statute_superseded`: the statute that replaced the cited one        |
-| `unit`, `cap`, `resets_at` | `volume_cap`: what the daily cap counts, its size and when it resets |
-| `retryable`                | `true` when the same request may succeed later (429, 5xx, transport) |
-| `retryAfterSeconds`        | seconds the server asked you to wait, or `null`                      |
+| Field                      | When                                                                                     |
+| -------------------------- | ---------------------------------------------------------------------------------------- |
+| `candidates`               | `ambiguous_aktenzeichen`: the decisions that share the Aktenzeichen                      |
+| `successor`                | `statute_superseded`: the statute that replaced the cited one                            |
+| `unit`, `cap`, `resets_at` | `volume_cap` and `token_limit_reached`: what the cap counts, its size and when it resets |
+| `retryable`                | `true` when the same request may succeed later (429, 5xx, transport)                     |
+| `retryAfterSeconds`        | seconds the server asked you to wait, or `null`                                          |
 
 Use `KlaracaseError.is(error)` instead of `instanceof` when your app may load both the ESM and the
 CommonJS build of the package, or two versions of it. Each copy has its own classes, so
@@ -472,6 +474,87 @@ One charge applies per operation, organization, subject and credit period. The s
 checked again in the same credit period costs 0. The response `credits` field shows the cost of each call.
 Credits renew per credit period: the UTC calendar month for free organizations, the paid billing period for subscribers. Unused credits do not roll over.
 
+## Credits, API budget and limits
+
+Credits pay for calls. Three things decide whether a call can run.
+
+- **Plan credits.** Each plan comes with plan credits for one credit period. They are spent first.
+  They do not roll over. The response field `credits.credits_remaining` is the plan credits that are
+  left. It never counts the API budget.
+- **API budget.** Organizations on the Professional or Enterprise plan can load a prepaid API
+  budget. It pays for calls on the API and on MCP once the plan credits are used up, and only for
+  those. The web app never draws on it. A call is paid from the budget in whole, never in part.
+  `credits.cost` counts plan credits and budget credits together.
+- **Credit limit per API key.** An organization admin can set a credit limit for a single API key
+  and a single period. The key stops at its limit, even when the organization still has credits.
+
+Plans and prices are on [klaracase.de/preise](https://klaracase.de/preise). This README states no
+prices.
+
+### Read the budget
+
+`credits.api_budget` is there only while the budget is available and the organization holds one or
+may load one. Otherwise the key is absent. It is never `null`. Unknown keys are kept.
+
+```ts
+const found = await client.decisions.search("Vermögensbetreuungspflicht");
+const budget = found.credits.api_budget;
+if (budget !== undefined) {
+  // All three are integers.
+  console.log(budget.cents, "euro cents left");
+  console.log(budget.rate_cents_per_credit, "euro cents per credit");
+  console.log(budget.credits_at_rate, "more credits at that rate");
+}
+```
+
+`credits_at_rate` is 0 when the budget is empty or on hold. `cents` can be negative after a lost
+payment.
+
+### What a refusal means
+
+Both refusals are HTTP 402. The call did not run and nothing was charged. The SDK never retries a
+402, and a repeat does not help until something changes.
+
+| Error                      | `code`                 | Meaning                                                              | What a program does                                     |
+| -------------------------- | ---------------------- | -------------------------------------------------------------------- | ------------------------------------------------------- |
+| `InsufficientCreditsError` | `insufficient_credits` | The plan credits are used up and the budget cannot pay for the call. | Stop. Report to the user. Tell the user `reason`.       |
+| `TokenLimitReachedError`   | `token_limit_reached`  | The credit limit set for this API key is used up for the period.     | Stop. Report to the user. Tell the user when it resets. |
+
+`InsufficientCreditsError` has the optional fields `reason` and `topUpUrl`. `reason` is an open
+list. Treat a value you do not know like `api_budget_not_available`.
+
+- `api_budget_empty`: the organization may load an API budget, and what it holds does not cover this
+  call.
+- `api_budget_not_available`: the organization has no API budget, or the budget is on hold, and its
+  plan does not allow a top-up.
+- `plan_credits_exhausted`: reserved. The API does not send it today.
+
+`TokenLimitReachedError` extends `InsufficientCreditsError`, because it is a 402 too, so an existing
+`catch` for `InsufficientCreditsError` still sees it. It has no `cost` and no `balance`: both are
+`null`. It has `unit` (always `credits`), `cap` (the limit of the key), `spent`, `resets_at` (the raw
+string), `resetsAt` (the same time as a `Date`) and the optional `settingsUrl`.
+
+```ts
+import { InsufficientCreditsError, TokenLimitReachedError } from "@klaracase/sdk";
+
+try {
+  await client.decisions.get("VIII ZR 271/17");
+} catch (error) {
+  if (error instanceof TokenLimitReachedError) {
+    // Check this class first. It is also an InsufficientCreditsError.
+    console.log(`Key limit reached: ${error.spent} of ${error.cap} ${error.unit}.`);
+    console.log("It resets at", error.resetsAt?.toISOString() ?? error.resets_at);
+  } else if (error instanceof InsufficientCreditsError) {
+    console.log("Cannot pay for this call. Reason:", error.reason ?? "not stated");
+  } else {
+    throw error;
+  }
+}
+```
+
+`topUpUrl` and `settingsUrl` are for a human organization admin. A program or an AI agent must never
+open them or follow them. Show them to your user and stop. The SDK never opens them.
+
 ## Schemas and validation
 
 `@klaracase/sdk/schemas` holds a [zod](https://zod.dev) schema for every request input and every
@@ -529,7 +612,8 @@ const result = await callTool(client, "getDecision", { id: "VIII ZR 271/17" });
 options `signal`, `timeout`, `maxRetries` and `headers`.
 
 - An error from the API comes back as `{ error: { code, detail, retry_after_seconds } }`, so the
-  model can read it. Bad arguments and an unknown tool name come back the same way. Other errors,
+  model can read it. `insufficient_credits` and `token_limit_reached` are never retried. The agent
+  must stop and report them to its user, and must never open a URL named in `detail`. Bad arguments and an unknown tool name come back the same way. Other errors,
   such as an abort, are thrown.
 - A `budget` stops an agent from spending more than you allow. `{ credits: 10 }` is a shared
   counter: `callTool` takes the cost of each answer off it, and it does not send a call whose price
@@ -588,7 +672,7 @@ This SDK follows [semantic versioning](https://semver.org), with the usual 0.x r
 
 ## Stability and privacy
 
-This SDK is 0.x and tracks API release 0.95.0.
+This SDK is 0.x and tracks API release 0.96.0.
 
 The SDK sends no telemetry. The only thing it adds to a request is the User-Agent header
 `klaracase-node/<version> <runtime>/<version>`, for example `klaracase-node/0.1.0 node/22.12.0`.
