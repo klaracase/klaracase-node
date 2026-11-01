@@ -7,11 +7,16 @@
     "german law",
     "legal research",
     "citation check",
-    "api client"
+    "api client",
+    "german case law",
+    "rechtsprechung",
+    "gesetze",
+    "statutes",
+    "mcp"
   ],
   "license": "MIT",
   "author": "SPARQ VENTURES UG",
-  "homepage": "https://klaracase.de",
+  "homepage": "https://klaracase.de/developers?ref=npm",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/klaracase/klaracase-node.git",
