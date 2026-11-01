@@ -40,9 +40,9 @@ export interface DocumentReceipt extends ApiEnvelope {
 
 export interface WaitUntilReadyOptions {
   /** Seconds between polls. Default 2. */
-  pollInterval?: number;
+  pollInterval?: number | undefined;
   /** Seconds to wait in total. Default 120. */
-  timeout?: number;
+  timeout?: number | undefined;
 }
 
 export class CitationCheckDocuments {

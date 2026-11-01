@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "paths": {
+      "@klaracase/sdk": ["./packages/sdk/src/index.ts"],
+      "@klaracase/ai-sdk": ["./packages/ai-sdk/src/index.ts"],
+      "ai": ["./packages/ai-sdk/node_modules/ai"],
+      "zod": ["./packages/ai-sdk/node_modules/zod"]
+    }
+  },
+  "include": ["readme-check", "scripts/readme-ambient.d.ts"]
+}

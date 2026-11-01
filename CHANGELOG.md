@@ -15,6 +15,23 @@ All notable changes to this project are documented in this file. The format foll
   `client_validation`) when `window` and `document` exist.
 - CI lanes for Bun and for the Vercel Edge runtime (vitest `edge-runtime` environment).
 - `ConfigurationError.code`.
+- Complete typed response model for all twelve operations, derived from the example bodies. No
+  response type has an index signature any more. `getExtra(body, key)` reads an undeclared key.
+- `ResponseMeta.headers` (the response `Headers`).
+- `CITATION_VERDICTS` and `isKnownVerdict()`.
+- Request enums are strict unions (`mode`, `branch`, `document_type`, `cited_statutes`,
+  `direction`, `depth`, facet `type`). Response enums stay open.
+- Every input type accepts `undefined` for optional keys (`exactOptionalPropertyTypes` safe).
+  A second tsconfig compiles the sources, the tests and the README examples with that flag.
+- Type tests that assign every example and conformance body to its response type, and a key
+  manifest test that fails when a body carries a key the type does not declare.
+
+### Changed
+
+- `corpus.coverage` `branches[].count` and `courts[].count` are `Count` objects, not numbers.
+- `corpus.facets` has the optional key `norm`. `decisions.get` has the optional `returned_range`.
+- `SearchMode`, `Branch`, `DocumentType` and `CitedStatute` are strict unions. Use `Open<...>` for a
+  response value.
 
 ### Not done yet
 

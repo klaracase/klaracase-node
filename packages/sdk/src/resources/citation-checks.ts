@@ -15,17 +15,63 @@ export type CitationCheckCreateParams = (
   { text: string; document_id?: undefined } | { document_id: string; text?: undefined }
 ) & {
   /** Document date, `YYYY-MM-DD`. Applied to statute citations that name no date themselves. */
-  reference_date?: string;
+  reference_date?: string | undefined;
 };
 
+/** Progress counters of a run. */
+export interface CitationProgress {
+  citations_total: number;
+  citations_checked: number;
+  unique_citations_total: number;
+}
+
+/** How many citations ended without a verdict of "found", by reason. */
+export interface ReasonCount {
+  category: Open<"statute_unknown">;
+  count: number;
+}
+
+/** What the extractor saw and dropped before it checked anything. */
+export interface CitationExtraction {
+  detected: number;
+  dropped: number;
+  dropped_unreadable: number;
+  dropped_truncation: number;
+  dropped_trailing_noun: number;
+  dropped_stacked_subdivision: number;
+  dropped_refused_collision: number;
+  dropped_by_token: unknown[];
+  dropped_unreadable_texts: unknown[];
+  refused_contract_collision: unknown[];
+  not_verifiable: number;
+  not_verifiable_by_type: unknown[];
+  possible_citations_unparsed: number;
+  possible_citations_unparsed_texts: string[];
+}
+
+/** The decision a case citation resolved to. */
 export interface MatchedDecision {
   artifact_id: string;
   ecli: string | null;
   court: string | null;
   date: string | null;
-  [key: string]: unknown;
 }
 
+/** What the check read to reach a verdict. */
+export interface CheckScope {
+  subdivision: Open<"not_applicable">;
+  article_text_available: boolean | null;
+  article_text_read: boolean;
+  court: Open<"checked">;
+}
+
+/** Why a finding got its verdict. */
+export interface FindingEvidence {
+  reason: Open<"exact_match">;
+  match_strength: Open<"exact">;
+}
+
+/** One citation found in the text, with its verdict. */
 export interface CitationFinding {
   id: string;
   raw_text: string;
@@ -33,54 +79,52 @@ export interface CitationFinding {
   type: Open<"case" | "statute">;
   role: string | null;
   verdict: CitationVerdict;
-  external_status: string;
-  /** Unicode codepoint offsets into the submitted text. */
+  external_status: Open<"skipped">;
+  /** Unicode code point offsets into the submitted text. */
   start_offset: number;
   end_offset: number;
   occurrence_index: number;
-  confidence: number | string | null;
+  confidence: number | null;
   matched_decision: MatchedDecision | null;
-  subdivision_check: string;
+  subdivision_check: Open<"not_checked">;
   subdivision_advisory: string | null;
-  check_scope: Record<string, unknown>;
+  check_scope: CheckScope;
   ambiguity_advisory: string | null;
-  coverage: unknown;
-  coverage_boundary: unknown;
+  coverage: Record<string, unknown> | null;
+  coverage_boundary: Record<string, unknown> | null;
   coverage_advisory: string | null;
-  evidence: Record<string, unknown>;
+  evidence: FindingEvidence;
   disputed_at: string | null;
-  [key: string]: unknown;
 }
 
+/** One distinct citation with all its spellings and occurrences. */
 export interface UniqueCitation {
-  key_basis: string;
+  key_basis: Open<"matched_decision" | "canonical">;
   target_artifact_id: string | null;
   canonical: string | null;
   spellings: string[];
   occurrences: number;
   verdict: CitationVerdict;
   reference_type: Open<"case" | "statute">;
-  [key: string]: unknown;
 }
 
-/** Body of `POST /citation-checks` and `GET /citation-checks/{run}`. */
+/**
+ * Body of `POST /citation-checks` and `GET /citation-checks/{run}`.
+ *
+ * Check `status` before you trust the findings. See `assertComplete`.
+ */
 export interface CitationCheckRun extends ApiEnvelope {
   id: string;
   status: CitationCheckStatus;
-  source: string;
-  progress: {
-    citations_total: number;
-    citations_checked: number;
-    unique_citations_total: number;
-    [key: string]: unknown;
-  };
+  source: Open<"api_v1">;
+  progress: CitationProgress;
   /** Count per verdict. Keys are verdict names. */
   verdict_counts: Record<string, number>;
   partial: boolean;
   unverified_count: number;
-  reason_counts: Array<{ category: string; count: number; [key: string]: unknown }>;
+  reason_counts: ReasonCount[];
   unique_citations: UniqueCitation[];
-  extraction: Record<string, unknown>;
+  extraction: CitationExtraction;
   notes: unknown[];
   findings_unavailable_reason: string | null;
   findings_purged_at: string | null;

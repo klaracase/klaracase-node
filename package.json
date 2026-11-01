@@ -22,7 +22,7 @@
     "test": "pnpm -r run test",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "typecheck": "pnpm -r run typecheck",
+    "typecheck": "pnpm -r run typecheck && node scripts/check-readme.mjs",
     "smoke": "pnpm --filter @klaracase/sdk run smoke"
   },
   "devDependencies": {

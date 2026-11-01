@@ -15,53 +15,80 @@ import type { QueryExpansion, Snippet } from "./decisions.js";
 /** Filters of `GET /search`. `query` is the first argument of the method. */
 export interface CrossTypeSearchFilters {
   /** Narrows the laws section only. `DE`, `EU` or `XI`. */
-  jurisdiction?: Open<"DE" | "EU" | "XI">;
-  court?: string;
-  branch?: Branch;
+  jurisdiction?: Open<"DE" | "EU" | "XI"> | undefined;
+  court?: string | undefined;
+  branch?: Branch | undefined;
   /** `YYYY-MM-DD`, inclusive. */
-  date_from?: string;
+  date_from?: string | undefined;
   /** `YYYY-MM-DD`, inclusive. */
-  date_to?: string;
-  mode?: SearchMode;
-  document_type?: DocumentType;
-  cited_norm?: string;
-  cited_statutes?: readonly CitedStatute[];
+  date_to?: string | undefined;
+  mode?: SearchMode | undefined;
+  document_type?: DocumentType | undefined;
+  cited_norm?: string | undefined;
+  cited_statutes?: readonly CitedStatute[] | undefined;
   /** Results per section. Default 5, at most 10. */
-  limit?: number;
-  bridge?: boolean;
+  limit?: number | undefined;
+  bridge?: boolean | undefined;
 }
 
-export interface CrossTypeResult {
+interface CrossTypeBase {
   id: string;
-  artifact_type: Open<"LAW" | "DECISION">;
-  aktenzeichen: string | null;
-  court: string | null;
-  date: string | null;
-  document_type: string | null;
   title: string | null;
   snippet: string | null;
   snippets: Snippet[];
   chunk_title: string | null;
   rn_range: string | null;
   fundstelle: string | null;
-  confidence: string | null;
-  [key: string]: unknown;
+  confidence: Open<"high" | "medium" | "low"> | null;
+}
+
+/** A statute hit of `GET /search`. It has no court, date or Aktenzeichen. */
+export interface CrossTypeLaw extends CrossTypeBase {
+  artifact_type: "LAW";
+  aktenzeichen: null;
+  court: null;
+  date: null;
+  document_type: null;
+  breadcrumb: string | null;
+  abbreviation: string;
+  law_type: string;
+  jurisdiction: string | null;
+}
+
+/** A decision hit of `GET /search`. */
+export interface CrossTypeDecision extends CrossTypeBase {
+  artifact_type: "DECISION";
+  aktenzeichen: string | null;
+  court: string | null;
+  date: string | null;
+  document_type: Open<DocumentType> | null;
+  fortgeltung_checked: boolean;
+  fortgeltung_note: string;
+}
+
+/** Counts of one section of `GET /search`. */
+export interface SectionTotal {
+  total_available: Count;
+  total_available_basis: string;
+  candidate_pool: number;
+  pool_exhaustive: boolean;
+  truncated: boolean;
 }
 
 /** Body of `GET /search`. */
 export interface CrossTypeSearchResponse extends ApiEnvelope {
-  sections: { laws: CrossTypeResult[]; decisions: CrossTypeResult[]; [key: string]: unknown };
-  section_totals: Record<string, unknown>;
+  sections: { laws: CrossTypeLaw[]; decisions: CrossTypeDecision[] };
+  section_totals: { laws: SectionTotal; decisions: SectionTotal };
   limit: number;
   total_available: Count;
   total_available_basis: string;
   pool_exhaustive: boolean;
   truncated: boolean;
-  mode: SearchMode;
+  mode: Open<SearchMode>;
   query_expansion: QueryExpansion;
   frequently_cited_by_results: unknown[];
   norms_cited_by_decision_results: unknown[];
-  top_confidence?: string | null;
+  top_confidence?: Open<"high" | "medium" | "low"> | null;
 }
 
 /** `GET /search`: statutes and decisions together. Costs 1 credit. */

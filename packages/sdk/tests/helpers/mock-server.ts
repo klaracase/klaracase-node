@@ -3,12 +3,12 @@ import type { AddressInfo } from "node:net";
 
 /** One scripted answer. */
 export interface MockResponse {
-  status?: number;
-  headers?: Record<string, string>;
+  status?: number | undefined;
+  headers?: Record<string, string> | undefined;
   /** Serialised body text. The runner resolves `body`, `body_file` and `body_text` before this. */
-  bodyText?: string;
-  delaySeconds?: number;
-  dropConnection?: boolean;
+  bodyText?: string | undefined;
+  delaySeconds?: number | undefined;
+  dropConnection?: boolean | undefined;
 }
 
 export interface RecordedRequest {

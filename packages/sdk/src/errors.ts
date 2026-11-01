@@ -64,14 +64,14 @@ export type ErrorCode = KlaracaseErrorCode | (string & {});
 
 /** The members of an RFC 9457 problem body that the SDK reads as typed fields. */
 export interface ProblemInit {
-  type?: string;
-  title?: string;
-  status?: number | null;
-  detail?: string;
-  code?: ErrorCode | null;
-  api_release?: string | null;
+  type?: string | undefined;
+  title?: string | undefined;
+  status?: number | null | undefined;
+  detail?: string | undefined;
+  code?: ErrorCode | null | undefined;
+  api_release?: string | null | undefined;
   /** Every member of the problem body except `type`, `title`, `status`, `detail` and `code`. */
-  extra?: Record<string, unknown>;
+  extra?: Record<string, unknown> | undefined;
   cause?: unknown;
 }
 
@@ -156,7 +156,7 @@ export class RateLimitError extends KlaracaseError {
   /** Seconds to wait: the body value, else the `Retry-After` header, else `null`. */
   readonly retry_after_seconds: number | null;
 
-  constructor(init: ProblemInit & { retry_after_seconds?: number | null } = {}) {
+  constructor(init: ProblemInit & { retry_after_seconds?: number | null | undefined } = {}) {
     super(init);
     const fromBody = this.extra["retry_after_seconds"];
     this.retry_after_seconds =
@@ -189,7 +189,6 @@ export interface DocumentReceiptLike {
   id: string;
   status: string;
   error_code: string | null;
-  [key: string]: unknown;
 }
 
 /** `waitUntilReady` saw the upload end in the `failed` status. */

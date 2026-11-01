@@ -27,6 +27,8 @@ export {
   type ProblemInit,
 } from "./errors.js";
 export type * from "./types.js";
+export { getExtra } from "./response.js";
+export { CITATION_VERDICTS, isKnownVerdict, type KnownCitationVerdict } from "./verdicts.js";
 export type * from "./resources/decisions.js";
 export type * from "./resources/search.js";
 export type * from "./resources/norms.js";

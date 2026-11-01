@@ -213,13 +213,30 @@ Full parameter lists are in the [API reference](https://klaracase.de/docs/api).
 
 ## Responses
 
-Each method returns the answer body, parsed. Nothing in it is renamed, reordered or cleaned. Keys
-that a later API release adds are readable too, because every response type has an index signature.
+Each method returns the answer body, parsed. Nothing in it is renamed, reordered or cleaned.
 
-Each body also has a `meta` property with `status`, `api_release` (from
-`X-Klaracase-Api-Release`) and `request_duration` in seconds. `meta` is not enumerable. It does not
-show in `JSON.stringify(result)`, `Object.keys(result)` or a spread copy. Read `result.meta`
-directly. `result.credits` has `metered`, `cost` and `credits_remaining`.
+The response types list the documented keys and nothing else. They have no index signature, so a
+misspelled key is a compile error. A key that a later API release adds still exists at run time.
+Read it with `getExtra`:
+
+```ts
+import { getExtra } from "@klaracase/sdk";
+
+const found = await client.decisions.search("Untreue");
+const added = getExtra(found, "a_key_from_a_later_release"); // unknown
+```
+
+Enum values in a response are open: `verdict` is a known name or any other string. Enum values you
+send are strict unions, such as `mode: "keyword" | "semantic" | "hybrid"`. `CITATION_VERDICTS` lists
+the seven verdicts, and `isKnownVerdict(value)` tells you whether a value is one of them.
+
+Each body also has a `meta` property with `status`, `api_release` (from `X-Klaracase-Api-Release`),
+`request_duration` in seconds and `headers` (the response `Headers`). `meta` is not enumerable. It
+does not show in `JSON.stringify(result)`, `Object.keys(result)` or a spread copy. Read
+`result.meta` directly. `result.credits` has `metered`, `cost` and `credits_remaining`. The body
+itself is a plain mutable object.
+
+All input types accept `undefined` for an optional key, also under `exactOptionalPropertyTypes`.
 
 ## Errors
 
@@ -302,16 +319,18 @@ await client.norms.get("§ 535 BGB", {}, { timeout: 10, maxRetries: 0, signal: c
 ## Client options
 
 ```ts
+import { Klaracase } from "@klaracase/sdk";
+
 new Klaracase({
-  token, // or KLARACASE_API_TOKEN
-  baseUrl, // default https://klaracase.de/api/v1
-  timeout, // seconds, default 30
-  maxRetries, // default 2
-  userAgentSuffix, // appended to the User-Agent header
-  fetch, // your own fetch
-  onDeprecation, // see below
-  sleep, // (seconds) => Promise<void>, for tests
-  now, // () => seconds, for tests
+  token: "klc_your_token_here", // or KLARACASE_API_TOKEN
+  baseUrl: "https://klaracase.de/api/v1", // default
+  timeout: 30, // seconds, default 30
+  maxRetries: 2, // default 2
+  userAgentSuffix: "my-app/1.0", // appended to the User-Agent header
+  fetch: globalThis.fetch, // your own fetch
+  onDeprecation: (info) => console.warn(info), // see below
+  sleep: async (seconds) => void seconds, // for tests
+  now: () => performance.now() / 1000, // for tests
 });
 ```
 

@@ -3,6 +3,7 @@ import type { Transport } from "../http.js";
 import type {
   ApiEnvelope,
   Branch,
+  CitationDirection,
   CitedStatute,
   Count,
   DocumentType,
@@ -15,38 +16,47 @@ import type {
 /** Filters of `GET /decisions/search`. `query` is the first argument of the method. */
 export interface DecisionSearchFilters {
   /** Court name as in `corpus.facets("court_name")`. */
-  court?: string;
-  branch?: Branch;
-  document_type?: DocumentType;
+  court?: string | undefined;
+  branch?: Branch | undefined;
+  document_type?: DocumentType | undefined;
   /** One canonical statute token, for example `§ 906 BGB`. */
-  cited_norm?: string;
+  cited_norm?: string | undefined;
   /** Any section of these statutes. Sent as `cited_statutes[]=A&cited_statutes[]=B`. */
-  cited_statutes?: readonly CitedStatute[];
+  cited_statutes?: readonly CitedStatute[] | undefined;
   /** `YYYY-MM-DD`, inclusive. */
-  date_from?: string;
+  date_from?: string | undefined;
   /** `YYYY-MM-DD`, inclusive. */
-  date_to?: string;
-  mode?: SearchMode;
+  date_to?: string | undefined;
+  mode?: SearchMode | undefined;
   /** Default 20, which is also the cap. */
-  limit?: number;
+  limit?: number | undefined;
   /** 1 to 10. */
-  page?: number;
+  page?: number | undefined;
   /** Let the server add curated legal-register terms before retrieval. Default true. */
-  bridge?: boolean;
+  bridge?: boolean | undefined;
 }
 
+/** One passage of a search result. `rn` is the Randnummer of the passage when it has one. */
 export interface Snippet {
   text: string;
   rn?: number;
-  [key: string]: unknown;
 }
 
+/** How the server rewrote a lay query into legal terms. */
+export interface QueryExpansion {
+  status: Open<"abstained" | "applied">;
+  applied: boolean;
+  reason: Open<"no_lay_term"> | null;
+  note: string | null;
+}
+
+/** One hit of `GET /decisions/search`. */
 export interface DecisionSearchResult {
   id: string;
   aktenzeichen: string | null;
   court: string | null;
   date: string | null;
-  document_type: string | null;
+  document_type: Open<DocumentType> | null;
   title: string | null;
   snippet: string | null;
   snippets: Snippet[];
@@ -56,15 +66,6 @@ export interface DecisionSearchResult {
   fortgeltung_checked: boolean;
   fortgeltung_note: string;
   confidence: Open<"high" | "medium" | "low"> | null;
-  [key: string]: unknown;
-}
-
-export interface QueryExpansion {
-  status: string;
-  applied: boolean;
-  reason: string | null;
-  note: string | null;
-  [key: string]: unknown;
 }
 
 /** Body of `GET /decisions/search`. */
@@ -72,46 +73,32 @@ export interface DecisionSearchResponse extends ApiEnvelope {
   results: DecisionSearchResult[];
   payload_truncated: boolean;
   total_available: Count;
-  total_available_basis: string;
+  total_available_basis: Open<"matching_indexed_passages_lexical_arm">;
   candidate_pool: number;
   pool_exhaustive: boolean;
   truncated: boolean;
   page: number;
   limit: number;
-  mode: SearchMode;
+  mode: Open<SearchMode>;
   frequently_cited_by_results: unknown[];
   query_expansion: QueryExpansion;
-  top_confidence?: string | null;
+  top_confidence?: Open<"high" | "medium" | "low"> | null;
 }
 
 /** Arguments of `GET /decisions/{id}`. */
 export interface DecisionGetOptions {
   /** Minimum 500. Default 40000. */
-  max_chars?: number;
+  max_chars?: number | undefined;
   /** First Randnummer to return. */
-  rn_from?: number;
+  rn_from?: number | undefined;
   /** Last Randnummer to return, inclusive. */
-  rn_to?: number;
+  rn_to?: number | undefined;
   /** `Tenor`, `Leitsatz`, `Tatbestand` or `Gründe`, in any case. */
-  section?: Open<"Tenor" | "Leitsatz" | "Tatbestand" | "Gründe">;
+  section?: Open<"Tenor" | "Leitsatz" | "Tatbestand" | "Gründe"> | undefined;
   /** Disambiguates an Aktenzeichen. Ignored for a UUID. */
-  court?: string;
+  court?: string | undefined;
   /** `YYYY-MM-DD`. Disambiguates an Aktenzeichen. Ignored for a UUID. */
-  date?: string;
-}
-
-export interface DecisionMetadata {
-  document_type: string | null;
-  ecli: string | null;
-  file_numbers: string[];
-  [key: string]: unknown;
-}
-
-export interface RnRange {
-  rn_from: number | null;
-  rn_to: number | null;
-  rn_source: string | null;
-  [key: string]: unknown;
+  date?: string | undefined;
 }
 
 /** Body of `GET /decisions/{id}`. */
@@ -121,50 +108,82 @@ export interface DecisionResponse extends ApiEnvelope {
   court: string | null;
   date: string | null;
   jurisdiction: string | null;
-  metadata: DecisionMetadata;
+  metadata: {
+    document_type: Open<DocumentType> | null;
+    ecli: string | null;
+    file_numbers: string[];
+  };
   fortgeltung_checked: boolean;
   fortgeltung_note: string;
   full_text: string;
   text_length: number;
   truncated: boolean;
-  rn_source: string | null;
+  rn_source: Open<"printed"> | null;
   rn_source_note: string | null;
   available_sections: string[];
-  available_range: RnRange | null;
-  available_range_scope: string | null;
+  available_range: {
+    rn_from: number | null;
+    rn_to: number | null;
+    rn_source: Open<"printed"> | null;
+  } | null;
+  available_range_scope: Open<"decision"> | null;
   has_rn_anchors: boolean;
+  /** Present when the call asked for a section or a Randnummer window. */
+  returned_range?: {
+    section_heading?: string | null;
+    rn_from?: number | null;
+    rn_to?: number | null;
+  };
 }
 
 /** Arguments of `GET /decisions/{id}/citations`. */
 export interface DecisionCitationsOptions {
   /** `both` is the default. */
-  direction?: Open<"outgoing" | "incoming" | "both">;
+  direction?: CitationDirection | undefined;
   /** 1 (default) or 2. */
-  depth?: 1 | 2;
+  depth?: 1 | 2 | undefined;
   /** Disambiguates an Aktenzeichen. */
-  court?: string;
+  court?: string | undefined;
   /** `YYYY-MM-DD`. Disambiguates an Aktenzeichen. */
-  date?: string;
+  date?: string | undefined;
   /** 1 to 20. Depth 1 only. */
-  page?: number;
+  page?: number | undefined;
 }
 
+/** The decision a citation edge resolves to inside the corpus. */
+export interface CitationCorpusRef {
+  artifact_id: string;
+  court: string | null;
+  date: string | null;
+  az: string | null;
+  document_type: string | null;
+  ecli: string | null;
+  corpus_url: string;
+}
+
+/** One edge of the citation graph. */
 export interface CitationEdge {
   reference_canonical: string;
-  reference_role: string | null;
-  resolution_status: string;
+  reference_role: Open<"leitentscheidung"> | null;
+  resolution_status: Open<"resolved" | "unresolved">;
   in_corpus: boolean;
-  corpus: Record<string, unknown> | null;
+  corpus: CitationCorpusRef | null;
   from_artifact_id: string;
+  /** Present at depth 2: how many steps from the source decision. */
   hop?: number;
-  [key: string]: unknown;
 }
 
+/** Page state of `GET /decisions/{id}/citations`. */
 export interface CitationPagination {
   page: number;
   page_size: number;
   max_page: number;
-  [key: string]: unknown;
+  reachable_distinct_max: number;
+  references_pages: number;
+  referenced_by_pages: number;
+  has_more_references: boolean;
+  has_more_referenced_by: boolean;
+  applies_at_depth: 1 | 2;
 }
 
 /** Body of `GET /decisions/{id}/citations`. */
@@ -172,7 +191,7 @@ export interface DecisionCitationsResponse extends ApiEnvelope {
   source: { id: string; aktenzeichen: string | null; court: string | null; date: string | null };
   references: CitationEdge[];
   referenced_by: CitationEdge[];
-  served_direction: string;
+  served_direction: Open<CitationDirection>;
   served_references_total: number;
   served_referenced_by_total: number;
   references_total: number;
@@ -180,7 +199,7 @@ export interface DecisionCitationsResponse extends ApiEnvelope {
   referenced_by_total: number;
   references_unresolved_total: number;
   references_withheld_reasons: unknown[];
-  totals_scope: string;
+  totals_scope: Open<"source_decision_hop_1">;
   per_direction_cap: number;
   unresolved_cap: number;
   node_cap: number;

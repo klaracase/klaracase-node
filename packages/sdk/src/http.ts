@@ -126,12 +126,9 @@ export class Transport {
     const timeoutSignal = AbortSignal.timeout(Math.ceil(timeout * 1000));
     const signal = userSignal ? AbortSignal.any([userSignal, timeoutSignal]) : timeoutSignal;
     try {
-      const response = await this.config.fetch(url, {
-        method: request.method,
-        headers,
-        body,
-        signal,
-      });
+      const init: RequestInit = { method: request.method, headers, signal };
+      if (body !== undefined) init.body = body;
+      const response = await this.config.fetch(url, init);
       const text = await response.text();
       return { response, text };
     } catch (cause) {
@@ -166,6 +163,7 @@ export class Transport {
       status: response.status,
       api_release: apiRelease,
       request_duration: duration,
+      headers: response.headers,
     };
     Object.defineProperty(body, "meta", { value: meta, enumerable: false });
     return body as WithMeta<T>;
