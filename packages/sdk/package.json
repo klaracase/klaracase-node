@@ -60,6 +60,11 @@
     "typecheck": "tsc --noEmit",
     "smoke": "node scripts/smoke.mjs",
     "check-dist": "node scripts/check-dist.mjs",
-    "prepack": "node ../../scripts/copy-package-docs.mjs"
+    "prepack": "node ../../scripts/copy-package-docs.mjs",
+    "test:bun": "bun --bun ../../node_modules/vitest/vitest.mjs run",
+    "test:edge": "vitest run --config vitest.edge.config.ts"
+  },
+  "devDependencies": {
+    "@edge-runtime/vm": "^5.0.0"
   }
 }

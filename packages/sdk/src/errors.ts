@@ -230,9 +230,13 @@ export class DocumentTimeoutError extends KlaracaseError {
  * {@link KlaracaseError}. Raised by the constructor, before any request.
  */
 export class ConfigurationError extends Error {
-  constructor(message: string) {
+  /** `client_validation` when the setup is unsafe or invalid for this host, else `null`. */
+  readonly code: string | null;
+
+  constructor(message: string, code: string | null = null) {
     super(message);
     this.name = "ConfigurationError";
+    this.code = code;
   }
 }
 

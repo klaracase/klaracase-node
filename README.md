@@ -35,6 +35,61 @@ import { Klaracase } from "@klaracase/sdk";
 const { Klaracase } = require("@klaracase/sdk");
 ```
 
+## Requirements and runtimes
+
+The client needs a global `fetch`, `FormData`, `Blob` and `AbortSignal.any`. It has no runtime
+dependencies and imports no Node module.
+
+| Runtime            | Version | Tested in CI                           |
+| ------------------ | ------- | -------------------------------------- |
+| Node.js            | 22+     | 22, 24 and 26                          |
+| Bun                | 1.x     | the whole suite                        |
+| Vercel Edge        | current | the whole suite, in the Edge sandbox   |
+| Deno               | 2+      | not in CI yet, see the changelog       |
+| Cloudflare Workers | current | not in CI yet, see the changelog       |
+| Browsers           | current | not supported without your own backend |
+
+The `User-Agent` names the runtime it detects: `node/22.12.0`, `bun/1.4.4`, `deno/2.1.0`,
+`vercel-edge/unknown`, `cloudflare-workers/unknown`, `browser/unknown` or `unknown/unknown`. The
+detector never throws, so the client builds on a host that has no `process` object.
+
+## Browser and proxy pattern
+
+The token is an organization secret. Do not ship it to a browser. The constructor throws a
+`ConfigurationError` with the code `client_validation` when it finds `window` and `document` and
+you did not pass `dangerouslyAllowBrowser: true`.
+
+Keep the token on your server. Give the browser your own route, and point the `fetch` option at it.
+The client then sends its requests to your route, and your route adds the token.
+
+```ts
+// In the browser. No token is needed here, but the constructor wants a placeholder.
+import { Klaracase } from "@klaracase/sdk";
+
+const client = new Klaracase({
+  token: "proxied",
+  baseUrl: "https://app.example.com/klaracase",
+  dangerouslyAllowBrowser: true,
+  fetch: (input, init) => fetch(input, { ...init, credentials: "include" }),
+});
+```
+
+```ts
+// On your server (a route handler). It adds the real token and forwards the call.
+export async function GET(request: Request): Promise<Response> {
+  const url = new URL(request.url);
+  const path = url.pathname.replace(/^\/klaracase/, "");
+  return fetch(`https://klaracase.de/api/v1${path}${url.search}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.KLARACASE_API_TOKEN}`,
+      Accept: "application/json",
+    },
+  });
+}
+```
+
+Check the signed-in user and rate-limit the route yourself. Every call it forwards costs credits.
+
 ## Get a token
 
 Create a token at <https://klaracase.de/settings/api-tokens>. You need to be signed in with a

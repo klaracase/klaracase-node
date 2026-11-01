@@ -1,6 +1,7 @@
 import { defaultDeprecationHandler, type DeprecationHandler } from "./deprecation.js";
 import { ConfigurationError } from "./errors.js";
 import { Transport } from "./http.js";
+import { detectRuntime, isBrowser, readEnv } from "./runtime.js";
 import { CitationCheckDocuments } from "./resources/citation-check-documents.js";
 import { CitationChecks } from "./resources/citation-checks.js";
 import { Corpus } from "./resources/corpus.js";
@@ -38,6 +39,12 @@ export interface KlaracaseOptions {
    * logs one `console.warn` line.
    */
   onDeprecation?: DeprecationHandler;
+  /**
+   * Allow the client to be built in a browser page. Off by default. The token is an organization
+   * secret: anyone who can open the page can read it. Keep the token on your server and point the
+   * `fetch` option at your own route instead.
+   */
+  dangerouslyAllowBrowser?: boolean;
   /** Wait for this many seconds. For tests. Default: a timer. */
   sleep?: (seconds: number) => Promise<void>;
   /** The clock in seconds. For tests. Default: a monotonic clock. */
@@ -66,7 +73,16 @@ export class Klaracase {
   private readonly transport: Transport;
 
   constructor(options: KlaracaseOptions = {}) {
-    const token = options.token ?? readEnvironmentToken();
+    if (isBrowser() && options.dangerouslyAllowBrowser !== true) {
+      throw new ConfigurationError(
+        "The Klaracase token is an organization secret and must stay on the server. " +
+          "This looks like a browser. Call the API from your own backend and give the client a " +
+          "`fetch` that points at your route, or pass { dangerouslyAllowBrowser: true } if you " +
+          "accept that anyone who opens the page can read the token.",
+        "client_validation",
+      );
+    }
+    const token = options.token ?? readEnv(TOKEN_ENV_VAR);
     if (token === undefined || token.trim() === "") {
       throw new ConfigurationError(
         `No API token. Pass { token } or set the ${TOKEN_ENV_VAR} environment variable.`,
@@ -114,10 +130,6 @@ export class Klaracase {
   }
 }
 
-function readEnvironmentToken(): string | undefined {
-  return typeof process === "undefined" ? undefined : process.env[TOKEN_ENV_VAR];
-}
-
 function normalizeBaseUrl(baseUrl: string): string {
   let parsed: URL;
   try {
@@ -132,18 +144,8 @@ function normalizeBaseUrl(baseUrl: string): string {
 }
 
 function buildUserAgent(suffix: string | undefined): string {
-  const base = `klaracase-node/${VERSION} ${runtimeName()}`;
+  const base = `klaracase-node/${VERSION} ${detectRuntime()}`;
   return suffix === undefined || suffix === "" ? base : `${base} ${suffix}`;
-}
-
-function runtimeName(): string {
-  const runtime = globalThis as {
-    Deno?: { version?: { deno?: string } };
-    Bun?: { version?: string };
-  };
-  if (runtime.Deno?.version?.deno) return `deno/${runtime.Deno.version.deno}`;
-  if (runtime.Bun?.version) return `bun/${runtime.Bun.version}`;
-  return `node/${process.versions.node}`;
 }
 
 function defaultSleep(seconds: number): Promise<void> {

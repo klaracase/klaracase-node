@@ -71,7 +71,7 @@ describe("construction", () => {
       const client = new Klaracase({ token: "t", baseUrl: `${mock.baseUrl}/api/v1` });
       await client.decisions.search("x");
       const agent = String(mock.requests[0]?.headers["user-agent"]);
-      expect(agent).toMatch(new RegExp(`^klaracase-node/${VERSION} (node|bun|deno)/`));
+      expect(agent).toMatch(new RegExp(`^klaracase-node/${VERSION} (node|bun|deno|vercel-edge)/`));
     });
   });
 });
@@ -170,8 +170,12 @@ describe("upload", () => {
           filename: "b.md",
           contentType: "text/markdown",
         });
+        // Bun appends ";charset=utf-8" to text parts. The media type is what matters here.
         const parts = mock.requests.map((r) =>
-          parseMultipart(String(r.headers["content-type"]), r.body),
+          parseMultipart(String(r.headers["content-type"]), r.body).map((part) => ({
+            ...part,
+            content_type: part.content_type?.split(";")[0]?.trim() ?? null,
+          })),
         );
         expect(parts[0]).toEqual([{ name: "file", filename: "a.txt", content_type: "text/plain" }]);
         expect(parts[1]).toEqual([
