@@ -22,6 +22,7 @@ export type KlaracaseErrorCode =
   | "rate_limited"
   | "volume_cap"
   | "insufficient_credits"
+  | "token_limit_reached"
   | "backend_unavailable"
   | "service_unavailable"
   | "internal_error"
@@ -116,11 +117,11 @@ export class KlaracaseError extends Error {
   readonly candidates: AmbiguousCandidate[] | undefined;
   /** The statute that replaced the cited one, for `statute_superseded`. */
   readonly successor: string | undefined;
-  /** What the cap counts (for example `rows`), for `volume_cap`. */
+  /** What the cap counts: `rows` or `documents` for `volume_cap`, `credits` for `token_limit_reached`. */
   readonly unit: string | undefined;
-  /** The size of the cap, for `volume_cap`. */
+  /** The size of the cap, for `volume_cap`, and the credit limit of the key for `token_limit_reached`. */
   readonly cap: number | undefined;
-  /** When the cap resets, an ISO 8601 time, for `volume_cap`. */
+  /** When the cap resets, an ISO 8601 time, for `volume_cap` and `token_limit_reached`. */
   readonly resets_at: string | undefined;
   /**
    * True when sending the same request again later can succeed: a 429 (wait first), a 503, any
@@ -172,16 +173,85 @@ export class AuthenticationError extends KlaracaseError {
   override name = "AuthenticationError";
 }
 
-/** 402. The organization has too few credits. Never retried. */
+/**
+ * Why a 402 `insufficient_credits` call could not be paid (API release 0.96.0). The list is open:
+ * a later release may add a value. Treat a value you do not know like `api_budget_not_available`.
+ *
+ * - `api_budget_empty`: the organization may load an API budget, and what it holds does not cover
+ *   this call.
+ * - `api_budget_not_available`: the organization has no API budget to draw on, or the budget is on
+ *   hold, and its plan does not allow a top-up.
+ * - `plan_credits_exhausted`: reserved for a refusal where the API budget plays no part. The API
+ *   does not serve it today.
+ */
+export type InsufficientCreditsReason =
+  "api_budget_empty" | "api_budget_not_available" | "plan_credits_exhausted" | (string & {});
+
+/**
+ * 402. The organization has too few credits, so the call did not run and nothing was charged.
+ * Never retried.
+ *
+ * Read `reason` to tell the cases apart. Show `topUpUrl` to a human organization admin. A program
+ * or an AI agent must never open it or follow it.
+ *
+ * {@link TokenLimitReachedError} extends this class, because it is a 402 too. It has no `cost` and
+ * no `balance`, so both can be `null` here.
+ */
 export class InsufficientCreditsError extends KlaracaseError {
   override name = "InsufficientCreditsError";
+  /** What the call would have cost in credits, or `null` when the body names no cost. */
   readonly cost: number | null;
+  /** The plan credits left in the credit period, or `null` when the body names none. */
   readonly balance: number | null;
+  /**
+   * Why the call could not be paid, when the body says so. Only served while the prepaid API
+   * budget is available. `undefined` when the body has no `reason`.
+   */
+  readonly reason: InsufficientCreditsReason | undefined;
+  /**
+   * The page where a human organization admin loads the API budget. `undefined` when the
+   * organization may not load one. For a human: never open or follow this URL in a program or an
+   * agent, only show it to the user.
+   */
+  readonly topUpUrl: string | undefined;
 
   constructor(init: ProblemInit = {}) {
     super(init);
     this.cost = numberOrNull(this.extra["cost"]);
     this.balance = numberOrNull(this.extra["balance"]);
+    this.reason = stringOrUndefined(this.extra["reason"]);
+    this.topUpUrl = stringOrUndefined(this.extra["top_up_url"]);
+  }
+}
+
+/**
+ * 402 with the code `token_limit_reached` (API release 0.96.0). The credit limit that an
+ * organization admin set for this API key is used up for the period. The call did not run and
+ * nothing was charged. Never retried: the limit stays until `resetsAt` or until an admin changes
+ * it.
+ *
+ * It extends {@link InsufficientCreditsError}, because the HTTP status is 402. Unlike that class
+ * it has no `cost` and no `balance`: both are `null`. The inherited `unit` (always `credits`),
+ * `cap` and `resets_at` (the raw string) are set too. Stop, and tell your user. Show `settingsUrl`
+ * to a human admin. A program or an AI agent must never open it.
+ */
+export class TokenLimitReachedError extends InsufficientCreditsError {
+  override name = "TokenLimitReachedError";
+  /** The credits this key used in the period, plan credits and API budget together. */
+  readonly spent: number | undefined;
+  /**
+   * When the limit resets, parsed from `resets_at`. `undefined` when the body has none or the
+   * value is not a date. The raw string is `resets_at`.
+   */
+  readonly resetsAt: Date | undefined;
+  /** Where a human organization admin changes the limit. Never open it from a program. */
+  readonly settingsUrl: string | undefined;
+
+  constructor(init: ProblemInit = {}) {
+    super(init);
+    this.spent = numberOrUndefined(this.extra["spent"]);
+    this.resetsAt = dateOrUndefined(this.extra["resets_at"]);
+    this.settingsUrl = stringOrUndefined(this.extra["settings_url"]);
   }
 }
 
@@ -381,6 +451,12 @@ function stringOrUndefined(value: unknown): string | undefined {
 
 function numberOrUndefined(value: unknown): number | undefined {
   return typeof value === "number" ? value : undefined;
+}
+
+function dateOrUndefined(value: unknown): Date | undefined {
+  if (typeof value !== "string") return undefined;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
 function candidatesOf(value: unknown): AmbiguousCandidate[] | undefined {

@@ -13,6 +13,7 @@ import {
   ServerError,
   ServiceUnavailableError,
   TimeoutError,
+  TokenLimitReachedError,
   TransportError,
   ValidationError,
   type ProblemInit,
@@ -231,7 +232,11 @@ export class Transport {
         } satisfies ProblemInit);
 
     if (status === 401) return new AuthenticationError(init);
-    if (status === 402) return new InsufficientCreditsError(init);
+    if (status === 402) {
+      return init.code === "token_limit_reached"
+        ? new TokenLimitReachedError(init)
+        : new InsufficientCreditsError(init);
+    }
     if (status === 403) return new PermissionError(init);
     if (status === 404) return new NotFoundError(init);
     if (status === 409) return new ConflictError(init);

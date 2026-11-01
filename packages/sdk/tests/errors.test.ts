@@ -15,6 +15,7 @@ import {
   ServerError,
   ServiceUnavailableError,
   TimeoutError,
+  TokenLimitReachedError,
   TransportError,
   ValidationError,
   type AmbiguousCandidate,
@@ -25,6 +26,10 @@ import superseded from "./fixtures/conformance/problems/statute_superseded.json"
 import volumeCap from "./fixtures/conformance/problems/volume_cap.json";
 import rateLimited from "./fixtures/conformance/problems/rate_limited.json";
 import internalError from "./fixtures/conformance/problems/internal_error.json";
+import budgetEmpty from "./fixtures/conformance/problems/insufficient_credits.api_budget_empty.json";
+import budgetNotAvailable from "./fixtures/conformance/problems/insufficient_credits.api_budget_not_available.json";
+import insufficientCredits from "./fixtures/conformance/problems/insufficient_credits.json";
+import tokenLimitReached from "./fixtures/conformance/problems/token_limit_reached.json";
 import unauthenticated from "./fixtures/conformance/problems/unauthenticated.json";
 
 /** A client whose fetch answers once with the given problem body. */
@@ -56,6 +61,7 @@ describe("error names", () => {
       ["KlaracaseError", new KlaracaseError()],
       ["AuthenticationError", new AuthenticationError()],
       ["InsufficientCreditsError", new InsufficientCreditsError()],
+      ["TokenLimitReachedError", new TokenLimitReachedError()],
       ["PermissionError", new PermissionError()],
       ["NotFoundError", new NotFoundError()],
       ["ConflictError", new ConflictError()],
@@ -174,5 +180,127 @@ describe("HTTP errors", () => {
     expect(new TimeoutError().retryable).toBe(true);
     expect(new ServiceUnavailableError({ status: 503 }).retryable).toBe(true);
     expect(new ValidationError({ code: "client_validation" }).retryable).toBe(false);
+  });
+});
+
+describe("402 insufficient_credits with a reason (API release 0.96.0)", () => {
+  it("reads reason and topUpUrl, and keeps them in extra", async () => {
+    const error = await failureOf(clientAnswering(budgetEmpty).corpus.coverage());
+    expect(error).toBeInstanceOf(InsufficientCreditsError);
+    expect(error).not.toBeInstanceOf(TokenLimitReachedError);
+    const credits = error as InsufficientCreditsError;
+    expect(credits.reason).toBe("api_budget_empty");
+    expect(credits.topUpUrl).toBe("https://klaracase.de/org/billing/api-budget");
+    expect(credits.cost).toBe(1);
+    expect(credits.balance).toBe(0);
+    expect(credits.extra["reason"]).toBe("api_budget_empty");
+    expect(credits.extra["top_up_url"]).toBe("https://klaracase.de/org/billing/api-budget");
+    expect(credits.retryable).toBe(false);
+  });
+
+  it("does not require top_up_url", async () => {
+    const error = (await failureOf(
+      clientAnswering(budgetNotAvailable).corpus.coverage(),
+    )) as InsufficientCreditsError;
+    expect(error.reason).toBe("api_budget_not_available");
+    expect(error.topUpUrl).toBeUndefined();
+  });
+
+  it("keeps a reason that a later release adds, and the reserved one", async () => {
+    const later = { ...budgetEmpty, reason: "something_new" };
+    const error = (await failureOf(
+      clientAnswering(later).corpus.coverage(),
+    )) as InsufficientCreditsError;
+    expect(error.reason).toBe("something_new");
+    const reserved = (await failureOf(
+      clientAnswering({ ...budgetEmpty, reason: "plan_credits_exhausted" }).corpus.coverage(),
+    )) as InsufficientCreditsError;
+    expect(reserved.reason).toBe("plan_credits_exhausted");
+  });
+
+  it("leaves reason and topUpUrl undefined for the older body", async () => {
+    const error = (await failureOf(
+      clientAnswering(insufficientCredits).corpus.coverage(),
+    )) as InsufficientCreditsError;
+    expect(error.reason).toBeUndefined();
+    expect(error.topUpUrl).toBeUndefined();
+    expect(error.cost).not.toBeNull();
+  });
+
+  it("ignores members of the wrong type", () => {
+    const error = new InsufficientCreditsError({
+      status: 402,
+      extra: { reason: 3, top_up_url: false },
+    });
+    expect(error.reason).toBeUndefined();
+    expect(error.topUpUrl).toBeUndefined();
+  });
+});
+
+describe("402 token_limit_reached (API release 0.96.0)", () => {
+  it("is a TokenLimitReachedError and an InsufficientCreditsError, with no cost and no balance", async () => {
+    const error = await failureOf(clientAnswering(tokenLimitReached).corpus.coverage());
+    expect(error).toBeInstanceOf(TokenLimitReachedError);
+    expect(error).toBeInstanceOf(InsufficientCreditsError);
+    const limit = error as TokenLimitReachedError;
+    expect(limit.name).toBe("TokenLimitReachedError");
+    expect(limit.status).toBe(402);
+    expect(limit.code).toBe("token_limit_reached");
+    expect(limit.cost).toBeNull();
+    expect(limit.balance).toBeNull();
+    expect(limit.reason).toBeUndefined();
+    expect(limit.topUpUrl).toBeUndefined();
+    expect(limit.retryable).toBe(false);
+  });
+
+  it("reads unit, cap, spent, resetsAt and settingsUrl", async () => {
+    const limit = (await failureOf(
+      clientAnswering(tokenLimitReached).corpus.coverage(),
+    )) as TokenLimitReachedError;
+    expect(limit.unit).toBe("credits");
+    expect(limit.cap).toBe(500);
+    expect(limit.spent).toBe(500);
+    expect(limit.resets_at).toBe("2026-12-01T00:00:00+00:00");
+    expect(limit.resetsAt).toEqual(new Date("2026-12-01T00:00:00Z"));
+    expect(limit.settingsUrl).toBe("https://klaracase.de/org/api-keys");
+    expect(limit.extra["settings_url"]).toBe("https://klaracase.de/org/api-keys");
+    expect(limit.extra["spent"]).toBe(500);
+  });
+
+  it("tolerates a body without the optional members, and a date it cannot parse", () => {
+    const bare = new TokenLimitReachedError({ status: 402, code: "token_limit_reached" });
+    expect(bare.spent).toBeUndefined();
+    expect(bare.resetsAt).toBeUndefined();
+    expect(bare.resets_at).toBeUndefined();
+    expect(bare.settingsUrl).toBeUndefined();
+    const odd = new TokenLimitReachedError({ status: 402, extra: { resets_at: "soon" } });
+    expect(odd.resets_at).toBe("soon");
+    expect(odd.resetsAt).toBeUndefined();
+  });
+
+  it("is not retried, whatever max_retries says", async () => {
+    let calls = 0;
+    const client = new Klaracase({
+      token: "t",
+      maxRetries: 2,
+      sleep: async () => undefined,
+      fetch: (async () => {
+        calls += 1;
+        return new Response(JSON.stringify(tokenLimitReached), {
+          status: 402,
+          headers: { "content-type": "application/problem+json" },
+        });
+      }) as typeof fetch,
+    });
+    await expect(client.corpus.coverage()).rejects.toBeInstanceOf(TokenLimitReachedError);
+    expect(calls).toBe(1);
+  });
+
+  it("keeps a 402 with another code a plain InsufficientCreditsError", async () => {
+    const error = await failureOf(
+      clientAnswering({ ...insufficientCredits, code: "something_else" }).corpus.coverage(),
+    );
+    expect(error).toBeInstanceOf(InsufficientCreditsError);
+    expect(error).not.toBeInstanceOf(TokenLimitReachedError);
   });
 });
