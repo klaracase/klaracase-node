@@ -84,7 +84,8 @@
     "node": ">=22"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "build": "tsdown && node scripts/generate-json-schemas.mjs && tsdown",

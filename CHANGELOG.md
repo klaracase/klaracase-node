@@ -59,6 +59,10 @@ All notable changes to this project are documented in this file. The format foll
 
 ### Changed
 
+- Documentation correction: paging the same query within a credit period costs no extra credits, so
+  `maxPages` is a runaway guard, not a price cap. A changed query, filter or mode is a new charge.
+  Check `credits` on each response. This applies to `searchAll` and `citationsAll`.
+
 - `@klaracase/ai-sdk` is a thin wrapper over `@klaracase/sdk/tools`. Its input schemas are now
   `zod/mini` schemas from `@klaracase/sdk/schemas`, its peer dependency on zod is `^4.1.8`, and a
   failure from the API comes back as `{ error: { code, detail, retry_after_seconds } }` instead of

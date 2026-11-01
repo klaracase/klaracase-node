@@ -9,7 +9,8 @@ export const CITATIONS_MAX_PAGES = 20;
 /** Options of the paging iterators. */
 export interface PageOptions extends RequestOptions {
   /**
-   * The most pages to fetch. Required. Paging adds no credits (one charge per query and month),
+   * The most pages to fetch. Required. Paging the same query within a credit period costs no extra credits (a changed query, filter or
+   * mode is a new charge; check `credits` on each response),
    * but every page is a call: it counts against the rate limit and the daily volume cap, and it
    * takes time. A value above the endpoint's last page (10 for search, 20 for citations) counts
    * as that page.

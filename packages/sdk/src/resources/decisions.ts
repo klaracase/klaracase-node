@@ -262,8 +262,9 @@ export class Decisions {
   }
 
   /**
-   * Search decisions page by page, as an async iterator of pages. Paging adds no credits: the
-   * search costs 1 credit per distinct query and filter set per month. Each page is still a call,
+   * Search decisions page by page, as an async iterator of pages. Paging the same query within a credit period costs no extra credits.
+   * A changed query, filter or mode is a new charge. Check `credits` on each response.
+   * The search costs 1 credit per distinct query, filter set and mode. Each page is still a call,
    * with its own share of the rate limit and the daily volume cap, so `maxPages` is required. It
    * stops when a page has no results or after `maxPages` pages, and never goes past page 10. A
    * `page` in `filters` is the first page.
@@ -303,7 +304,9 @@ export class Decisions {
 
   /**
    * Read the citation graph around one decision page by page, as an async iterator of pages.
-   * Paging adds no credits: the graph costs 2 credits per decision, direction and depth per month.
+   * Paging the same query within a credit period costs no extra credits.
+   * A changed query, filter or mode is a new charge. Check `credits` on each response.
+   * The graph costs 2 credits per decision, direction and depth per period.
    * Each page is still a call, with its own share of the rate limit and the daily volume cap, so
    * `maxPages` is required. It stops when no direction has another page, when a page is empty, or
    * after `maxPages` pages, and never goes past page 20. A `page` in `options` is the first page.
