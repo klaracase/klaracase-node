@@ -32,6 +32,16 @@ export {
   type ProblemInit,
 } from "./errors.js";
 export type * from "./types.js";
+export {
+  BRANCHES,
+  CITATION_DIRECTIONS,
+  CITED_STATUTES,
+  DECISION_SECTIONS,
+  DOCUMENT_TYPES,
+  FACET_FIELDS,
+  MAX_CITED_STATUTES,
+  SEARCH_MODES,
+} from "./enums.js";
 export { getExtra } from "./response.js";
 export {
   assertComplete,

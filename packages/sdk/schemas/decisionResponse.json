@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "api_version": {
+      "type": "string"
+    },
+    "changelog_url": {
+      "type": "string"
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "metered": {
+          "type": "boolean"
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "credits_remaining": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "metered",
+        "cost",
+        "credits_remaining"
+      ],
+      "additionalProperties": {}
+    },
+    "ignored_parameters": {},
+    "id": {
+      "type": "string"
+    },
+    "aktenzeichen": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "court": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "jurisdiction": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Known values: Urteil, Beschluss, Verfügung, Sonstige, Gerichtsbescheid, Schlussanträge. Other strings may appear in later releases."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ecli": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "file_numbers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "document_type",
+        "ecli",
+        "file_numbers"
+      ],
+      "additionalProperties": {}
+    },
+    "fortgeltung_checked": {
+      "type": "boolean"
+    },
+    "fortgeltung_note": {
+      "type": "string"
+    },
+    "full_text": {
+      "type": "string"
+    },
+    "text_length": {
+      "type": "number"
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "rn_source": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "Known values: printed. Other strings may appear in later releases."
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "rn_source_note": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "available_sections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "available_range": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "rn_from": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "rn_to": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "rn_source": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "description": "Known values: printed. Other strings may appear in later releases."
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "rn_from",
+            "rn_to",
+            "rn_source"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "available_range_scope": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "Known values: decision. Other strings may appear in later releases."
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "has_rn_anchors": {
+      "type": "boolean"
+    },
+    "returned_range": {
+      "type": "object",
+      "properties": {
+        "section_heading": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rn_from": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "rn_to": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": {}
+    }
+  },
+  "required": [
+    "api_version",
+    "changelog_url",
+    "credits",
+    "id",
+    "aktenzeichen",
+    "court",
+    "date",
+    "jurisdiction",
+    "metadata",
+    "fortgeltung_checked",
+    "fortgeltung_note",
+    "full_text",
+    "text_length",
+    "truncated",
+    "rn_source",
+    "rn_source_note",
+    "available_sections",
+    "available_range",
+    "available_range_scope",
+    "has_rn_anchors"
+  ],
+  "additionalProperties": {},
+  "title": "decisionResponse"
+}

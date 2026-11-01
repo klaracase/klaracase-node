@@ -9,43 +9,31 @@
  * {@link Open}, because the API may add a value in a minor release.
  */
 
+import type {
+  BRANCHES,
+  CITATION_DIRECTIONS,
+  CITED_STATUTES,
+  DOCUMENT_TYPES,
+  SEARCH_MODES,
+} from "./enums.js";
+
 /** A string union that still accepts values the API may add later. */
 export type Open<T extends string> = T | (string & {});
 
 /** Court jurisdiction (Gerichtsbarkeit). It is not a legal subject area. */
-export type Branch =
-  | "ordentlich"
-  | "verwaltung"
-  | "sozial"
-  | "arbeit"
-  | "finanz"
-  | "verfassung"
-  | "patent"
-  | "unbekannt";
+export type Branch = (typeof BRANCHES)[number];
 
 /** Retrieval mode of a search. */
-export type SearchMode = "keyword" | "semantic" | "hybrid";
+export type SearchMode = (typeof SEARCH_MODES)[number];
 
 /** Document type of a decision. */
-export type DocumentType =
-  "Urteil" | "Beschluss" | "Verfügung" | "Sonstige" | "Gerichtsbescheid" | "Schlussanträge";
+export type DocumentType = (typeof DOCUMENT_TYPES)[number];
 
 /** Statutes the `cited_statutes` filter accepts. */
-export type CitedStatute =
-  | "StGB"
-  | "StPO"
-  | "InsO"
-  | "DSGVO"
-  | "GDPR"
-  | "BDSG"
-  | "BauGB"
-  | "BBauG"
-  | "BauNVO"
-  | "StVG"
-  | "StVO";
+export type CitedStatute = (typeof CITED_STATUTES)[number];
 
 /** Direction of the citation graph around a decision. */
-export type CitationDirection = "outgoing" | "incoming" | "both";
+export type CitationDirection = (typeof CITATION_DIRECTIONS)[number];
 
 /** Verdict of one citation in a citation check. The list is in {@link CITATION_VERDICTS}. */
 export type CitationVerdict = Open<

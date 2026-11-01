@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "metered": {
+      "type": "boolean"
+    },
+    "cost": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "credits_remaining": {
+      "type": [
+        "number",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "metered",
+    "cost",
+    "credits_remaining"
+  ],
+  "additionalProperties": {},
+  "title": "credits"
+}

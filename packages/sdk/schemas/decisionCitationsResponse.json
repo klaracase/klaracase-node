@@ -1,0 +1,411 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "api_version": {
+      "type": "string"
+    },
+    "changelog_url": {
+      "type": "string"
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "metered": {
+          "type": "boolean"
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "credits_remaining": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "metered",
+        "cost",
+        "credits_remaining"
+      ],
+      "additionalProperties": {}
+    },
+    "ignored_parameters": {},
+    "source": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "aktenzeichen": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "court": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "aktenzeichen",
+        "court",
+        "date"
+      ],
+      "additionalProperties": {}
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "reference_canonical": {
+            "type": "string"
+          },
+          "reference_role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "Known values: leitentscheidung. Other strings may appear in later releases."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "resolution_status": {
+            "type": "string",
+            "description": "Known values: resolved, unresolved. Other strings may appear in later releases."
+          },
+          "in_corpus": {
+            "type": "boolean"
+          },
+          "corpus": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "artifact_id": {
+                    "type": "string"
+                  },
+                  "court": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "date": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "az": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "document_type": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "ecli": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "corpus_url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "artifact_id",
+                  "court",
+                  "date",
+                  "az",
+                  "document_type",
+                  "ecli",
+                  "corpus_url"
+                ],
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "from_artifact_id": {
+            "type": "string"
+          },
+          "hop": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "reference_canonical",
+          "reference_role",
+          "resolution_status",
+          "in_corpus",
+          "corpus",
+          "from_artifact_id"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "referenced_by": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "reference_canonical": {
+            "type": "string"
+          },
+          "reference_role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "Known values: leitentscheidung. Other strings may appear in later releases."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "resolution_status": {
+            "type": "string",
+            "description": "Known values: resolved, unresolved. Other strings may appear in later releases."
+          },
+          "in_corpus": {
+            "type": "boolean"
+          },
+          "corpus": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "artifact_id": {
+                    "type": "string"
+                  },
+                  "court": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "date": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "az": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "document_type": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "ecli": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "corpus_url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "artifact_id",
+                  "court",
+                  "date",
+                  "az",
+                  "document_type",
+                  "ecli",
+                  "corpus_url"
+                ],
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "from_artifact_id": {
+            "type": "string"
+          },
+          "hop": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "reference_canonical",
+          "reference_role",
+          "resolution_status",
+          "in_corpus",
+          "corpus",
+          "from_artifact_id"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "served_direction": {
+      "type": "string",
+      "description": "Known values: outgoing, incoming, both. Other strings may appear in later releases."
+    },
+    "served_references_total": {
+      "type": "number"
+    },
+    "served_referenced_by_total": {
+      "type": "number"
+    },
+    "references_total": {
+      "type": "number"
+    },
+    "references_resolved_total": {
+      "type": "number"
+    },
+    "referenced_by_total": {
+      "type": "number"
+    },
+    "references_unresolved_total": {
+      "type": "number"
+    },
+    "references_withheld_reasons": {
+      "type": "array",
+      "items": {}
+    },
+    "totals_scope": {
+      "type": "string",
+      "description": "Known values: source_decision_hop_1. Other strings may appear in later releases."
+    },
+    "per_direction_cap": {
+      "type": "number"
+    },
+    "unresolved_cap": {
+      "type": "number"
+    },
+    "node_cap": {
+      "type": "number"
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "nodes_omitted": {
+      "type": "number"
+    },
+    "payload_truncated": {
+      "type": "boolean"
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "number"
+        },
+        "page_size": {
+          "type": "number"
+        },
+        "max_page": {
+          "type": "number"
+        },
+        "reachable_distinct_max": {
+          "type": "number"
+        },
+        "references_pages": {
+          "type": "number"
+        },
+        "referenced_by_pages": {
+          "type": "number"
+        },
+        "has_more_references": {
+          "type": "boolean"
+        },
+        "has_more_referenced_by": {
+          "type": "boolean"
+        },
+        "applies_at_depth": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 1
+            },
+            {
+              "type": "number",
+              "const": 2
+            }
+          ]
+        }
+      },
+      "required": [
+        "page",
+        "page_size",
+        "max_page",
+        "reachable_distinct_max",
+        "references_pages",
+        "referenced_by_pages",
+        "has_more_references",
+        "has_more_referenced_by",
+        "applies_at_depth"
+      ],
+      "additionalProperties": {}
+    },
+    "fortgeltung_checked": {
+      "type": "boolean"
+    },
+    "fortgeltung_note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "api_version",
+    "changelog_url",
+    "credits",
+    "source",
+    "references",
+    "referenced_by",
+    "served_direction",
+    "served_references_total",
+    "served_referenced_by_total",
+    "references_total",
+    "references_resolved_total",
+    "referenced_by_total",
+    "references_unresolved_total",
+    "references_withheld_reasons",
+    "totals_scope",
+    "per_direction_cap",
+    "unresolved_cap",
+    "node_cap",
+    "truncated",
+    "nodes_omitted",
+    "payload_truncated",
+    "pagination",
+    "fortgeltung_checked",
+    "fortgeltung_note"
+  ],
+  "additionalProperties": {},
+  "title": "decisionCitationsResponse"
+}

@@ -1,7 +1,11 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: {
+    index: "src/index.ts",
+    schemas: "src/schemas/index.ts",
+    tools: "src/tools/index.ts",
+  },
   format: ["esm", "cjs"],
   dts: true,
   tsconfig: "tsconfig.build.json",

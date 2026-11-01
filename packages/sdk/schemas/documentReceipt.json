@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "api_version": {
+      "type": "string"
+    },
+    "changelog_url": {
+      "type": "string"
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "metered": {
+          "type": "boolean"
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "credits_remaining": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "metered",
+        "cost",
+        "credits_remaining"
+      ],
+      "additionalProperties": {}
+    },
+    "ignored_parameters": {},
+    "id": {
+      "type": "string"
+    },
+    "filename": {
+      "type": "string"
+    },
+    "format": {
+      "type": "string",
+      "description": "Known values: pdf, docx, md, txt. Other strings may appear in later releases."
+    },
+    "status": {
+      "type": "string",
+      "description": "Known values: uploaded, extracting, ocr_pending, ready, failed. Other strings may appear in later releases."
+    },
+    "char_count": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "page_count": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "pages_without_text_layer": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "check_max_chars": {
+      "type": "number"
+    },
+    "quoted_credits": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "error_code": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "Known values: document_too_long, unsupported_format_pending, corrupted_document, zip_bomb_rejected, encrypted_pdf, scanned_pdf, pdf_text_garbled, extraction_failed. Other strings may appear in later releases."
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "expires_at": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "api_version",
+    "changelog_url",
+    "credits",
+    "id",
+    "filename",
+    "format",
+    "status",
+    "char_count",
+    "page_count",
+    "pages_without_text_layer",
+    "check_max_chars",
+    "quoted_credits",
+    "error_code",
+    "expires_at",
+    "created_at"
+  ],
+  "additionalProperties": {},
+  "title": "documentReceipt"
+}

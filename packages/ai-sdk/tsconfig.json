@@ -1,7 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "paths": { "@klaracase/sdk": ["../sdk/src/index.ts"] }
+    "paths": {
+      "@klaracase/sdk": ["../sdk/src/index.ts"],
+      "@klaracase/sdk/schemas": ["../sdk/src/schemas/index.ts"],
+      "@klaracase/sdk/tools": ["../sdk/src/tools/index.ts"]
+    }
   },
   "include": ["src", "tests", "tsdown.config.ts", "vitest.config.ts"]
 }

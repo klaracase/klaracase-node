@@ -6,7 +6,10 @@
       "@klaracase/sdk": ["./packages/sdk/src/index.ts"],
       "@klaracase/ai-sdk": ["./packages/ai-sdk/src/index.ts"],
       "ai": ["./packages/ai-sdk/node_modules/ai"],
-      "zod": ["./packages/ai-sdk/node_modules/zod"]
+      "zod": ["./packages/ai-sdk/node_modules/zod"],
+      "@klaracase/sdk/schemas": ["./packages/sdk/src/schemas/index.ts"],
+      "@klaracase/sdk/tools": ["./packages/sdk/src/tools/index.ts"],
+      "zod/mini": ["./packages/sdk/node_modules/zod/mini"]
     }
   },
   "include": ["readme-check", "scripts/readme-ambient.d.ts"]

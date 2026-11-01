@@ -1,5 +1,6 @@
 import { encodePathSegment } from "../encoding.js";
 import { ValidationError } from "../errors.js";
+import type { DECISION_SECTIONS } from "../enums.js";
 import type { Transport } from "../http.js";
 import {
   CITATIONS_MAX_PAGES,
@@ -101,7 +102,7 @@ export interface DecisionGetOptions {
   /** Last Randnummer to return, inclusive. */
   rn_to?: number | undefined;
   /** `Tenor`, `Leitsatz`, `Tatbestand` or `Gründe`, in any case. */
-  section?: Open<"Tenor" | "Leitsatz" | "Tatbestand" | "Gründe"> | undefined;
+  section?: Open<(typeof DECISION_SECTIONS)[number]> | undefined;
   /** Disambiguates an Aktenzeichen. Ignored for a UUID. */
   court?: string | undefined;
   /** `YYYY-MM-DD`. Disambiguates an Aktenzeichen. Ignored for a UUID. */

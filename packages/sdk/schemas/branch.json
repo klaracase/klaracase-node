@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "ordentlich",
+    "verwaltung",
+    "sozial",
+    "arbeit",
+    "finanz",
+    "verfassung",
+    "patent",
+    "unbekannt"
+  ],
+  "description": "Court jurisdiction (Gerichtsbarkeit), not the legal subject area.",
+  "title": "branch"
+}

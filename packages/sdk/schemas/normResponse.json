@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "api_version": {
+      "type": "string"
+    },
+    "changelog_url": {
+      "type": "string"
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "metered": {
+          "type": "boolean"
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "credits_remaining": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "metered",
+        "cost",
+        "credits_remaining"
+      ],
+      "additionalProperties": {}
+    },
+    "ignored_parameters": {},
+    "reference": {
+      "type": "string"
+    },
+    "requested_reference": {
+      "type": "string"
+    },
+    "law": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "abbreviation": {
+          "type": "string"
+        },
+        "source_abbreviation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "official_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "law_level": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Known values: BUND, EU. Other strings may appear in later releases."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jurisdiction": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Known values: DE, EU. Other strings may appear in later releases."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "upstream_status": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Known values: confirmed. Other strings may appear in later releases."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "upstream_last_seen_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "upstream_missing_since": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "abbreviation",
+        "source_abbreviation",
+        "official_name",
+        "law_level",
+        "jurisdiction",
+        "source_url",
+        "upstream_status",
+        "upstream_last_seen_at",
+        "upstream_missing_since"
+      ],
+      "additionalProperties": {}
+    },
+    "norm": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lifecycle": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Known values: current. Other strings may appear in later releases."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "absatz_identifiers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "chars": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "number",
+        "title",
+        "lifecycle",
+        "text",
+        "absatz_identifiers",
+        "chars"
+      ],
+      "additionalProperties": {}
+    },
+    "requested_qualifiers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "checked": {
+            "type": "boolean"
+          },
+          "present": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "type",
+          "value",
+          "checked",
+          "present"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "version": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "last_amendment_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_amendment_date_basis": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Known values: source_stand. Other strings may appear in later releases."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_fetched_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_last_seen_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "last_amendment_date",
+        "last_amendment_date_basis",
+        "source_fetched_at",
+        "source_last_seen_at"
+      ],
+      "additionalProperties": {}
+    },
+    "neighbours": {
+      "type": "object",
+      "properties": {
+        "previous": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "next": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "previous",
+        "next"
+      ],
+      "additionalProperties": {}
+    },
+    "links": {
+      "type": "object",
+      "properties": {
+        "decisions_citing": {
+          "type": "object",
+          "properties": {
+            "tool": {
+              "type": "string"
+            },
+            "arguments": {
+              "type": "object",
+              "properties": {
+                "cited_norm": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "cited_norm"
+              ],
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "tool",
+            "arguments"
+          ],
+          "additionalProperties": {}
+        },
+        "decisions_citing_url": {
+          "type": "string"
+        },
+        "self_url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decisions_citing",
+        "decisions_citing_url",
+        "self_url"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "required": [
+    "api_version",
+    "changelog_url",
+    "credits",
+    "reference",
+    "requested_reference",
+    "law",
+    "norm",
+    "requested_qualifiers",
+    "version",
+    "neighbours",
+    "links"
+  ],
+  "additionalProperties": {},
+  "title": "normResponse"
+}

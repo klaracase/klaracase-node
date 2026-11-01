@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "reference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120,
+      "description": "The norm as cited, for example § 535 BGB or Art. 6 DSGVO."
+    },
+    "jurisdiction": {
+      "type": "string",
+      "description": "Only used when the abbreviation is ambiguous. Known values: DE, EU. Other strings may appear in later releases."
+    }
+  },
+  "required": [
+    "reference"
+  ],
+  "additionalProperties": false,
+  "title": "getNormInput"
+}

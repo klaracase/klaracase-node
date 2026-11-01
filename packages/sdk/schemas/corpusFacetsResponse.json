@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "api_version": {
+      "type": "string"
+    },
+    "changelog_url": {
+      "type": "string"
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "metered": {
+          "type": "boolean"
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "credits_remaining": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "metered",
+        "cost",
+        "credits_remaining"
+      ],
+      "additionalProperties": {}
+    },
+    "ignored_parameters": {},
+    "field": {
+      "type": "string",
+      "description": "Known values: court_name, court_branch, document_type, jurisdiction, law_type, cited_norms. Other strings may appear in later releases."
+    },
+    "applies_to": {
+      "type": "string",
+      "description": "Known values: DECISION, LAW. Other strings may appear in later releases."
+    },
+    "values": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number"
+          },
+          "is_floor": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "value",
+          "is_floor"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "total_values": {
+      "type": "number"
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "value_limit": {
+      "type": "number"
+    },
+    "count_basis": {
+      "type": "string",
+      "description": "Known values: indexed_passages. Other strings may appear in later releases."
+    },
+    "as_of": {
+      "type": "string"
+    },
+    "norm": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "api_version",
+    "changelog_url",
+    "credits",
+    "field",
+    "applies_to",
+    "values",
+    "total_values",
+    "truncated",
+    "value_limit",
+    "count_basis",
+    "as_of"
+  ],
+  "additionalProperties": {},
+  "title": "corpusFacetsResponse"
+}

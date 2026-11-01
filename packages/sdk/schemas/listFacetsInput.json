@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "field": {
+      "type": "string",
+      "description": "The facet field to count. Known values: court_name, court_branch, document_type, jurisdiction, law_type, cited_norms. Other strings may appear in later releases."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "decision",
+        "law"
+      ],
+      "description": "Restrict the counts to one artifact type."
+    },
+    "norm": {
+      "type": "string",
+      "description": "Required for the field cited_norms: the norm whose family to list."
+    },
+    "prefix": {
+      "type": "string",
+      "description": "Case-insensitive prefix filter on the value."
+    }
+  },
+  "required": [
+    "field"
+  ],
+  "additionalProperties": false,
+  "title": "listFacetsInput"
+}

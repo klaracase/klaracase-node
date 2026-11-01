@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "jurisdiction": {
+      "type": "string",
+      "description": "Only used when the abbreviation is ambiguous. Known values: DE, EU. Other strings may appear in later releases."
+    }
+  },
+  "additionalProperties": false,
+  "title": "normGetOptions"
+}

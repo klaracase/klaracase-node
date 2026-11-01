@@ -1,193 +1,127 @@
-import type { Klaracase } from "@klaracase/sdk";
-import { tool } from "ai";
-import { z } from "zod";
+import {
+  checkCitationsInputSchema,
+  getDecisionInputSchema,
+  getNormInputSchema,
+  searchDecisionsInputSchema,
+} from "@klaracase/sdk/schemas";
+import {
+  callTool,
+  tools,
+  type CallToolOptions,
+  type ToolClient,
+  type ToolName,
+} from "@klaracase/sdk/tools";
+import { jsonSchema, tool, type JSONSchema7, type Tool } from "ai";
+import * as z from "zod/mini";
 
-/** The parts of the Klaracase client that the tools call. A mock can stand in for it. */
-export interface KlaracaseToolClient {
-  decisions: Pick<Klaracase["decisions"], "search" | "get">;
-  norms: Pick<Klaracase["norms"], "get">;
-  citationChecks: Pick<Klaracase["citationChecks"], "create">;
-}
+/** The parts of the Klaracase client that the tools call. A test double can stand in for it. */
+export type KlaracaseToolClient = ToolClient;
 
-export type KlaracaseToolName = "searchDecisions" | "getDecision" | "getNorm" | "checkCitations";
+export type { CallToolOptions, ToolBudget, ToolName } from "@klaracase/sdk/tools";
+export type KlaracaseToolName = ToolName;
 
-export interface KlaracaseToolsOptions<K extends KlaracaseToolName = KlaracaseToolName> {
+/** Input schema of the `searchDecisions` tool. Mirrors `GET /decisions/search`. */
+export const searchDecisionsInput: typeof searchDecisionsInputSchema = searchDecisionsInputSchema;
+/** Input schema of the `getDecision` tool. Mirrors `GET /decisions/{id}`. */
+export const getDecisionInput: typeof getDecisionInputSchema = getDecisionInputSchema;
+/** Input schema of the `getNorm` tool. Mirrors `GET /norms/{reference}`. */
+export const getNormInput: typeof getNormInputSchema = getNormInputSchema;
+/** Input schema of the `checkCitations` tool. Mirrors `POST /citation-checks` with `text`. */
+export const checkCitationsInput: typeof checkCitationsInputSchema = checkCitationsInputSchema;
+
+/**
+ * Options of {@link klaracaseTools}. `maxChars` and `budget` are the options of `callTool`.
+ */
+export interface KlaracaseToolsOptions<K extends ToolName = ToolName> extends Pick<
+  CallToolOptions,
+  "maxChars" | "budget" | "timeout" | "maxRetries" | "headers"
+> {
   /** Names of the tools to return. Default: all four. */
-  tools?: readonly K[];
+  tools?: readonly K[] | undefined;
 }
 
-const branch = z.enum([
-  "ordentlich",
-  "verwaltung",
-  "sozial",
-  "arbeit",
-  "finanz",
-  "verfassung",
-  "patent",
-  "unbekannt",
-]);
+function definitionOf(name: ToolName) {
+  const definition = tools.find((candidate) => candidate.name === name);
+  if (definition === undefined) throw new Error(`Unknown Klaracase tool: ${name}`);
+  return definition;
+}
 
-const date = (what: string) =>
-  z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .describe(what);
+/**
+ * The input schema of a tool for the AI SDK: the JSON Schema that ships with
+ * `@klaracase/sdk/tools`, and the zod schema to validate the arguments the model produced.
+ * The JSON Schema comes from the shipped files because the AI SDK cannot convert the open enums
+ * of the zod schemas.
+ */
+function inputSchemaOf<S extends z.ZodMiniType>(name: ToolName, schema: S) {
+  return jsonSchema<z.infer<S>>(definitionOf(name).inputSchema as JSONSchema7, {
+    validate: (value) => {
+      const parsed = z.safeParse(schema, value);
+      if (parsed.success) return { success: true, value: parsed.data };
+      return { success: false, error: new Error(z.prettifyError(parsed.error)) };
+    },
+  });
+}
 
-/** Input of the `searchDecisions` tool. Mirrors `GET /decisions/search`. */
-export const searchDecisionsInput = z.object({
-  query: z
-    .string()
-    .min(2)
-    .max(500)
-    .describe("Search query in German legal-concept phrasing, 2 to 500 characters."),
-  court: z.string().max(100).optional().describe("Court name, for example BGH."),
-  branch: branch
-    .optional()
-    .describe("Court jurisdiction (Gerichtsbarkeit), not the legal subject area."),
-  document_type: z
-    .enum(["Urteil", "Beschluss", "Verfügung", "Sonstige", "Gerichtsbescheid", "Schlussanträge"])
-    .optional()
-    .describe("Restrict to one document type."),
-  cited_norm: z
-    .string()
-    .max(120)
-    .optional()
-    .describe("Decisions that cite this norm, for example § 906 BGB."),
-  cited_statutes: z
-    .array(
-      z.enum([
-        "StGB",
-        "StPO",
-        "InsO",
-        "DSGVO",
-        "GDPR",
-        "BDSG",
-        "BauGB",
-        "BBauG",
-        "BauNVO",
-        "StVG",
-        "StVO",
-      ]),
-    )
-    .optional()
-    .describe("Decisions that cite any section of these statutes."),
-  date_from: date("Earliest decision date, YYYY-MM-DD.").optional(),
-  date_to: date("Latest decision date, YYYY-MM-DD.").optional(),
-  mode: z
-    .enum(["keyword", "semantic", "hybrid"])
-    .optional()
-    .describe("Retrieval mode. Default hybrid."),
-  limit: z
-    .number()
-    .int()
-    .min(1)
-    .max(20)
-    .optional()
-    .describe("Maximum results. Default and cap: 20."),
-  page: z.number().int().min(1).max(10).optional().describe("Page number, 1 to 10."),
-  bridge: z
-    .boolean()
-    .optional()
-    .describe("Let the server add legal-register terms to the query. Default true."),
-});
+/** The four tools, typed by the zod schemas of their input. */
+export interface KlaracaseTools {
+  searchDecisions: Tool<z.infer<typeof searchDecisionsInputSchema>, unknown>;
+  getDecision: Tool<z.infer<typeof getDecisionInputSchema>, unknown>;
+  getNorm: Tool<z.infer<typeof getNormInputSchema>, unknown>;
+  checkCitations: Tool<z.infer<typeof checkCitationsInputSchema>, unknown>;
+}
 
-/** Input of the `getDecision` tool. Mirrors `GET /decisions/{id}`. */
-export const getDecisionInput = z.object({
-  id: z.string().min(1).describe("A decision UUID, an Aktenzeichen or an ECLI."),
-  section: z
-    .enum(["Tenor", "Leitsatz", "Tatbestand", "Gründe"])
-    .optional()
-    .describe("Return only this section."),
-  rn_from: z.number().int().min(1).optional().describe("First Randnummer to return."),
-  rn_to: z.number().int().min(1).optional().describe("Last Randnummer to return, inclusive."),
-  max_chars: z
-    .number()
-    .int()
-    .min(500)
-    .optional()
-    .describe("Maximum characters of text. Default 40000."),
-  court: z.string().optional().describe("Court short form, to disambiguate an Aktenzeichen."),
-  date: date("Decision date, to disambiguate an Aktenzeichen.").optional(),
-});
+function buildTools(client: ToolClient, options: CallToolOptions): KlaracaseTools {
+  /** Run the tool through `callTool`. The AI SDK abort signal cancels the request. */
+  const run = (name: ToolName, input: unknown, abortSignal: AbortSignal | undefined) =>
+    callTool(client, name, input, { ...options, signal: abortSignal });
 
-/** Input of the `getNorm` tool. Mirrors `GET /norms/{reference}`. */
-export const getNormInput = z.object({
-  reference: z
-    .string()
-    .min(1)
-    .max(120)
-    .describe("The norm as cited, for example § 535 BGB or Art. 6 DSGVO."),
-  jurisdiction: z
-    .enum(["DE", "EU"])
-    .optional()
-    .describe("Only used when the abbreviation is ambiguous."),
-});
-
-/** Input of the `checkCitations` tool. Mirrors `POST /citation-checks` with `text`. */
-export const checkCitationsInput = z.object({
-  text: z
-    .string()
-    .min(50)
-    .max(20000)
-    .describe("The German legal text to check, 50 to 20,000 characters."),
-  reference_date: date(
-    "Document date, YYYY-MM-DD. Applied to statute citations that name no date.",
-  ).optional(),
-});
-
-function buildTools(client: KlaracaseToolClient) {
   return {
     searchDecisions: tool({
-      description:
-        "Search German court decisions. Phrase the query as German legal concepts. Costs 1 credit per distinct search and month. Returns results with Aktenzeichen, court, date and snippets.",
-      inputSchema: searchDecisionsInput,
-      execute: async ({ query, ...filters }) => client.decisions.search(query, filters),
+      description: definitionOf("searchDecisions").description,
+      inputSchema: inputSchemaOf("searchDecisions", searchDecisionsInput),
+      execute: async (input, { abortSignal }) => run("searchDecisions", input, abortSignal),
     }),
     getDecision: tool({
-      description:
-        "Read one decision by UUID, Aktenzeichen or ECLI, in full or as one section or Randnummer window. Costs 1 credit per decision and month.",
-      inputSchema: getDecisionInput,
-      execute: async ({ id, ...slice }) => client.decisions.get(id, slice),
+      description: definitionOf("getDecision").description,
+      inputSchema: inputSchemaOf("getDecision", getDecisionInput),
+      execute: async (input, { abortSignal }) => run("getDecision", input, abortSignal),
     }),
     getNorm: tool({
-      description:
-        "Read the current text of one German or EU norm by its citation, for example § 535 BGB. Costs 1 credit per norm and month.",
-      inputSchema: getNormInput,
-      execute: async ({ reference, ...rest }) => client.norms.get(reference, rest),
+      description: definitionOf("getNorm").description,
+      inputSchema: inputSchemaOf("getNorm", getNormInput),
+      execute: async (input, { abortSignal }) => run("getNorm", input, abortSignal),
     }),
     checkCitations: tool({
-      description:
-        "Check every court-decision and statute citation in a German legal text against the corpus. One verdict per citation, with offsets into the text. not_found means not found in the corpus, not invented. Costs 2 to 4 credits by length.",
-      inputSchema: checkCitationsInput,
-      execute: async ({ text, reference_date }) =>
-        client.citationChecks.create(
-          reference_date === undefined ? { text } : { text, reference_date },
-        ),
+      description: definitionOf("checkCitations").description,
+      inputSchema: inputSchemaOf("checkCitations", checkCitationsInput),
+      execute: async (input, { abortSignal }) => run("checkCitations", input, abortSignal),
     }),
   };
 }
 
-type AllTools = ReturnType<typeof buildTools>;
-
 /**
- * Vercel AI SDK tools over a Klaracase client.
+ * Vercel AI SDK tools over a Klaracase client. A thin wrapper over `@klaracase/sdk/tools`: the
+ * descriptions, the input schemas and the dispatch come from there.
  *
  * ```ts
  * const tools = klaracaseTools(new Klaracase(), { tools: ["searchDecisions", "getNorm"] });
  * ```
  *
- * Each tool returns the parsed API body. A tool that fails throws a `KlaracaseError`; the AI SDK
- * reports it to the model as a tool error. Cite only what a tool returned. A `not_found` verdict
- * means the citation was not found in the corpus; it does not mean it is invented.
+ * Each tool returns what `callTool` returns: the API body, trimmed to `maxChars` where it is long
+ * (`checkCitations` returns a slim object). A failure from the API comes back as
+ * `{ error: { code, detail, retry_after_seconds } }`, so the model can read it and decide. The AI
+ * SDK `abortSignal` cancels the request. `cited_statutes` takes at most 5 statutes, like the
+ * server. Cite only what a tool returned. A `not_found` verdict means the citation was not found
+ * in the corpus; it does not mean it is invented.
  */
-export function klaracaseTools<K extends KlaracaseToolName = KlaracaseToolName>(
-  client: KlaracaseToolClient,
+export function klaracaseTools<K extends ToolName = ToolName>(
+  client: ToolClient,
   options: KlaracaseToolsOptions<K> = {},
-): Pick<AllTools, K> {
-  const all = buildTools(client);
-  const names = options.tools ?? (Object.keys(all) as K[]);
-  const picked = {} as Pick<AllTools, K>;
-  for (const name of names) {
+): Pick<KlaracaseTools, K> {
+  const { tools: names, ...callOptions } = options;
+  const all = buildTools(client, callOptions);
+  const picked = {} as Pick<KlaracaseTools, K>;
+  for (const name of names ?? (Object.keys(all) as K[])) {
     if (!(name in all)) throw new Error(`Unknown Klaracase tool: ${String(name)}`);
     picked[name] = all[name];
   }

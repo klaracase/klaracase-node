@@ -1,0 +1,435 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "api_version": {
+      "type": "string"
+    },
+    "changelog_url": {
+      "type": "string"
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "metered": {
+          "type": "boolean"
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "credits_remaining": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "metered",
+        "cost",
+        "credits_remaining"
+      ],
+      "additionalProperties": {}
+    },
+    "ignored_parameters": {},
+    "total_decisions": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "is_floor": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "value",
+        "is_floor"
+      ],
+      "additionalProperties": {}
+    },
+    "branches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "branch": {
+            "type": "string",
+            "description": "Known values: ordentlich, verwaltung, sozial, arbeit, finanz, verfassung, patent, unbekannt. Other strings may appear in later releases."
+          },
+          "count": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "is_floor": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "value",
+              "is_floor"
+            ],
+            "additionalProperties": {}
+          },
+          "earliest": {
+            "type": "string"
+          },
+          "latest": {
+            "type": "string"
+          },
+          "court_founding_year": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "court_founding_basis": {
+            "type": "string",
+            "description": "Known values: branch_wide_weakest_court_floor. Other strings may appear in later releases."
+          },
+          "has_dates_below_floor": {
+            "type": "boolean"
+          },
+          "instance_mix": {
+            "type": "object",
+            "properties": {
+              "federal": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "is_floor": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "value",
+                  "is_floor"
+                ],
+                "additionalProperties": {}
+              },
+              "appellate": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "is_floor": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "value",
+                  "is_floor"
+                ],
+                "additionalProperties": {}
+              },
+              "first_instance_and_regional": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "is_floor": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "value",
+                  "is_floor"
+                ],
+                "additionalProperties": {}
+              },
+              "other": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "is_floor": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "value",
+                  "is_floor"
+                ],
+                "additionalProperties": {}
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "federal",
+              "appellate",
+              "first_instance_and_regional",
+              "other",
+              "note"
+            ],
+            "additionalProperties": {}
+          },
+          "top_courts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "court": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "number"
+                    },
+                    "is_floor": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "is_floor"
+                  ],
+                  "additionalProperties": {}
+                },
+                "earliest": {
+                  "type": "string"
+                },
+                "latest": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "court",
+                "count",
+                "earliest",
+                "latest"
+              ],
+              "additionalProperties": {}
+            }
+          }
+        },
+        "required": [
+          "branch",
+          "count",
+          "earliest",
+          "latest",
+          "court_founding_year",
+          "court_founding_basis",
+          "has_dates_below_floor",
+          "instance_mix",
+          "top_courts"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "courts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "court": {
+            "type": "string"
+          },
+          "count": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "is_floor": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "value",
+              "is_floor"
+            ],
+            "additionalProperties": {}
+          },
+          "earliest": {
+            "type": "string"
+          },
+          "latest": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string",
+            "description": "Known values: ordentlich, verwaltung, sozial, arbeit, finanz, verfassung, patent, unbekannt. Other strings may appear in later releases."
+          },
+          "court_founding_year": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "court_founding_basis": {
+            "type": "string",
+            "description": "Known values: court_floor. Other strings may appear in later releases."
+          },
+          "has_dates_below_floor": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "court",
+          "count",
+          "earliest",
+          "latest",
+          "branch",
+          "court_founding_year",
+          "court_founding_basis",
+          "has_dates_below_floor"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "courts_returned": {
+      "type": "number"
+    },
+    "courts_total": {
+      "type": "number"
+    },
+    "corpus_floors": {
+      "type": "string"
+    },
+    "coverage_ranges": {
+      "type": "object",
+      "properties": {
+        "note": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string",
+          "description": "Known values: all. Other strings may appear in later releases."
+        },
+        "verified_at": {
+          "type": "string"
+        },
+        "ranges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bucket": {
+                "type": "string"
+              },
+              "court": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "from": {
+                "type": "string"
+              },
+              "until": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "exhaustive": {
+                "type": "boolean"
+              },
+              "ocr": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "string"
+              },
+              "holdings_earliest": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "bucket",
+              "court",
+              "label",
+              "from",
+              "until",
+              "sources",
+              "exhaustive",
+              "ocr",
+              "note",
+              "holdings_earliest"
+            ],
+            "additionalProperties": {}
+          }
+        }
+      },
+      "required": [
+        "note",
+        "scope",
+        "verified_at",
+        "ranges"
+      ],
+      "additionalProperties": {}
+    },
+    "as_of": {
+      "type": "string"
+    },
+    "filter_coverage_caveats": {
+      "type": "string"
+    },
+    "law_coverage": {
+      "type": "object",
+      "properties": {
+        "note": {
+          "type": "string"
+        },
+        "eu": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "international": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "note",
+        "eu",
+        "international"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "required": [
+    "api_version",
+    "changelog_url",
+    "credits",
+    "total_decisions",
+    "branches",
+    "courts",
+    "courts_returned",
+    "courts_total",
+    "corpus_floors",
+    "coverage_ranges",
+    "as_of",
+    "filter_coverage_caveats",
+    "law_coverage"
+  ],
+  "additionalProperties": {},
+  "title": "corpusCoverageResponse"
+}

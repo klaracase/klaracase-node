@@ -1,0 +1,506 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "api_version": {
+      "type": "string"
+    },
+    "changelog_url": {
+      "type": "string"
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "metered": {
+          "type": "boolean"
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "credits_remaining": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "metered",
+        "cost",
+        "credits_remaining"
+      ],
+      "additionalProperties": {}
+    },
+    "ignored_parameters": {},
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "description": "Known values: pending, gating, extracting, resolving, checking_external, complete, rejected, failed. Other strings may appear in later releases."
+    },
+    "source": {
+      "type": "string",
+      "description": "Known values: api_v1. Other strings may appear in later releases."
+    },
+    "progress": {
+      "type": "object",
+      "properties": {
+        "citations_total": {
+          "type": "number"
+        },
+        "citations_checked": {
+          "type": "number"
+        },
+        "unique_citations_total": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "citations_total",
+        "citations_checked",
+        "unique_citations_total"
+      ],
+      "additionalProperties": {}
+    },
+    "verdict_counts": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "partial": {
+      "type": "boolean"
+    },
+    "unverified_count": {
+      "type": "number"
+    },
+    "reason_counts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Known values: statute_unknown. Other strings may appear in later releases."
+          },
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "category",
+          "count"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "unique_citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key_basis": {
+            "type": "string",
+            "description": "Known values: matched_decision, canonical. Other strings may appear in later releases."
+          },
+          "target_artifact_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "canonical": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "spellings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "occurrences": {
+            "type": "number"
+          },
+          "verdict": {
+            "type": "string",
+            "description": "Known values: verified_corpus, verified_external, not_found, out_of_coverage, ambiguous, unverifiable, discrepancy. Other strings may appear in later releases."
+          },
+          "reference_type": {
+            "type": "string",
+            "description": "Known values: case, statute. Other strings may appear in later releases."
+          }
+        },
+        "required": [
+          "key_basis",
+          "target_artifact_id",
+          "canonical",
+          "spellings",
+          "occurrences",
+          "verdict",
+          "reference_type"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "properties": {
+        "detected": {
+          "type": "number"
+        },
+        "dropped": {
+          "type": "number"
+        },
+        "dropped_unreadable": {
+          "type": "number"
+        },
+        "dropped_truncation": {
+          "type": "number"
+        },
+        "dropped_trailing_noun": {
+          "type": "number"
+        },
+        "dropped_stacked_subdivision": {
+          "type": "number"
+        },
+        "dropped_refused_collision": {
+          "type": "number"
+        },
+        "dropped_by_token": {
+          "type": "array",
+          "items": {}
+        },
+        "dropped_unreadable_texts": {
+          "type": "array",
+          "items": {}
+        },
+        "refused_contract_collision": {
+          "type": "array",
+          "items": {}
+        },
+        "not_verifiable": {
+          "type": "number"
+        },
+        "not_verifiable_by_type": {
+          "type": "array",
+          "items": {}
+        },
+        "possible_citations_unparsed": {
+          "type": "number"
+        },
+        "possible_citations_unparsed_texts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "detected",
+        "dropped",
+        "dropped_unreadable",
+        "dropped_truncation",
+        "dropped_trailing_noun",
+        "dropped_stacked_subdivision",
+        "dropped_refused_collision",
+        "dropped_by_token",
+        "dropped_unreadable_texts",
+        "refused_contract_collision",
+        "not_verifiable",
+        "not_verifiable_by_type",
+        "possible_citations_unparsed",
+        "possible_citations_unparsed_texts"
+      ],
+      "additionalProperties": {}
+    },
+    "notes": {
+      "type": "array",
+      "items": {}
+    },
+    "findings_unavailable_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "findings_purged_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "raw_text": {
+            "type": "string"
+          },
+          "canonical": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "description": "Known values: case, statute. Other strings may appear in later releases."
+          },
+          "role": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "verdict": {
+            "type": "string",
+            "description": "Known values: verified_corpus, verified_external, not_found, out_of_coverage, ambiguous, unverifiable, discrepancy. Other strings may appear in later releases."
+          },
+          "external_status": {
+            "type": "string",
+            "description": "Known values: skipped. Other strings may appear in later releases."
+          },
+          "start_offset": {
+            "type": "number"
+          },
+          "end_offset": {
+            "type": "number"
+          },
+          "occurrence_index": {
+            "type": "number"
+          },
+          "confidence": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "matched_decision": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "artifact_id": {
+                    "type": "string"
+                  },
+                  "ecli": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "court": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "date": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "artifact_id",
+                  "ecli",
+                  "court",
+                  "date"
+                ],
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "subdivision_check": {
+            "type": "string",
+            "description": "Known values: not_checked. Other strings may appear in later releases."
+          },
+          "subdivision_advisory": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "check_scope": {
+            "type": "object",
+            "properties": {
+              "subdivision": {
+                "type": "string",
+                "description": "Known values: not_applicable. Other strings may appear in later releases."
+              },
+              "article_text_available": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "article_text_read": {
+                "type": "boolean"
+              },
+              "court": {
+                "type": "string",
+                "description": "Known values: checked. Other strings may appear in later releases."
+              }
+            },
+            "required": [
+              "subdivision",
+              "article_text_available",
+              "article_text_read",
+              "court"
+            ],
+            "additionalProperties": {}
+          },
+          "ambiguity_advisory": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "coverage": {
+            "anyOf": [
+              {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "coverage_boundary": {
+            "anyOf": [
+              {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "coverage_advisory": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "reason": {
+                "type": "string",
+                "description": "Known values: exact_match. Other strings may appear in later releases."
+              },
+              "match_strength": {
+                "type": "string",
+                "description": "Known values: exact. Other strings may appear in later releases."
+              }
+            },
+            "required": [
+              "reason",
+              "match_strength"
+            ],
+            "additionalProperties": {}
+          },
+          "disputed_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "raw_text",
+          "canonical",
+          "type",
+          "role",
+          "verdict",
+          "external_status",
+          "start_offset",
+          "end_offset",
+          "occurrence_index",
+          "confidence",
+          "matched_decision",
+          "subdivision_check",
+          "subdivision_advisory",
+          "check_scope",
+          "ambiguity_advisory",
+          "coverage",
+          "coverage_boundary",
+          "coverage_advisory",
+          "evidence",
+          "disputed_at"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "submitted_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "completed_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "payload_truncated": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "api_version",
+    "changelog_url",
+    "credits",
+    "id",
+    "status",
+    "source",
+    "progress",
+    "verdict_counts",
+    "partial",
+    "unverified_count",
+    "reason_counts",
+    "unique_citations",
+    "extraction",
+    "notes",
+    "findings_unavailable_reason",
+    "findings_purged_at",
+    "findings",
+    "submitted_at",
+    "completed_at",
+    "created_at",
+    "payload_truncated"
+  ],
+  "additionalProperties": {},
+  "title": "citationCheckRun"
+}

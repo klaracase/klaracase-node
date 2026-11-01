@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "description": "Known values: verified_corpus, verified_external, not_found, out_of_coverage, ambiguous, unverifiable, discrepancy. Other strings may appear in later releases.",
+  "title": "citationVerdict"
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "Urteil",
+    "Beschluss",
+    "Verfügung",
+    "Sonstige",
+    "Gerichtsbescheid",
+    "Schlussanträge"
+  ],
+  "description": "Restrict to one document type.",
+  "title": "documentType"
+}

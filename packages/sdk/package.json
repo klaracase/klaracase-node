@@ -30,6 +30,16 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "schemas": [
+        "./dist/schemas.d.ts"
+      ],
+      "tools": [
+        "./dist/tools.d.ts"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "import": {
@@ -41,10 +51,32 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./schemas": {
+      "import": {
+        "types": "./dist/schemas.d.ts",
+        "default": "./dist/schemas.js"
+      },
+      "require": {
+        "types": "./dist/schemas.d.cts",
+        "default": "./dist/schemas.cjs"
+      }
+    },
+    "./tools": {
+      "import": {
+        "types": "./dist/tools.d.ts",
+        "default": "./dist/tools.js"
+      },
+      "require": {
+        "types": "./dist/tools.d.cts",
+        "default": "./dist/tools.cjs"
+      }
+    },
+    "./schemas/*.json": "./schemas/*.json",
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
+    "schemas",
     "README.md",
     "LICENSE"
   ],
@@ -55,14 +87,23 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown && node scripts/generate-json-schemas.mjs && tsdown",
     "test": "vitest run",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.exact.json --noEmit",
     "smoke": "node scripts/smoke.mjs",
     "check-dist": "node scripts/check-dist.mjs",
     "prepack": "node ../../scripts/copy-package-docs.mjs",
     "test:bun": "bun --bun ../../node_modules/vitest/vitest.mjs run",
-    "test:edge": "vitest run --config vitest.edge.config.ts"
+    "test:edge": "vitest run --config vitest.edge.config.ts",
+    "schemas:generate": "tsdown && node scripts/generate-json-schemas.mjs"
+  },
+  "peerDependencies": {
+    "zod": "^4.1.0"
+  },
+  "peerDependenciesMeta": {
+    "zod": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@edge-runtime/vm": "^5.0.0",

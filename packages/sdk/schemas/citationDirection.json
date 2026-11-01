@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "outgoing",
+    "incoming",
+    "both"
+  ],
+  "description": "Which citations to follow. Default both.",
+  "title": "citationDirection"
+}

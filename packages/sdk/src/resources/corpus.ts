@@ -1,4 +1,5 @@
 import { encodePathSegment } from "../encoding.js";
+import type { FACET_FIELDS } from "../enums.js";
 import type { Transport } from "../http.js";
 import type { ApiEnvelope, Branch, Count, Open, RequestOptions, WithMeta } from "../types.js";
 
@@ -81,9 +82,7 @@ export interface CorpusCoverageResponse extends ApiEnvelope {
 }
 
 /** The facet fields the API serves. */
-export type FacetField = Open<
-  "court_name" | "court_branch" | "document_type" | "jurisdiction" | "law_type" | "cited_norms"
->;
+export type FacetField = Open<(typeof FACET_FIELDS)[number]>;
 
 /** Arguments of `GET /corpus/facets/{field}`. */
 export interface CorpusFacetsOptions {

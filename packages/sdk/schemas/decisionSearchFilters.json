@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "court": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Court name as list_facets gives it, for example BGH."
+    },
+    "branch": {
+      "type": "string",
+      "enum": [
+        "ordentlich",
+        "verwaltung",
+        "sozial",
+        "arbeit",
+        "finanz",
+        "verfassung",
+        "patent",
+        "unbekannt"
+      ],
+      "description": "Court jurisdiction (Gerichtsbarkeit), not the legal subject area."
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "Urteil",
+        "Beschluss",
+        "Verfügung",
+        "Sonstige",
+        "Gerichtsbescheid",
+        "Schlussanträge"
+      ],
+      "description": "Restrict to one document type."
+    },
+    "cited_norm": {
+      "type": "string",
+      "maxLength": 120,
+      "description": "Decisions that cite this norm, for example § 906 BGB."
+    },
+    "cited_statutes": {
+      "description": "Decisions that cite any section of these statutes. At most 5.",
+      "maxItems": 5,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "StGB",
+          "StPO",
+          "InsO",
+          "DSGVO",
+          "GDPR",
+          "BDSG",
+          "BauGB",
+          "BBauG",
+          "BauNVO",
+          "StVG",
+          "StVO"
+        ]
+      }
+    },
+    "date_from": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Earliest decision date, YYYY-MM-DD."
+    },
+    "date_to": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Latest decision date, YYYY-MM-DD."
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "keyword",
+        "semantic",
+        "hybrid"
+      ],
+      "description": "Retrieval mode. Default hybrid."
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20,
+      "description": "Maximum results. Default and cap: 20."
+    },
+    "page": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Page number, 1 to 10."
+    },
+    "bridge": {
+      "type": "boolean",
+      "description": "Let the server add legal-register terms to the query. Default true."
+    }
+  },
+  "additionalProperties": false,
+  "title": "decisionSearchFilters"
+}

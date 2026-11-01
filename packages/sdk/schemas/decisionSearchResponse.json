@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "api_version": {
+      "type": "string"
+    },
+    "changelog_url": {
+      "type": "string"
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "metered": {
+          "type": "boolean"
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "credits_remaining": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "metered",
+        "cost",
+        "credits_remaining"
+      ],
+      "additionalProperties": {}
+    },
+    "ignored_parameters": {},
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "aktenzeichen": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "court": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "date": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "document_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "Known values: Urteil, Beschluss, Verfügung, Sonstige, Gerichtsbescheid, Schlussanträge. Other strings may appear in later releases."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "snippet": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "snippets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "rn": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "text"
+              ],
+              "additionalProperties": {}
+            }
+          },
+          "chunk_title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "rn_range": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fundstelle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fortgeltung_checked": {
+            "type": "boolean"
+          },
+          "fortgeltung_note": {
+            "type": "string"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "Known values: high, medium, low. Other strings may appear in later releases."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "aktenzeichen",
+          "court",
+          "date",
+          "document_type",
+          "title",
+          "snippet",
+          "snippets",
+          "chunk_title",
+          "rn_range",
+          "fundstelle",
+          "fortgeltung_checked",
+          "fortgeltung_note",
+          "confidence"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "payload_truncated": {
+      "type": "boolean"
+    },
+    "total_available": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "is_floor": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "value",
+        "is_floor"
+      ],
+      "additionalProperties": {}
+    },
+    "total_available_basis": {
+      "type": "string",
+      "description": "Known values: matching_indexed_passages_lexical_arm. Other strings may appear in later releases."
+    },
+    "candidate_pool": {
+      "type": "number"
+    },
+    "pool_exhaustive": {
+      "type": "boolean"
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "page": {
+      "type": "number"
+    },
+    "limit": {
+      "type": "number"
+    },
+    "mode": {
+      "type": "string",
+      "description": "Known values: keyword, semantic, hybrid. Other strings may appear in later releases."
+    },
+    "frequently_cited_by_results": {
+      "type": "array",
+      "items": {}
+    },
+    "query_expansion": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Known values: abstained, applied. Other strings may appear in later releases."
+        },
+        "applied": {
+          "type": "boolean"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Known values: no_lay_term. Other strings may appear in later releases."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "applied",
+        "reason",
+        "note"
+      ],
+      "additionalProperties": {}
+    },
+    "top_confidence": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "Known values: high, medium, low. Other strings may appear in later releases."
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "api_version",
+    "changelog_url",
+    "credits",
+    "results",
+    "payload_truncated",
+    "total_available",
+    "total_available_basis",
+    "candidate_pool",
+    "pool_exhaustive",
+    "truncated",
+    "page",
+    "limit",
+    "mode",
+    "frequently_cited_by_results",
+    "query_expansion"
+  ],
+  "additionalProperties": {},
+  "title": "decisionSearchResponse"
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "ids": {
+      "description": "1 to 10 decision ids (UUID or Aktenzeichen). The size budget drops ids from the end.",
+      "minItems": 1,
+      "maxItems": 10,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "include_citations": {
+      "type": "boolean",
+      "description": "Include each decision's outgoing citation edges. Default true."
+    },
+    "full_text": {
+      "type": "boolean",
+      "description": "Serve whole judgments instead of excerpts. Default false."
+    },
+    "max_chars": {
+      "type": "integer",
+      "minimum": 500,
+      "maximum": 200000,
+      "description": "Per-decision text cap when full_text is true. Default 60000."
+    }
+  },
+  "required": [
+    "ids"
+  ],
+  "additionalProperties": false,
+  "title": "datapackageCreateParams"
+}

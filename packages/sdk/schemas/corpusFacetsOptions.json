@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "decision",
+        "law"
+      ],
+      "description": "Restrict the counts to one artifact type."
+    },
+    "norm": {
+      "type": "string",
+      "description": "Required for the field cited_norms: the norm whose family to list."
+    },
+    "prefix": {
+      "type": "string",
+      "description": "Case-insensitive prefix filter on the value."
+    }
+  },
+  "additionalProperties": false,
+  "title": "corpusFacetsOptions"
+}

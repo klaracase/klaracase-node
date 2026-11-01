@@ -1,0 +1,341 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "api_version": {
+      "type": "string"
+    },
+    "changelog_url": {
+      "type": "string"
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "metered": {
+          "type": "boolean"
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "credits_remaining": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "metered",
+        "cost",
+        "credits_remaining"
+      ],
+      "additionalProperties": {}
+    },
+    "ignored_parameters": {},
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "aktenzeichen": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "court": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "date": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "document_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "Known values: Urteil, Beschluss, Verfügung, Sonstige, Gerichtsbescheid, Schlussanträge. Other strings may appear in later releases."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "ecli": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "jurisdiction": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "excerpt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "excerpt_span": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "Known values: document_start. Other strings may appear in later releases."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "text_length": {
+            "type": "number"
+          },
+          "truncated": {
+            "type": "boolean"
+          },
+          "fortgeltung_checked": {
+            "type": "boolean"
+          },
+          "fortgeltung_note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "aktenzeichen",
+          "court",
+          "date",
+          "document_type",
+          "ecli",
+          "jurisdiction",
+          "excerpt",
+          "excerpt_span",
+          "text_length",
+          "truncated",
+          "fortgeltung_checked",
+          "fortgeltung_note"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "citation_edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "reference_canonical": {
+            "type": "string"
+          },
+          "reference_role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "Known values: leitentscheidung. Other strings may appear in later releases."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "resolution_status": {
+            "type": "string",
+            "description": "Known values: resolved, unresolved. Other strings may appear in later releases."
+          },
+          "in_corpus": {
+            "type": "boolean"
+          },
+          "corpus": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "artifact_id": {
+                    "type": "string"
+                  },
+                  "court": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "date": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "az": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "document_type": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "ecli": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "corpus_url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "artifact_id",
+                  "court",
+                  "date",
+                  "az",
+                  "document_type",
+                  "ecli",
+                  "corpus_url"
+                ],
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "from_artifact_id": {
+            "type": "string"
+          },
+          "hop": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "reference_canonical",
+          "reference_role",
+          "resolution_status",
+          "in_corpus",
+          "corpus",
+          "from_artifact_id"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "edge_accounting": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from_artifact_id": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Known values: edge_rows. Other strings may appear in later releases."
+          },
+          "edges_total": {
+            "type": "number"
+          },
+          "edges_included": {
+            "type": "number"
+          },
+          "edges_resolved_included": {
+            "type": "number"
+          },
+          "edges_unresolved_included": {
+            "type": "number"
+          },
+          "edges_resolved_total": {
+            "type": "number"
+          },
+          "edges_unresolved_total": {
+            "type": "number"
+          },
+          "targets_resolved_included": {
+            "type": "number"
+          },
+          "targets_resolved_total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "from_artifact_id",
+          "unit",
+          "edges_total",
+          "edges_included",
+          "edges_resolved_included",
+          "edges_unresolved_included",
+          "edges_resolved_total",
+          "edges_unresolved_total",
+          "targets_resolved_included",
+          "targets_resolved_total"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "per_source_resolved_target_cap": {
+      "type": "number"
+    },
+    "per_source_unresolved_edge_row_cap": {
+      "type": "number"
+    },
+    "requested": {
+      "type": "number"
+    },
+    "included": {
+      "type": "number"
+    },
+    "deduped": {
+      "type": "number"
+    },
+    "text_mode": {
+      "type": "string",
+      "description": "Known values: excerpt, full_text. Other strings may appear in later releases."
+    },
+    "max_chars": {
+      "type": "number"
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "payload_truncated": {
+      "type": "boolean"
+    },
+    "assembled_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "api_version",
+    "changelog_url",
+    "credits",
+    "decisions",
+    "citation_edges",
+    "edge_accounting",
+    "per_source_resolved_target_cap",
+    "per_source_unresolved_edge_row_cap",
+    "requested",
+    "included",
+    "deduped",
+    "text_mode",
+    "max_chars",
+    "truncated",
+    "payload_truncated",
+    "assembled_at"
+  ],
+  "additionalProperties": {},
+  "title": "datapackageResponse"
+}
