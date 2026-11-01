@@ -2,6 +2,11 @@ import { encodePathSegment } from "../encoding.js";
 import { ValidationError } from "../errors.js";
 import type { Transport } from "../http.js";
 import type {
+  CitationCheckDocuments,
+  UploadFile,
+  UploadOptions,
+} from "./citation-check-documents.js";
+import type {
   ApiEnvelope,
   CitationCheckStatus,
   CitationVerdict,
@@ -135,9 +140,27 @@ export interface CitationCheckRun extends ApiEnvelope {
   payload_truncated: boolean;
 }
 
+/** Options of {@link CitationChecks.createFromFile}. */
+export interface CreateFromFileOptions extends UploadOptions {
+  /** How long to wait for the upload to be read. Both values are in seconds. */
+  wait?:
+    | {
+        /** Seconds to wait in total. Default 120. */
+        timeout?: number | undefined;
+        /** Seconds between polls. Default 2. */
+        interval?: number | undefined;
+      }
+    | undefined;
+  /** Document date, `YYYY-MM-DD`. Applied to statute citations that name no date themselves. */
+  reference_date?: string | undefined;
+}
+
 export class CitationChecks {
   /** @internal */
-  constructor(private readonly transport: Transport) {}
+  constructor(
+    private readonly transport: Transport,
+    private readonly documents: CitationCheckDocuments,
+  ) {}
 
   /**
    * Check the citations in a German legal text, or in a ready upload. Synchronous: the answer is
@@ -168,6 +191,43 @@ export class CitationChecks {
   get(runId: string, request?: RequestOptions): Promise<WithMeta<CitationCheckRun>> {
     return this.transport.request(
       { method: "GET", path: `/citation-checks/${encodePathSegment(runId)}` },
+      request,
+    );
+  }
+
+  /**
+   * Upload a file, wait until it is read, then check its citations. This is `upload`,
+   * `waitUntilReady` and `create` in one call. The upload is free. The check costs 2 to 4 credits.
+   *
+   * ```ts
+   * const run = await client.citationChecks.createFromFile(file, {
+   *   wait: { timeout: 180, interval: 3 },
+   *   reference_date: "2026-10-01",
+   * });
+   * assertComplete(run);
+   * ```
+   *
+   * @throws {DocumentFailedError} The upload ended in `failed`, for example `encrypted_pdf`.
+   * @throws {DocumentTimeoutError} The upload was not ready within `wait.timeout`.
+   * @throws {ValidationError} The file has no name and `filename` is missing.
+   */
+  async createFromFile(
+    file: UploadFile,
+    options: CreateFromFileOptions = {},
+  ): Promise<WithMeta<CitationCheckRun>> {
+    const { wait, reference_date, ...upload } = options;
+    const { signal, timeout, maxRetries, headers } = upload;
+    const request: RequestOptions = { signal, timeout, maxRetries, headers };
+    const receipt = await this.documents.upload(file, upload);
+    const ready = await this.documents.waitUntilReady(
+      receipt.id,
+      { pollInterval: wait?.interval, timeout: wait?.timeout },
+      request,
+    );
+    return this.create(
+      reference_date === undefined
+        ? { document_id: ready.id }
+        : { document_id: ready.id, reference_date },
       request,
     );
   }

@@ -1,5 +1,12 @@
 import { encodePathSegment } from "../encoding.js";
+import { ValidationError } from "../errors.js";
 import type { Transport } from "../http.js";
+import {
+  CITATIONS_MAX_PAGES,
+  SEARCH_MAX_PAGES,
+  lastPageToFetch,
+  type PageOptions,
+} from "../pagination.js";
 import type {
   ApiEnvelope,
   Branch,
@@ -249,5 +256,92 @@ export class Decisions {
       { method: "GET", path: `/decisions/${encodePathSegment(id)}/citations`, query: options },
       request,
     );
+  }
+
+  /**
+   * Search decisions page by page, as an async iterator of pages. Each page is a separate call and
+   * costs 1 credit, so `maxPages` is required. It stops when a page has no results or after
+   * `maxPages` pages, and never goes past page 10. A `page` in `filters` is the first page.
+   *
+   * ```ts
+   * for await (const page of client.decisions.searchAll("Untreue", { court: "BGH" }, { maxPages: 3 })) {
+   *   for (const hit of page.results) console.log(hit.aktenzeichen);
+   * }
+   * ```
+   *
+   * @throws {ValidationError} `maxPages` is missing or below 1.
+   */
+  searchAll(
+    query: string,
+    filters: DecisionSearchFilters = {},
+    options: PageOptions,
+  ): AsyncGenerator<WithMeta<DecisionSearchResponse>, void, undefined> {
+    const { maxPages, ...request } = options ?? {};
+    const first = filters.page ?? 1;
+    const last = lastPageToFetch(maxPages, first, SEARCH_MAX_PAGES);
+    return this.#searchPages(query, filters, first, last, request);
+  }
+
+  async *#searchPages(
+    query: string,
+    filters: DecisionSearchFilters,
+    first: number,
+    last: number,
+    request: RequestOptions,
+  ): AsyncGenerator<WithMeta<DecisionSearchResponse>, void, undefined> {
+    for (let page = first; page <= last; page++) {
+      const answer = await this.search(query, { ...filters, page }, request);
+      if (answer.results.length === 0) return;
+      yield answer;
+    }
+  }
+
+  /**
+   * Read the citation graph around one decision page by page, as an async iterator of pages. Each
+   * page is a separate call and costs 2 credits, so `maxPages` is required. It stops when no
+   * direction has another page, when a page is empty, or after `maxPages` pages, and never goes
+   * past page 20. A `page` in `options` is the first page. Paging works at depth 1 only.
+   *
+   * ```ts
+   * for await (const page of client.decisions.citationsAll("VIII ZR 271/17", {}, { maxPages: 2 })) {
+   *   console.log(page.references.length, page.referenced_by.length);
+   * }
+   * ```
+   *
+   * @throws {ValidationError} `maxPages` is missing or below 1, or `depth` is 2.
+   */
+  citationsAll(
+    id: string,
+    options: DecisionCitationsOptions = {},
+    paging: PageOptions,
+  ): AsyncGenerator<WithMeta<DecisionCitationsResponse>, void, undefined> {
+    if (options.depth === 2) {
+      throw new ValidationError({
+        title: "Invalid arguments",
+        detail: "Citation pages exist at depth 1 only. Leave out `depth`, or use `citations`.",
+        code: "client_validation",
+      });
+    }
+    const { maxPages, ...request } = paging ?? {};
+    const first = options.page ?? 1;
+    const last = lastPageToFetch(maxPages, first, CITATIONS_MAX_PAGES);
+    return this.#citationPages(id, options, first, last, request);
+  }
+
+  async *#citationPages(
+    id: string,
+    options: DecisionCitationsOptions,
+    first: number,
+    last: number,
+    request: RequestOptions,
+  ): AsyncGenerator<WithMeta<DecisionCitationsResponse>, void, undefined> {
+    for (let page = first; page <= last; page++) {
+      const answer = await this.citations(id, { ...options, page }, request);
+      if (answer.references.length === 0 && answer.referenced_by.length === 0) return;
+      yield answer;
+      const more =
+        answer.pagination.has_more_references || answer.pagination.has_more_referenced_by;
+      if (!more) return;
+    }
   }
 }

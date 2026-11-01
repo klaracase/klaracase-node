@@ -7,6 +7,8 @@ declare global {
   const controller: AbortController;
   const yourModel: LanguageModel;
   const client: Klaracase;
+  // A `File` from a form field or from `new File([bytes], "name.pdf")`.
+  const file: File;
 }
 
 export {};

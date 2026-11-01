@@ -10,6 +10,7 @@ export {
   ApiError,
   AuthenticationError,
   ConfigurationError,
+  CitationCheckIncompleteError,
   ConflictError,
   DocumentFailedError,
   DocumentTimeoutError,
@@ -24,6 +25,7 @@ export {
   TransportError,
   ValidationError,
   type AmbiguousCandidate,
+  type CitationCheckRunLike,
   type DocumentReceiptLike,
   type ErrorCode,
   type KlaracaseErrorCode,
@@ -31,6 +33,14 @@ export {
 } from "./errors.js";
 export type * from "./types.js";
 export { getExtra } from "./response.js";
+export {
+  assertComplete,
+  excerpt,
+  groupByVerdict,
+  type CompleteCitationCheckRun,
+  type FindingsByVerdict,
+} from "./helpers.js";
+export { CITATIONS_MAX_PAGES, SEARCH_MAX_PAGES, type PageOptions } from "./pagination.js";
 export { CITATION_VERDICTS, isKnownVerdict, type KnownCitationVerdict } from "./verdicts.js";
 export type * from "./resources/decisions.js";
 export type * from "./resources/search.js";

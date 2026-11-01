@@ -147,8 +147,8 @@ export class Klaracase {
     this.decisions = new Decisions(transport);
     this.norms = new Norms(transport);
     this.datapackages = new Datapackages(transport);
-    this.citationChecks = new CitationChecks(transport);
     this.citationCheckDocuments = new CitationCheckDocuments(transport, sleep, now);
+    this.citationChecks = new CitationChecks(transport, this.citationCheckDocuments);
     this.corpus = new Corpus(transport);
   }
 

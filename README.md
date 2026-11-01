@@ -132,47 +132,55 @@ typed strictly. Client options and method names use camel case.
 answers when the check is finished.
 
 ```ts
+import { assertComplete, excerpt, groupByVerdict } from "@klaracase/sdk";
+
 const run = await client.citationChecks.create({
   text: draftText, // 50 to 20,000 characters
   reference_date: "2026-10-01", // optional
 });
 
-for (const finding of run.findings) {
-  const where = draftText.slice(finding.start_offset, finding.end_offset);
-  switch (finding.verdict) {
-    case "verified_corpus":
-    case "verified_external":
-      console.log("found:", where);
-      break;
-    case "not_found":
-      // Not found in the corpus. This does not mean the citation is invented.
-      console.log("check by hand:", where);
-      break;
-    case "out_of_coverage":
-    case "ambiguous":
-    case "unverifiable":
-    case "discrepancy":
-      console.log(finding.verdict + ":", where);
-      break;
-    default:
-      console.log("new verdict:", finding.verdict, where);
-  }
+// Check the status first. A run can end as "rejected" or "failed".
+assertComplete(run);
+
+const groups = groupByVerdict(run);
+console.log(groups.verified_corpus.length, "found,", groups.not_found.length, "to check by hand");
+
+for (const finding of groups.not_found) {
+  // Not found in the corpus. This does not mean the citation is invented.
+  console.log("check by hand:", excerpt(draftText, finding));
 }
 ```
 
-The offsets are Unicode code point offsets into the text you sent. For text that has characters
-outside the basic plane, slice with `Array.from(draftText)`.
+### Guard on the status
 
-To check a file, upload it first. The upload is free. PDF, DOCX, Markdown and plain text work, up to
-25 MB.
+Always check `run.status` before you read `run.findings`. The status is `complete` only when the
+check finished. A run can also be `rejected` or `failed`, or still be working when you read it with
+`citationChecks.get`. Then the findings are not a full result, and a citation that is missing from
+them has not been verified. `assertComplete(run)` throws `CitationCheckIncompleteError` for any
+other status. The error has `run_status` and the `run`. Its `status` is `null`, because no HTTP
+request failed. A complete run can still have `partial: true`. Read `partial` and
+`findings_unavailable_reason` as well.
+
+The helpers are plain functions and make no request:
+
+| Helper                   | What it does                                                         |
+| ------------------------ | -------------------------------------------------------------------- |
+| `groupByVerdict(run)`    | Findings grouped by verdict. Each of the seven verdicts has a list.  |
+| `assertComplete(run)`    | Throws `CitationCheckIncompleteError` unless `status` is `complete`. |
+| `excerpt(text, finding)` | The cited text. Offsets count code points, so emoji do not shift it. |
+
+The offsets of a finding are Unicode code point offsets into the text you sent. `text.slice` counts
+UTF-16 units and cuts in the wrong place after an emoji. Use `excerpt`.
+
+To check a file, upload it. The upload is free. PDF, DOCX, Markdown and plain text work, up to
+25 MB. `upload` takes a `File`, a `Blob`, a `Uint8Array` or an `ArrayBuffer`. A `File` brings its own
+name and media type. For bytes, pass `filename`.
 
 ```ts
 import { readFile } from "node:fs/promises";
 
-const receipt = await client.citationCheckDocuments.upload({
-  file: await readFile("schriftsatz.pdf"),
+const receipt = await client.citationCheckDocuments.upload(await readFile("schriftsatz.pdf"), {
   filename: "schriftsatz.pdf",
-  contentType: "application/pdf",
 });
 const ready = await client.citationCheckDocuments.waitUntilReady(receipt.id, {
   pollInterval: 2, // seconds
@@ -183,8 +191,20 @@ console.log("a check will cost", ready.quoted_credits, "credits");
 const run = await client.citationChecks.create({ document_id: ready.id });
 ```
 
-`waitUntilReady` throws `DocumentFailedError` when the upload fails, for example with
-`encrypted_pdf`. It throws `DocumentTimeoutError` when the time runs out.
+`createFromFile` does the three steps in one call:
+
+```ts
+import { assertComplete } from "@klaracase/sdk";
+
+const run = await client.citationChecks.createFromFile(file, {
+  wait: { timeout: 180, interval: 3 }, // seconds
+  reference_date: "2026-10-01",
+});
+assertComplete(run);
+```
+
+`waitUntilReady` and `createFromFile` throw `DocumentFailedError` when the upload fails, for example
+with `encrypted_pdf`. They throw `DocumentTimeoutError` when the time runs out.
 
 ## All operations
 
@@ -198,9 +218,12 @@ const run = await client.citationChecks.create({ document_id: ready.id });
 | `client.datapackages.create({ ids, ... })`            | `POST /datapackages`                  |
 | `client.citationChecks.create({ text })`              | `POST /citation-checks`               |
 | `client.citationChecks.get(runId)`                    | `GET /citation-checks/{run}`          |
-| `client.citationCheckDocuments.upload({ file, ... })` | `POST /citation-check-documents`      |
+| `client.citationCheckDocuments.upload(file, options)` | `POST /citation-check-documents`      |
 | `client.citationCheckDocuments.get(id)`               | `GET /citation-check-documents/{id}`  |
 | `client.citationCheckDocuments.waitUntilReady(id)`    | polls `get` until the upload is ready |
+| `client.citationChecks.createFromFile(file)`          | upload, wait and check in one call    |
+| `client.decisions.searchAll(query, filters, paging)`  | pages of `GET /decisions/search`      |
+| `client.decisions.citationsAll(id, options, paging)`  | pages of the citations endpoint       |
 | `client.corpus.coverage(options)`                     | `GET /corpus/coverage`                |
 | `client.corpus.facets(field, options)`                | `GET /corpus/facets/{field}`          |
 
@@ -210,6 +233,31 @@ segment, so `VIII ZR 271/17` is sent as `VIII%20ZR%20271%2F17`. Arrays go out as
 not sent.
 
 Full parameter lists are in the [API reference](https://klaracase.de/docs/api).
+
+## Pagination
+
+`decisions.searchAll` and `decisions.citationsAll` are async iterators. Each step is one more call to
+the API, and **every call costs credits**: 1 credit per search page and 2 credits per citations
+page. A loop that you forget to stop can spend a lot. So `maxPages` is required and has no default.
+
+```ts
+for await (const page of client.decisions.searchAll("Untreue", { court: "BGH" }, { maxPages: 3 })) {
+  for (const hit of page.results) console.log(hit.aktenzeichen, hit.date);
+  console.log("this page cost", page.credits.cost);
+}
+
+for await (const page of client.decisions.citationsAll("VIII ZR 271/17", {}, { maxPages: 2 })) {
+  console.log(page.references.length, "references,", page.referenced_by.length, "cited by");
+}
+```
+
+- The iterator yields whole pages, so you can read `credits` and `meta` of each one.
+- It stops when a page has no results, or when the citations pages have no more, or after
+  `maxPages` pages. An empty page is not yielded.
+- `maxPages` is capped at the last page the endpoint serves: 10 for search, 20 for citations. A
+  `page` in the filters is the first page.
+- Breaking out of the loop stops the calls. Paging of citations works at depth 1 only.
+- The third argument also takes `signal`, `timeout`, `maxRetries` and `headers` for every call.
 
 ## Responses
 

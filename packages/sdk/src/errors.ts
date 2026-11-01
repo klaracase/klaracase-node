@@ -57,6 +57,7 @@ export type KlaracaseErrorCode =
   | "document_leitsatz_not_located"
   | "client_validation"
   | "wait_timeout"
+  | "citation_check_incomplete"
   | "unknown";
 
 /** A `code` value: a known code, or any other string the API may add later. */
@@ -307,6 +308,37 @@ export class DocumentTimeoutError extends KlaracaseError {
       code: "wait_timeout",
     });
     this.document = document;
+  }
+}
+
+/** The minimum a wait helper reads from a citation check run. */
+export interface CitationCheckRunLike {
+  id: string;
+  status: string;
+  partial: boolean;
+}
+
+/**
+ * `assertComplete` found a citation check run whose `status` is not `complete`. The run is on the
+ * error. `status` stays `null`, because no HTTP request failed: read `run_status`.
+ */
+export class CitationCheckIncompleteError extends KlaracaseError {
+  override name = "CitationCheckIncompleteError";
+  /** The status of the run, for example `failed`, `rejected` or `extracting`. */
+  readonly run_status: string;
+  /** The run that was checked. */
+  readonly run: CitationCheckRunLike;
+
+  constructor(run: CitationCheckRunLike) {
+    super({
+      title: "Citation check not complete",
+      detail:
+        `The citation check ${run.id} has the status "${run.status}", not "complete". ` +
+        "Its findings are not a full result. Do not read a missing finding as a verified citation.",
+      code: "citation_check_incomplete",
+    });
+    this.run_status = run.status;
+    this.run = run;
   }
 }
 

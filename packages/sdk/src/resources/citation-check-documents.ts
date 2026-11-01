@@ -1,5 +1,5 @@
 import { encodePathSegment } from "../encoding.js";
-import { DocumentFailedError, DocumentTimeoutError } from "../errors.js";
+import { DocumentFailedError, DocumentTimeoutError, ValidationError } from "../errors.js";
 import type { Transport } from "../http.js";
 import type {
   ApiEnvelope,
@@ -10,15 +10,24 @@ import type {
   WithMeta,
 } from "../types.js";
 
-/** Bytes for an upload. */
-export type UploadFile = Blob | Uint8Array | ArrayBuffer;
+/** Bytes for an upload. A `File` also carries its name and media type. */
+export type UploadFile = Blob | File | Uint8Array | ArrayBuffer;
 
+/** The older form of the arguments of `upload`: one object with everything in it. */
 export interface UploadParams {
   file: UploadFile;
   /** File name sent in the multipart part, for example `schriftsatz.pdf`. */
   filename: string;
   /** Media type of the part, for example `application/pdf`. */
   contentType: string;
+}
+
+/** Options of `upload`. Both names are read from a `File`, so a `File` needs neither. */
+export interface UploadOptions extends RequestOptions {
+  /** File name sent in the multipart part, for example `schriftsatz.pdf`. Required for bytes. */
+  filename?: string | undefined;
+  /** Media type of the part. Default: the type of the `File` or `Blob`, else from the extension. */
+  contentType?: string | undefined;
 }
 
 /** Body of `POST /citation-check-documents` and `GET /citation-check-documents/{document}`. */
@@ -53,10 +62,45 @@ export class CitationCheckDocuments {
     private readonly now: () => number,
   ) {}
 
-  /** Upload a PDF, DOCX, Markdown or text file (up to 25 MB). Answers 202. Free. */
-  upload(params: UploadParams, request?: RequestOptions): Promise<WithMeta<DocumentReceipt>> {
+  /**
+   * Upload a PDF, DOCX, Markdown or text file (up to 25 MB). Answers 202. Free.
+   *
+   * Pass a `File` and the name and media type come from it. Pass a `Blob`, a `Uint8Array` or an
+   * `ArrayBuffer` and give `filename`. The media type is guessed from the extension when you give
+   * none.
+   *
+   * ```ts
+   * const receipt = await client.citationCheckDocuments.upload(file); // a File
+   * const fromDisk = await client.citationCheckDocuments.upload(bytes, { filename: "brief.pdf" });
+   * ```
+   *
+   * @throws {ValidationError} The file has no name and `filename` is missing.
+   */
+  upload(file: UploadFile, options?: UploadOptions): Promise<WithMeta<DocumentReceipt>>;
+  /** The older form: one object with `file`, `filename` and `contentType`. */
+  upload(params: UploadParams, request?: RequestOptions): Promise<WithMeta<DocumentReceipt>>;
+  upload(
+    first: UploadFile | UploadParams,
+    options: UploadOptions | RequestOptions = {},
+  ): Promise<WithMeta<DocumentReceipt>> {
+    let file: UploadFile;
+    let upload: UploadOptions;
+    if (isUploadParams(first)) {
+      file = first.file;
+      upload = { ...options, filename: first.filename, contentType: first.contentType };
+    } else {
+      file = first;
+      upload = options;
+    }
+    const { filename, contentType, ...request } = upload;
+    let part: { blob: Blob; name: string };
+    try {
+      part = toPart(file, filename, contentType);
+    } catch (error) {
+      return Promise.reject(error);
+    }
     const form = new FormData();
-    form.append("file", toBlob(params.file, params.contentType), params.filename);
+    form.append("file", part.blob, part.name);
     return this.transport.request(
       { method: "POST", path: "/citation-check-documents", form },
       request,
@@ -96,9 +140,45 @@ export class CitationCheckDocuments {
   }
 }
 
-function toBlob(file: UploadFile, contentType: string): Blob {
-  if (file instanceof Blob) {
-    return file.type === contentType ? file : new Blob([file], { type: contentType });
+function isUploadParams(value: UploadFile | UploadParams): value is UploadParams {
+  if (value instanceof Blob || value instanceof ArrayBuffer || ArrayBuffer.isView(value)) {
+    return false;
   }
-  return new Blob([file as Uint8Array<ArrayBuffer>], { type: contentType });
+  return typeof value === "object" && value !== null && "file" in value;
+}
+
+const MEDIA_TYPES: Readonly<Record<string, string>> = {
+  pdf: "application/pdf",
+  docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  md: "text/markdown",
+  markdown: "text/markdown",
+  txt: "text/plain",
+};
+
+function mediaTypeFromName(name: string): string {
+  const extension = name.split(".").pop()?.toLowerCase() ?? "";
+  return MEDIA_TYPES[extension] ?? "application/octet-stream";
+}
+
+/** Work out the name, the media type and the bytes of the multipart part. */
+function toPart(
+  file: UploadFile,
+  filename: string | undefined,
+  contentType: string | undefined,
+): { blob: Blob; name: string } {
+  const named = typeof File !== "undefined" && file instanceof File ? file.name : undefined;
+  const name = filename ?? (named === "" ? undefined : named);
+  if (name === undefined) {
+    throw new ValidationError({
+      title: "Invalid arguments",
+      detail: "Pass { filename } with bytes or a Blob. Only a File carries its own name.",
+      code: "client_validation",
+    });
+  }
+  const own = file instanceof Blob && file.type !== "" ? file.type : undefined;
+  const type = contentType ?? own ?? mediaTypeFromName(name);
+  if (file instanceof Blob) {
+    return { blob: file.type === type ? file : new Blob([file], { type }), name };
+  }
+  return { blob: new Blob([file as Uint8Array<ArrayBuffer>], { type }), name };
 }

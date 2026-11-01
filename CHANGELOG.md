@@ -38,6 +38,14 @@ All notable changes to this project are documented in this file. The format foll
   the headers and the query string are never logged.
 - `client.withOptions(partial)` returns a new client that shares nothing mutable.
 
+- `decisions.searchAll` and `decisions.citationsAll`: async iterators over pages. `maxPages` is
+  required, and capped at 10 and 20.
+- Helpers `groupByVerdict(run)`, `assertComplete(run)` and `excerpt(text, finding)`, and the new
+  `CitationCheckIncompleteError` (code `citation_check_incomplete`, fields `run_status` and `run`).
+- `citationCheckDocuments.upload(file, options?)` takes a `Blob`, `File`, `Uint8Array` or
+  `ArrayBuffer` and reads name and media type from a `File`. The old object form still works.
+- `citationChecks.createFromFile(file, { wait, reference_date })`: upload, wait and check.
+
 ### Changed
 
 - The token is held in an ES private field, so it does not show up when a client is inspected.
