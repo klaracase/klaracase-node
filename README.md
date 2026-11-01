@@ -90,7 +90,7 @@ for (const finding of run.findings) {
       console.log("found:", where);
       break;
     case "not_found":
-      // Not found in the corpus. This does not mean the citation is fabricated.
+      // Not found in the corpus. This does not mean the citation is invented.
       console.log("check by hand:", where);
       break;
     case "out_of_coverage":
@@ -303,6 +303,17 @@ Pass `{ tools: ["searchDecisions", "getNorm"] }` to expose only some tools. See
 
 For frameworks other than the Vercel AI SDK, connect the Klaracase MCP server at
 <https://klaracase.de/mcp> with the same token. The client itself does not speak MCP.
+
+## Stability and privacy
+
+This SDK is 0.x and tracks API release 0.95.0. Minor versions may change the public surface until
+1.0. Every change is listed in [CHANGELOG.md](CHANGELOG.md). All Klaracase SDKs bump together when
+the API contract changes.
+
+The SDK sends no telemetry. The only thing it adds to a request is the User-Agent header
+`klaracase-node/<version> <runtime>/<version>`, for example `klaracase-node/0.1.0 node/22.12.0`.
+
+Klaracase is not affiliated with any court or with the federal government.
 
 ## Smoke test
 
