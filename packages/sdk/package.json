@@ -46,6 +46,7 @@
     "build": "tsdown",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "check-dist": "node scripts/check-dist.mjs"
   }
 }
