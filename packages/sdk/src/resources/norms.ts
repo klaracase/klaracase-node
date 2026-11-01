@@ -49,6 +49,7 @@ export interface NormResponse extends ApiEnvelope {
 }
 
 export class Norms {
+  /** @internal */
   constructor(private readonly transport: Transport) {}
 
   /** Read the current text of one norm, for example `§ 535 BGB` or `Art. 6 DSGVO`. Costs 1 credit. */

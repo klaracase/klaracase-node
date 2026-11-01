@@ -33,7 +33,15 @@ All notable changes to this project are documented in this file. The format foll
 - Typed problem extras on every error: `candidates`, `successor`, `unit`, `cap`, `resets_at`, plus
   `retryable` and `retryAfterSeconds`.
 
+- Options `defaultHeaders` (client), `headers` (per request), `logLevel` and `logger`, with the
+  `KLARACASE_LOG` environment fallback. Retries log at `debug`, deprecations at `warn`. The token,
+  the headers and the query string are never logged.
+- `client.withOptions(partial)` returns a new client that shares nothing mutable.
+
 ### Changed
+
+- The token is held in an ES private field, so it does not show up when a client is inspected.
+- `sleep` and `now` are marked `@internal` and are not in the published type files.
 
 - Every error class sets `name` with an explicit string, so a minifier cannot rename it.
 

@@ -1,6 +1,7 @@
 import { buildQuery, type QueryParams } from "./encoding.js";
 import { surfaceDeprecation, type DeprecationHandler } from "./deprecation.js";
 import type { KlaracaseError } from "./errors.js";
+import type { Log } from "./log.js";
 import {
   ApiError,
   AuthenticationError,
@@ -29,7 +30,6 @@ const MAX_RAW_DETAIL_CHARS = 1000;
 export interface TransportConfig {
   /** Base URL without a trailing slash. */
   baseUrl: string;
-  token: string;
   /** Seconds per attempt. */
   timeout: number;
   maxRetries: number;
@@ -42,6 +42,9 @@ export interface TransportConfig {
   /** A number in [0, 1) for the backoff jitter. */
   random: () => number;
   onDeprecation: DeprecationHandler;
+  /** Headers sent with every request. A per-request header wins. */
+  defaultHeaders: Readonly<Record<string, string>>;
+  log: Log;
 }
 
 export interface HttpRequest {
@@ -59,7 +62,15 @@ type JsonObject = Record<string, unknown>;
 
 /** The one place where requests leave the process: retries, errors, `meta` and deprecations. */
 export class Transport {
-  constructor(private readonly config: TransportConfig) {}
+  /** An ES private field: it does not show up when the client is logged or inspected. */
+  readonly #token: string;
+
+  constructor(
+    private readonly config: TransportConfig,
+    token: string,
+  ) {
+    this.#token = token;
+  }
 
   async request<T extends object>(
     request: HttpRequest,
@@ -76,17 +87,29 @@ export class Transport {
       let response: Response;
       let text: string;
       try {
-        ({ response, text } = await this.send(url, request, timeout, options.signal));
+        ({ response, text } = await this.send(
+          url,
+          request,
+          timeout,
+          options.signal,
+          options.headers,
+        ));
       } catch (error) {
         if (!(error instanceof TransportError)) throw error;
         if (!(isGet && canRetry)) throw error;
-        await this.config.sleep(this.backoff(attempt));
+        const wait = this.backoff(attempt);
+        this.logRetry(request, null, attempt, wait);
+        await this.config.sleep(wait);
         continue;
       }
       const duration = Math.max(0, this.config.now() - started);
 
       surfaceDeprecation(response.headers, this.config.onDeprecation);
 
+      this.config.log.info(`${request.method} ${request.path} ${response.status}`, {
+        status: response.status,
+        duration_ms: Math.round(duration * 1000),
+      });
       if (response.ok) return this.parseSuccess<T>(response, text, duration);
 
       const error = this.buildError(response, text);
@@ -96,8 +119,26 @@ export class Transport {
 
       const stated = this.statedWait(text, response.headers);
       if (stated !== null && stated > MAX_SERVER_WAIT_SECONDS) throw error;
-      await this.config.sleep(stated ?? this.backoff(attempt));
+      const wait = stated ?? this.backoff(attempt);
+      this.logRetry(request, response.status, attempt, wait);
+      await this.config.sleep(wait);
     }
+  }
+
+  /** One debug line per retry. It carries no token, no header and no query string. */
+  private logRetry(
+    request: HttpRequest,
+    status: number | null,
+    attempt: number,
+    waitSeconds: number,
+  ): void {
+    this.config.log.debug("retry", {
+      method: request.method,
+      path: request.path,
+      status,
+      attempt: attempt + 1,
+      wait_seconds: Math.round(waitSeconds * 1000) / 1000,
+    });
   }
 
   private buildUrl(request: HttpRequest): string {
@@ -111,12 +152,15 @@ export class Transport {
     request: HttpRequest,
     timeout: number,
     userSignal: AbortSignal | undefined,
+    extraHeaders: Readonly<Record<string, string>> | undefined,
   ): Promise<{ response: Response; text: string }> {
     const headers: Record<string, string> = {
-      Authorization: `Bearer ${this.config.token}`,
       Accept: "application/json",
       "User-Agent": this.config.userAgent,
     };
+    mergeHeaders(headers, this.config.defaultHeaders);
+    mergeHeaders(headers, extraHeaders);
+    headers["Authorization"] = `Bearer ${this.#token}`;
     let body: string | FormData | undefined;
     if (request.json !== undefined) {
       headers["Content-Type"] = "application/json";
@@ -216,6 +260,28 @@ export class Transport {
   private backoff(attempt: number): number {
     const ceiling = Math.min(MAX_BACKOFF_SECONDS, BASE_BACKOFF_SECONDS * 2 ** attempt);
     return this.config.random() * ceiling;
+  }
+}
+
+/** Headers the SDK owns. A caller header with one of these names is ignored. */
+const PROTECTED_HEADERS = new Set(["authorization", "content-type", "content-length", "host"]);
+
+/**
+ * Copy `extra` into `target`. Names match case-insensitively: a caller header replaces the SDK
+ * default of the same name, except for the protected ones.
+ */
+function mergeHeaders(
+  target: Record<string, string>,
+  extra: Readonly<Record<string, string>> | undefined,
+): void {
+  if (extra === undefined) return;
+  for (const [name, value] of Object.entries(extra)) {
+    const lower = name.toLowerCase();
+    if (PROTECTED_HEADERS.has(lower)) continue;
+    for (const existing of Object.keys(target)) {
+      if (existing.toLowerCase() === lower) delete target[existing];
+    }
+    target[name] = value;
   }
 }
 

@@ -46,6 +46,7 @@ export interface WaitUntilReadyOptions {
 }
 
 export class CitationCheckDocuments {
+  /** @internal */
   constructor(
     private readonly transport: Transport,
     private readonly sleep: (seconds: number) => Promise<void>,

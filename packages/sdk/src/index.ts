@@ -1,5 +1,6 @@
 export { Klaracase, type KlaracaseOptions } from "./client.js";
 export { VERSION } from "./version.js";
+export { LOG_ENV_VAR, LOG_LEVELS, type LogLevel, type Logger } from "./log.js";
 export {
   resetDeprecationWarnings,
   type DeprecationHandler,

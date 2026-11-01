@@ -63,6 +63,7 @@ export interface DatapackageResponse extends ApiEnvelope {
 }
 
 export class Datapackages {
+  /** @internal */
   constructor(private readonly transport: Transport) {}
 
   /** Bundle up to 10 decisions with their citations. Costs 5 credits. */

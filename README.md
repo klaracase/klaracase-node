@@ -337,21 +337,74 @@ import { Klaracase } from "@klaracase/sdk";
 new Klaracase({
   token: "klc_your_token_here", // or KLARACASE_API_TOKEN
   baseUrl: "https://klaracase.de/api/v1", // default
-  timeout: 30, // seconds, default 30
+  timeout: 30, // seconds for each attempt, default 30
   maxRetries: 2, // default 2
   userAgentSuffix: "my-app/1.0", // appended to the User-Agent header
+  defaultHeaders: { "X-Trace-Id": "abc" }, // sent with every request
+  logLevel: "warn", // off, error, warn, info or debug
+  logger: console, // anything with error, warn, info and debug
   fetch: globalThis.fetch, // your own fetch
   onDeprecation: (info) => console.warn(info), // see below
-  sleep: async (seconds) => void seconds, // for tests
-  now: () => performance.now() / 1000, // for tests
+  dangerouslyAllowBrowser: false, // see "Browser and proxy pattern"
 });
 ```
+
+Timeouts are in seconds, in every Klaracase SDK, so the option means the same in each language. The
+option for the API address is `baseUrl`.
 
 The `User-Agent` is `klaracase-node/0.1.0 node/<version>`.
 
 When the API announces a deprecation with `Deprecation` or `Sunset` headers, the client calls
-`onDeprecation` once per process with the raw header values. The default logs one `console.warn`
-line. In tests, call `resetDeprecationWarnings()` to reset the guard.
+`onDeprecation` once per process with the raw header values. The default writes one line at the
+`warn` level. In tests, call `resetDeprecationWarnings()` to reset the guard.
+
+## Logging
+
+The client logs through the `logger` option. The default is `console`. Set the level with
+`logLevel`, or with the `KLARACASE_LOG` environment variable. The option wins over the variable.
+The default level is `warn`.
+
+| Level   | What the client logs                                                      |
+| ------- | ------------------------------------------------------------------------- |
+| `warn`  | a deprecation notice from the API                                         |
+| `info`  | one line per answer: method, path, status                                 |
+| `debug` | every retry: method, path, status, attempt number and the wait in seconds |
+| `off`   | nothing                                                                   |
+
+The client never logs the token, a header, a request body or a query string. The query string is
+left out because it holds your search text. `console.log(client)` does not show the token either.
+
+```ts
+import { Klaracase } from "@klaracase/sdk";
+
+const client = new Klaracase({ logLevel: "debug", logger: console });
+```
+
+## Advanced
+
+Per-request headers, and a client with changed options:
+
+```ts
+const found = await client.decisions.search("Untreue", {}, { headers: { "X-Trace-Id": "abc" } });
+
+// A new client. The original is not changed, and the two share no state.
+const patient = client.withOptions({ timeout: 120, maxRetries: 4 });
+```
+
+A header you pass to one call wins over `defaultHeaders`. `Authorization` and `Content-Type` cannot
+be replaced. `withOptions` merges `defaultHeaders`: the new headers win, the rest stay.
+
+A custom `fetch` lets you add a proxy, a dispatcher or a test double. It receives the URL and the
+`RequestInit` that the client built.
+
+```ts
+import { Klaracase } from "@klaracase/sdk";
+
+const proxied = new Klaracase({
+  token: "klc_your_token_here",
+  fetch: (input, init) => globalThis.fetch(input, { ...init, keepalive: true }),
+});
+```
 
 ## Credits
 

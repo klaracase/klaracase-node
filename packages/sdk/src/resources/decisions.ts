@@ -212,6 +212,7 @@ export interface DecisionCitationsResponse extends ApiEnvelope {
 }
 
 export class Decisions {
+  /** @internal */
   constructor(private readonly transport: Transport) {}
 
   /** Search decisions. Costs 1 credit. */

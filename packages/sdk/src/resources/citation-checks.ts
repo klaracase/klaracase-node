@@ -136,6 +136,7 @@ export interface CitationCheckRun extends ApiEnvelope {
 }
 
 export class CitationChecks {
+  /** @internal */
   constructor(private readonly transport: Transport) {}
 
   /**

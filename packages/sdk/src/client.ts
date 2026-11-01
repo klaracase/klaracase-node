@@ -1,6 +1,7 @@
-import { defaultDeprecationHandler, type DeprecationHandler } from "./deprecation.js";
+import { deprecationMessage, type DeprecationHandler } from "./deprecation.js";
 import { ConfigurationError } from "./errors.js";
 import { Transport } from "./http.js";
+import { Log, resolveLogLevel, type Logger, type LogLevel } from "./log.js";
 import { detectRuntime, isBrowser, readEnv } from "./runtime.js";
 import { CitationCheckDocuments } from "./resources/citation-check-documents.js";
 import { CitationChecks } from "./resources/citation-checks.js";
@@ -23,32 +24,51 @@ const TOKEN_ENV_VAR = "KLARACASE_API_TOKEN";
 
 export interface KlaracaseOptions {
   /** API token (`klc_...`). Falls back to the `KLARACASE_API_TOKEN` environment variable. */
-  token?: string;
+  token?: string | undefined;
   /** Default `https://klaracase.de/api/v1`. */
-  baseUrl?: string;
+  baseUrl?: string | undefined;
   /** Seconds to wait for each attempt. Default 30. */
-  timeout?: number;
+  timeout?: number | undefined;
   /** Retries on 429, on 503 and (GET only) on transport errors. Default 2. */
-  maxRetries?: number;
+  maxRetries?: number | undefined;
   /** Appended to the User-Agent header, after a space. */
-  userAgentSuffix?: string;
+  userAgentSuffix?: string | undefined;
+  /**
+   * Headers sent with every request, for example a tracing header. A header passed to one call
+   * wins. `Authorization` and `Content-Type` cannot be replaced.
+   */
+  defaultHeaders?: Record<string, string> | undefined;
+  /**
+   * What the client logs: `off`, `error`, `warn`, `info` or `debug`. Default `warn`, or the value
+   * of the `KLARACASE_LOG` environment variable. `debug` logs every retry (method, path, status,
+   * attempt, wait). The token, the headers and the query string are never logged.
+   */
+  logLevel?: LogLevel | undefined;
+  /** Where log lines go. Default `console`. Any object with `error`, `warn`, `info`, `debug`. */
+  logger?: Logger | undefined;
   /** A replacement for the global `fetch`. */
-  fetch?: typeof fetch;
+  fetch?: typeof fetch | undefined;
   /**
    * Called once per process when an answer carries a `Deprecation` or `Sunset` header. The default
-   * logs one `console.warn` line.
+   * logs one line at level `warn` through the logger.
    */
-  onDeprecation?: DeprecationHandler;
+  onDeprecation?: DeprecationHandler | undefined;
   /**
    * Allow the client to be built in a browser page. Off by default. The token is an organization
    * secret: anyone who can open the page can read it. Keep the token on your server and point the
    * `fetch` option at your own route instead.
    */
-  dangerouslyAllowBrowser?: boolean;
-  /** Wait for this many seconds. For tests. Default: a timer. */
-  sleep?: (seconds: number) => Promise<void>;
-  /** The clock in seconds. For tests. Default: a monotonic clock. */
-  now?: () => number;
+  dangerouslyAllowBrowser?: boolean | undefined;
+  /**
+   * Wait for this many seconds. For tests. Default: a timer.
+   * @internal
+   */
+  sleep?: ((seconds: number) => Promise<void>) | undefined;
+  /**
+   * The clock in seconds. For tests. Default: a monotonic clock.
+   * @internal
+   */
+  now?: (() => number) | undefined;
 }
 
 /**
@@ -71,6 +91,9 @@ export class Klaracase {
   readonly corpus: Corpus;
 
   private readonly transport: Transport;
+
+  /** Resolved options, kept for {@link Klaracase.withOptions}. ES private: not logged or inspected. */
+  readonly #options: KlaracaseOptions;
 
   constructor(options: KlaracaseOptions = {}) {
     if (isBrowser() && options.dangerouslyAllowBrowser !== true) {
@@ -98,26 +121,54 @@ export class Klaracase {
     }
     const sleep = options.sleep ?? defaultSleep;
     const now = options.now ?? defaultNow;
+    const log = new Log(resolveLogLevel(options.logLevel), options.logger ?? console);
+    const defaultHeaders = { ...options.defaultHeaders };
 
-    this.transport = new Transport({
-      baseUrl: normalizeBaseUrl(options.baseUrl ?? DEFAULT_BASE_URL),
-      token: token.trim(),
-      timeout,
-      maxRetries,
-      userAgent: buildUserAgent(options.userAgentSuffix),
-      fetch: options.fetch ?? ((input, init) => globalThis.fetch(input, init)),
-      sleep,
-      now,
-      random: Math.random,
-      onDeprecation: options.onDeprecation ?? defaultDeprecationHandler,
+    this.#options = { ...options, token: token.trim(), defaultHeaders };
+
+    const transport = new Transport(
+      {
+        baseUrl: normalizeBaseUrl(options.baseUrl ?? DEFAULT_BASE_URL),
+        timeout,
+        maxRetries,
+        userAgent: buildUserAgent(options.userAgentSuffix),
+        fetch: options.fetch ?? ((input, init) => globalThis.fetch(input, init)),
+        sleep,
+        now,
+        random: Math.random,
+        onDeprecation: options.onDeprecation ?? ((info) => log.warn(deprecationMessage(info))),
+        defaultHeaders,
+        log,
+      },
+      token.trim(),
+    );
+
+    this.transport = transport;
+    this.decisions = new Decisions(transport);
+    this.norms = new Norms(transport);
+    this.datapackages = new Datapackages(transport);
+    this.citationChecks = new CitationChecks(transport);
+    this.citationCheckDocuments = new CitationCheckDocuments(transport, sleep, now);
+    this.corpus = new Corpus(transport);
+  }
+
+  /**
+   * A new client with these options changed. The original client is not touched, and the two share
+   * no mutable state. `defaultHeaders` are merged: a header in `options` wins, the rest stay.
+   *
+   * ```ts
+   * const patient = client.withOptions({ timeout: 120, maxRetries: 4 });
+   * ```
+   */
+  withOptions(options: Partial<KlaracaseOptions>): Klaracase {
+    const defined = Object.fromEntries(
+      Object.entries(options).filter(([, value]) => value !== undefined),
+    ) as Partial<KlaracaseOptions>;
+    return new Klaracase({
+      ...this.#options,
+      ...defined,
+      defaultHeaders: { ...this.#options.defaultHeaders, ...options.defaultHeaders },
     });
-
-    this.decisions = new Decisions(this.transport);
-    this.norms = new Norms(this.transport);
-    this.datapackages = new Datapackages(this.transport);
-    this.citationChecks = new CitationChecks(this.transport);
-    this.citationCheckDocuments = new CitationCheckDocuments(this.transport, sleep, now);
-    this.corpus = new Corpus(this.transport);
   }
 
   /** Search statutes and decisions together. Costs 1 credit. */

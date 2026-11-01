@@ -5,6 +5,7 @@ export interface DeprecationInfo {
   link: string | null;
 }
 
+/** Called once per process with the raw header values. */
 export type DeprecationHandler = (info: DeprecationInfo) => void;
 
 let alreadyWarned = false;
@@ -17,13 +18,13 @@ export function resetDeprecationWarnings(): void {
   alreadyWarned = false;
 }
 
-/** The default hook: one `console.warn` line. */
-export function defaultDeprecationHandler(info: DeprecationInfo): void {
-  const parts = ["[klaracase] The API announced a deprecation."];
+/** One sentence that names the deprecation, the sunset date and the link. */
+export function deprecationMessage(info: DeprecationInfo): string {
+  const parts = ["The API announced a deprecation."];
   if (info.deprecation) parts.push(`Deprecation: ${info.deprecation}.`);
   if (info.sunset) parts.push(`Sunset: ${info.sunset}.`);
   if (info.link) parts.push(`Link: ${info.link}.`);
-  console.warn(parts.join(" "));
+  return parts.join(" ");
 }
 
 /** Call the hook once per process when the answer carries a deprecation header. */

@@ -109,6 +109,7 @@ export interface CorpusFacetsResponse extends ApiEnvelope {
 }
 
 export class Corpus {
+  /** @internal */
   constructor(private readonly transport: Transport) {}
 
   /** Report what the corpus covers. Free. */
