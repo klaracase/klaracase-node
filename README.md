@@ -1,0 +1,316 @@
+# Klaracase for TypeScript and Node.js
+
+The official client for the [Klaracase](https://klaracase.de) REST API. Klaracase holds German
+court decisions and German statutes, linked by a citation graph.
+
+Klaracase covers German law only. It is a research tool. It gives no legal advice and does not
+replace a lawyer's review. A `not_found` verdict means the citation was not found in the corpus; it
+is not a claim that the citation is fabricated.
+
+This repository has two packages:
+
+| Package                                | What it is                                                 |
+| -------------------------------------- | ---------------------------------------------------------- |
+| [`@klaracase/sdk`](packages/sdk)       | The API client. No runtime dependencies. Node 22 or newer. |
+| [`@klaracase/ai-sdk`](packages/ai-sdk) | Tools for the Vercel AI SDK, built on the client.          |
+
+The client calls the REST API. It does not speak MCP. If your agent has an MCP client, connect it
+to `https://klaracase.de/mcp` with the same token.
+
+## Install
+
+```sh
+npm install @klaracase/sdk
+```
+
+The package ships ESM and CommonJS builds with type files.
+
+```ts
+// ESM
+import { Klaracase } from "@klaracase/sdk";
+```
+
+```js
+// CommonJS
+const { Klaracase } = require("@klaracase/sdk");
+```
+
+## Get a token
+
+Create a token at <https://klaracase.de/settings/api-tokens>. You need to be signed in with a
+verified email.
+
+- A token belongs to the organization that is open when you create it. That organization pays for
+  every call.
+- A token carries abilities. There are five: `search`, `read`, `graph`, `datapackage` and
+  `citation-check`. All five are ticked by default.
+- A token expires after 30, 90, 180 or 365 days. The default is 365.
+
+Pass the token to the client, or set `KLARACASE_API_TOKEN` and pass nothing. A missing token raises
+`ConfigurationError` when you build the client, not a 401 later. Never commit a token.
+
+## Quick start
+
+```ts
+import { Klaracase } from "@klaracase/sdk";
+
+const client = new Klaracase({ token: "klc_your_token_here" });
+
+const found = await client.decisions.search("Vermögensbetreuungspflicht", {
+  court: "BGH",
+  date_from: "2015-01-01",
+  limit: 5,
+});
+
+for (const hit of found.results) {
+  console.log(hit.aktenzeichen, hit.court, hit.date, hit.title);
+}
+console.log(found.credits.cost, "credit used,", found.credits.credits_remaining, "left");
+```
+
+Request parameters use the names of the API, such as `date_from` and `cited_statutes`. They are
+typed strictly. Client options and method names use camel case.
+
+## Check the citations in a text
+
+`citationChecks.create` checks every court-decision and statute citation in a German legal text. It
+answers when the check is finished.
+
+```ts
+const run = await client.citationChecks.create({
+  text: draftText, // 50 to 20,000 characters
+  reference_date: "2026-10-01", // optional
+});
+
+for (const finding of run.findings) {
+  const where = draftText.slice(finding.start_offset, finding.end_offset);
+  switch (finding.verdict) {
+    case "verified_corpus":
+    case "verified_external":
+      console.log("found:", where);
+      break;
+    case "not_found":
+      // Not found in the corpus. This does not mean the citation is fabricated.
+      console.log("check by hand:", where);
+      break;
+    case "out_of_coverage":
+    case "ambiguous":
+    case "unverifiable":
+    case "discrepancy":
+      console.log(finding.verdict + ":", where);
+      break;
+    default:
+      console.log("new verdict:", finding.verdict, where);
+  }
+}
+```
+
+The offsets are Unicode code point offsets into the text you sent. For text that has characters
+outside the basic plane, slice with `Array.from(draftText)`.
+
+To check a file, upload it first. The upload is free. PDF, DOCX, Markdown and plain text work, up to
+25 MB.
+
+```ts
+import { readFile } from "node:fs/promises";
+
+const receipt = await client.citationCheckDocuments.upload({
+  file: await readFile("schriftsatz.pdf"),
+  filename: "schriftsatz.pdf",
+  contentType: "application/pdf",
+});
+const ready = await client.citationCheckDocuments.waitUntilReady(receipt.id, {
+  pollInterval: 2, // seconds
+  timeout: 120, // seconds
+});
+console.log("a check will cost", ready.quoted_credits, "credits");
+
+const run = await client.citationChecks.create({ document_id: ready.id });
+```
+
+`waitUntilReady` throws `DocumentFailedError` when the upload fails, for example with
+`encrypted_pdf`. It throws `DocumentTimeoutError` when the time runs out.
+
+## All operations
+
+| Method                                                | Endpoint                              |
+| ----------------------------------------------------- | ------------------------------------- |
+| `client.decisions.search(query, filters)`             | `GET /decisions/search`               |
+| `client.search(query, filters)`                       | `GET /search` (laws and decisions)    |
+| `client.decisions.get(id, options)`                   | `GET /decisions/{id}`                 |
+| `client.decisions.citations(id, options)`             | `GET /decisions/{id}/citations`       |
+| `client.norms.get(reference, options)`                | `GET /norms/{reference}`              |
+| `client.datapackages.create({ ids, ... })`            | `POST /datapackages`                  |
+| `client.citationChecks.create({ text })`              | `POST /citation-checks`               |
+| `client.citationChecks.get(runId)`                    | `GET /citation-checks/{run}`          |
+| `client.citationCheckDocuments.upload({ file, ... })` | `POST /citation-check-documents`      |
+| `client.citationCheckDocuments.get(id)`               | `GET /citation-check-documents/{id}`  |
+| `client.citationCheckDocuments.waitUntilReady(id)`    | polls `get` until the upload is ready |
+| `client.corpus.coverage(options)`                     | `GET /corpus/coverage`                |
+| `client.corpus.facets(field, options)`                | `GET /corpus/facets/{field}`          |
+
+An `id` can be a UUID, an Aktenzeichen or an ECLI. The client encodes every path parameter as one
+segment, so `VIII ZR 271/17` is sent as `VIII%20ZR%20271%2F17`. Arrays go out as
+`cited_statutes[]=StGB&cited_statutes[]=StPO`. Options that you leave out or set to `undefined` are
+not sent.
+
+Full parameter lists are in the [API reference](https://klaracase.de/docs/api).
+
+## Responses
+
+Each method returns the answer body, parsed. Nothing in it is renamed, reordered or cleaned. Keys
+that a later API release adds are readable too, because every response type has an index signature.
+
+Each body also has a `meta` property with `status`, `api_release` (from
+`X-Klaracase-Api-Release`) and `request_duration` in seconds. `meta` is not enumerable. It does not
+show in `JSON.stringify(result)`, `Object.keys(result)` or a spread copy. Read `result.meta`
+directly. `result.credits` has `metered`, `cost` and `credits_remaining`.
+
+## Errors
+
+Every error from the API or the network extends `KlaracaseError`. The class follows the HTTP status.
+
+```ts
+import {
+  Klaracase,
+  KlaracaseError,
+  InsufficientCreditsError,
+  RateLimitError,
+  TransportError,
+  ValidationError,
+} from "@klaracase/sdk";
+
+try {
+  await client.decisions.get("VIII ZR 999/99");
+} catch (error) {
+  if (error instanceof InsufficientCreditsError) {
+    console.log("out of credits:", error.cost, error.balance);
+  } else if (error instanceof RateLimitError) {
+    console.log("wait", error.retry_after_seconds, "seconds");
+  } else if (error instanceof ValidationError) {
+    console.log(error.errors); // field name to a list of messages
+  } else if (error instanceof TransportError) {
+    console.log("no answer:", error.message); // also covers TimeoutError
+  } else if (error instanceof KlaracaseError) {
+    console.log(error.status, error.code, error.detail);
+  } else {
+    throw error;
+  }
+}
+```
+
+| Class                                         | When                                                |
+| --------------------------------------------- | --------------------------------------------------- |
+| `AuthenticationError`                         | 401                                                 |
+| `InsufficientCreditsError`                    | 402, with `cost` and `balance`                      |
+| `PermissionError`                             | 403, with `required_ability`                        |
+| `NotFoundError`                               | 404                                                 |
+| `ConflictError`                               | 409                                                 |
+| `ValidationError`                             | 422, with `errors`. Also raised before any request. |
+| `RateLimitError`                              | 429, with `retry_after_seconds`                     |
+| `ServiceUnavailableError`                     | 503                                                 |
+| `ApiError`                                    | any other status                                    |
+| `TransportError`, `TimeoutError`              | no answer from the server                           |
+| `DocumentFailedError`, `DocumentTimeoutError` | `waitUntilReady` ended without a ready upload       |
+| `ConfigurationError`                          | bad client setup. Not a `KlaracaseError`.           |
+
+An error has `type`, `title`, `status`, `detail`, `code`, `api_release` and `extra`. `extra` holds
+every other member of the problem body. If the server answers with something that is not a problem
+body, such as an HTML page from a proxy, `code` is `unknown` and `detail` holds the first 1,000
+characters of the body.
+
+Passing both `text` and `document_id`, or neither, to `citationChecks.create` raises a
+`ValidationError` with the code `client_validation`. No request is sent.
+
+## Retries and timeouts
+
+The client retries at most `maxRetries` times (default 2).
+
+- It retries on 429 and 503. Both statuses mean nothing ran and nothing was charged, so a retry is
+  safe on every operation, including POST.
+- It waits for `retry_after_seconds` from the body, or the `Retry-After` header. Without one it
+  backs off for up to 0.5 s, then 1 s, then 2 s, with random jitter, never more than 8 s.
+- If the server asks for more than 30 seconds, the client does not sleep. It throws
+  `RateLimitError` and you decide. The daily `volume_cap` is handled this way.
+- It never retries 402 or any other 4xx, and it does not retry 500 or 502.
+- It retries a transport error on GET only. A POST whose connection dropped after it was sent is
+  not retried. The same check repeated in the same month costs nothing more, so you can repeat it
+  by hand.
+
+`timeout` is in seconds for each attempt (default 30). You can set `timeout`, `maxRetries` and an
+`AbortSignal` for a single call:
+
+```ts
+await client.norms.get("§ 535 BGB", {}, { timeout: 10, maxRetries: 0, signal: controller.signal });
+```
+
+## Client options
+
+```ts
+new Klaracase({
+  token, // or KLARACASE_API_TOKEN
+  baseUrl, // default https://klaracase.de/api/v1
+  timeout, // seconds, default 30
+  maxRetries, // default 2
+  userAgentSuffix, // appended to the User-Agent header
+  fetch, // your own fetch
+  onDeprecation, // see below
+  sleep, // (seconds) => Promise<void>, for tests
+  now, // () => seconds, for tests
+});
+```
+
+The `User-Agent` is `klaracase-node/0.1.0 node/<version>`.
+
+When the API announces a deprecation with `Deprecation` or `Sunset` headers, the client calls
+`onDeprecation` once per process with the raw header values. The default logs one `console.warn`
+line. In tests, call `resetDeprecationWarnings()` to reset the guard.
+
+## Credits
+
+Most calls cost credits. The organization of the token pays.
+
+- `decisions.search`, `search`, `decisions.get` and `norms.get` cost 1 credit.
+- `decisions.citations` costs 2 credits. `datapackages.create` costs 5.
+- `citationChecks.create` costs `max(2, ceil(characters / 5000))` credits.
+- `corpus.coverage`, `corpus.facets`, uploads and reading a run or an upload are free.
+
+One charge applies per operation, organization, subject and calendar month (UTC). The same text
+checked again in the same month costs 0. The response `credits` field shows the cost of each call.
+
+## Use with the Vercel AI SDK
+
+`@klaracase/ai-sdk` turns the client into tools for `generateText` and `streamText`.
+
+```ts
+import { generateText } from "ai";
+import { Klaracase } from "@klaracase/sdk";
+import { klaracaseTools } from "@klaracase/ai-sdk";
+
+const client = new Klaracase();
+const { text } = await generateText({
+  model: yourModel,
+  tools: klaracaseTools(client),
+  prompt: "Which BGH decisions deal with § 266 StGB and the Vermögensbetreuungspflicht?",
+});
+```
+
+Pass `{ tools: ["searchDecisions", "getNorm"] }` to expose only some tools. See
+[`packages/ai-sdk`](packages/ai-sdk).
+
+## Smoke test
+
+`pnpm smoke` calls the two free endpoints with a real token. It needs a build first.
+
+```sh
+pnpm build
+KLARACASE_API_TOKEN=<token> pnpm smoke
+```
+
+## More
+
+- API reference: <https://klaracase.de/docs/api>
+- MCP tools: <https://klaracase.de/docs/mcp>
+- Support: support@klaracase.de
+- Changes: [CHANGELOG.md](CHANGELOG.md)
+- License: MIT, Copyright (c) 2026 SPARQ VENTURES UG
