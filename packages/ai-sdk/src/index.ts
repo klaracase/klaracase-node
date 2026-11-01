@@ -157,7 +157,7 @@ function buildTools(client: KlaracaseToolClient) {
     }),
     checkCitations: tool({
       description:
-        "Check every court-decision and statute citation in a German legal text against the corpus. One verdict per citation, with offsets into the text. not_found means not found in the corpus, not fabricated. Costs 2 to 4 credits by length.",
+        "Check every court-decision and statute citation in a German legal text against the corpus. One verdict per citation, with offsets into the text. not_found means not found in the corpus, not invented. Costs 2 to 4 credits by length.",
       inputSchema: checkCitationsInput,
       execute: async ({ text, reference_date }) =>
         client.citationChecks.create(
@@ -178,7 +178,7 @@ type AllTools = ReturnType<typeof buildTools>;
  *
  * Each tool returns the parsed API body. A tool that fails throws a `KlaracaseError`; the AI SDK
  * reports it to the model as a tool error. Cite only what a tool returned. A `not_found` verdict
- * means the citation was not found in the corpus; it does not mean it is fabricated.
+ * means the citation was not found in the corpus; it does not mean it is invented.
  */
 export function klaracaseTools<K extends KlaracaseToolName = KlaracaseToolName>(
   client: KlaracaseToolClient,
