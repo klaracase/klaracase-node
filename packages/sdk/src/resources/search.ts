@@ -88,7 +88,7 @@ export interface CrossTypeSearchResponse extends ApiEnvelope {
   query_expansion: QueryExpansion;
   frequently_cited_by_results: unknown[];
   norms_cited_by_decision_results: unknown[];
-  top_confidence?: Open<"high" | "medium" | "low"> | null;
+  top_confidence?: Open<"high" | "medium" | "low"> | null | undefined;
 }
 
 /** `GET /search`: statutes and decisions together. Costs 1 credit. */

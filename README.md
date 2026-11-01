@@ -236,14 +236,17 @@ Full parameter lists are in the [API reference](https://klaracase.de/docs/api).
 
 ## Pagination
 
-`decisions.searchAll` and `decisions.citationsAll` are async iterators. Each step is one more call to
-the API, and **every call costs credits**: 1 credit per search page and 2 credits per citations
-page. A loop that you forget to stop can spend a lot. So `maxPages` is required and has no default.
+`decisions.searchAll` and `decisions.citationsAll` are async iterators over pages.
+
+Paging adds no credits. A search costs 1 credit per distinct query and filter set per month, and the
+graph costs 2 credits per decision, direction and depth per month. Page 2 to 10 of a search you
+already paid for cost nothing more. Each page is still a call. It counts against the rate limit and
+the daily volume cap of your plan, and it takes time. So `maxPages` is required and has no default.
 
 ```ts
 for await (const page of client.decisions.searchAll("Untreue", { court: "BGH" }, { maxPages: 3 })) {
   for (const hit of page.results) console.log(hit.aktenzeichen, hit.date);
-  console.log("this page cost", page.credits.cost);
+  console.log("this page cost", page.credits.cost, "credits");
 }
 
 for await (const page of client.decisions.citationsAll("VIII ZR 271/17", {}, { maxPages: 2 })) {

@@ -128,7 +128,7 @@ export interface ApiEnvelope {
   changelog_url: string;
   credits: Credits;
   /** Present when the call sent arguments the server does not know. */
-  ignored_parameters?: unknown;
+  ignored_parameters?: unknown | undefined;
 }
 
 /** Options that apply to one request. */

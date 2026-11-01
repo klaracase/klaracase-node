@@ -46,7 +46,7 @@ export interface DecisionSearchFilters {
 /** One passage of a search result. `rn` is the Randnummer of the passage when it has one. */
 export interface Snippet {
   text: string;
-  rn?: number;
+  rn?: number | undefined;
 }
 
 /** How the server rewrote a lay query into legal terms. */
@@ -89,7 +89,7 @@ export interface DecisionSearchResponse extends ApiEnvelope {
   mode: Open<SearchMode>;
   frequently_cited_by_results: unknown[];
   query_expansion: QueryExpansion;
-  top_confidence?: Open<"high" | "medium" | "low"> | null;
+  top_confidence?: Open<"high" | "medium" | "low"> | null | undefined;
 }
 
 /** Arguments of `GET /decisions/{id}`. */
@@ -136,11 +136,13 @@ export interface DecisionResponse extends ApiEnvelope {
   available_range_scope: Open<"decision"> | null;
   has_rn_anchors: boolean;
   /** Present when the call asked for a section or a Randnummer window. */
-  returned_range?: {
-    section_heading?: string | null;
-    rn_from?: number | null;
-    rn_to?: number | null;
-  };
+  returned_range?:
+    | {
+        section_heading?: string | null | undefined;
+        rn_from?: number | null | undefined;
+        rn_to?: number | null | undefined;
+      }
+    | undefined;
 }
 
 /** Arguments of `GET /decisions/{id}/citations`. */
@@ -177,7 +179,7 @@ export interface CitationEdge {
   corpus: CitationCorpusRef | null;
   from_artifact_id: string;
   /** Present at depth 2: how many steps from the source decision. */
-  hop?: number;
+  hop?: number | undefined;
 }
 
 /** Page state of `GET /decisions/{id}/citations`. */
@@ -259,9 +261,11 @@ export class Decisions {
   }
 
   /**
-   * Search decisions page by page, as an async iterator of pages. Each page is a separate call and
-   * costs 1 credit, so `maxPages` is required. It stops when a page has no results or after
-   * `maxPages` pages, and never goes past page 10. A `page` in `filters` is the first page.
+   * Search decisions page by page, as an async iterator of pages. Paging adds no credits: the
+   * search costs 1 credit per distinct query and filter set per month. Each page is still a call,
+   * with its own share of the rate limit and the daily volume cap, so `maxPages` is required. It
+   * stops when a page has no results or after `maxPages` pages, and never goes past page 10. A
+   * `page` in `filters` is the first page.
    *
    * ```ts
    * for await (const page of client.decisions.searchAll("Untreue", { court: "BGH" }, { maxPages: 3 })) {
@@ -297,10 +301,12 @@ export class Decisions {
   }
 
   /**
-   * Read the citation graph around one decision page by page, as an async iterator of pages. Each
-   * page is a separate call and costs 2 credits, so `maxPages` is required. It stops when no
-   * direction has another page, when a page is empty, or after `maxPages` pages, and never goes
-   * past page 20. A `page` in `options` is the first page. Paging works at depth 1 only.
+   * Read the citation graph around one decision page by page, as an async iterator of pages.
+   * Paging adds no credits: the graph costs 2 credits per decision, direction and depth per month.
+   * Each page is still a call, with its own share of the rate limit and the daily volume cap, so
+   * `maxPages` is required. It stops when no direction has another page, when a page is empty, or
+   * after `maxPages` pages, and never goes past page 20. A `page` in `options` is the first page.
+   * Paging works at depth 1 only.
    *
    * ```ts
    * for await (const page of client.decisions.citationsAll("VIII ZR 271/17", {}, { maxPages: 2 })) {

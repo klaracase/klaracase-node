@@ -49,3 +49,4 @@ export type * from "./resources/datapackages.js";
 export type * from "./resources/citation-checks.js";
 export type * from "./resources/citation-check-documents.js";
 export type * from "./resources/corpus.js";
+export type * from "./inputs.js";

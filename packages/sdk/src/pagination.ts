@@ -9,8 +9,10 @@ export const CITATIONS_MAX_PAGES = 20;
 /** Options of the paging iterators. */
 export interface PageOptions extends RequestOptions {
   /**
-   * The most pages to fetch. Required, because every page is a separate call and costs credits.
-   * A value above the endpoint's last page (10 for search, 20 for citations) counts as that page.
+   * The most pages to fetch. Required. Paging adds no credits (one charge per query and month),
+   * but every page is a call: it counts against the rate limit and the daily volume cap, and it
+   * takes time. A value above the endpoint's last page (10 for search, 20 for citations) counts
+   * as that page.
    */
   maxPages: number;
 }
@@ -29,7 +31,7 @@ export function lastPageToFetch(
     throw new ValidationError({
       title: "Invalid arguments",
       detail:
-        "Pass { maxPages } as a whole number, 1 or more. Every page costs credits, so there is no default.",
+        "Pass { maxPages } as a whole number, 1 or more. Every page is a call against your rate limit and daily volume cap, so there is no default.",
       code: "client_validation",
     });
   }

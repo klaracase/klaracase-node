@@ -105,7 +105,7 @@ export interface CorpusFacetsResponse extends ApiEnvelope {
   count_basis: Open<"indexed_passages">;
   as_of: string;
   /** The canonical norm, echoed back. Present for the field `cited_norms`. */
-  norm?: string;
+  norm?: string | undefined;
 }
 
 export class Corpus {
