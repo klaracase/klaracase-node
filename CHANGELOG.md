@@ -26,7 +26,16 @@ All notable changes to this project are documented in this file. The format foll
 - Type tests that assign every example and conformance body to its response type, and a key
   manifest test that fails when a body carries a key the type does not declare.
 
+- `KlaracaseError.is(error)` and `ConfigurationError.is(error)`, based on `Symbol.for` brands, for
+  apps that load both the ESM and the CJS build.
+- `ServerError` (5xx except 503, extends `ApiError`).
+- `headers` on every error that came with an answer.
+- Typed problem extras on every error: `candidates`, `successor`, `unit`, `cap`, `resets_at`, plus
+  `retryable` and `retryAfterSeconds`.
+
 ### Changed
+
+- Every error class sets `name` with an explicit string, so a minifier cannot rename it.
 
 - `corpus.coverage` `branches[].count` and `courts[].count` are `Count` objects, not numbers.
 - `corpus.facets` has the optional key `norm`. `decisions.get` has the optional `returned_range`.

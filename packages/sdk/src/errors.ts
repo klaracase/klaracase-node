@@ -62,6 +62,23 @@ export type KlaracaseErrorCode =
 /** A `code` value: a known code, or any other string the API may add later. */
 export type ErrorCode = KlaracaseErrorCode | (string & {});
 
+/**
+ * Brand of every {@link KlaracaseError}. `Symbol.for` returns the same symbol in every copy of
+ * this package, so {@link KlaracaseError.is} works when an app loads both the ESM and the CJS
+ * build, or two versions of the package (the dual package hazard).
+ */
+const KLARACASE_ERROR: unique symbol = Symbol.for("klaracase.error");
+
+const CONFIGURATION_ERROR_BRAND: unique symbol = Symbol.for("klaracase.configuration_error");
+
+/** One decision that matches an ambiguous Aktenzeichen (`code` `ambiguous_aktenzeichen`). */
+export interface AmbiguousCandidate {
+  id: string;
+  court: string | null;
+  date: string | null;
+  aktenzeichen: string | null;
+}
+
 /** The members of an RFC 9457 problem body that the SDK reads as typed fields. */
 export interface ProblemInit {
   type?: string | undefined;
@@ -72,6 +89,10 @@ export interface ProblemInit {
   api_release?: string | null | undefined;
   /** Every member of the problem body except `type`, `title`, `status`, `detail` and `code`. */
   extra?: Record<string, unknown> | undefined;
+  /** The response headers, for an error that came with an HTTP answer. */
+  headers?: Headers | null | undefined;
+  /** Wait from the `Retry-After` header, when the body names none. */
+  retry_after_seconds?: number | null | undefined;
   cause?: unknown;
 }
 
@@ -88,11 +109,31 @@ export class KlaracaseError extends Error {
   readonly api_release: string | null;
   /** Every problem member that is not `type`, `title`, `status`, `detail` or `code`. */
   readonly extra: Record<string, unknown>;
+  /** The response headers of the failed answer, or `null` when there was no answer. */
+  readonly headers: Headers | null;
+  /** The decisions that share the Aktenzeichen, for `ambiguous_aktenzeichen`. */
+  readonly candidates: AmbiguousCandidate[] | undefined;
+  /** The statute that replaced the cited one, for `statute_superseded`. */
+  readonly successor: string | undefined;
+  /** What the cap counts (for example `rows`), for `volume_cap`. */
+  readonly unit: string | undefined;
+  /** The size of the cap, for `volume_cap`. */
+  readonly cap: number | undefined;
+  /** When the cap resets, an ISO 8601 time, for `volume_cap`. */
+  readonly resets_at: string | undefined;
+  /**
+   * True when sending the same request again later can succeed: a 429 (wait first), a 503, any
+   * other 5xx, or a transport error. False for every other 4xx. The client already retried
+   * `maxRetries` times before it threw.
+   */
+  readonly retryable: boolean;
+  /** Seconds the server asked you to wait: the body value, else `Retry-After`, else `null`. */
+  readonly retryAfterSeconds: number | null;
 
   constructor(init: ProblemInit = {}) {
     const detail = init.detail ?? init.title ?? "Klaracase error";
     super(detail, init.cause === undefined ? undefined : { cause: init.cause });
-    this.name = new.target.name;
+    this.name = "KlaracaseError";
     this.type = init.type ?? "about:blank";
     this.title = init.title ?? "";
     this.status = init.status ?? null;
@@ -100,14 +141,39 @@ export class KlaracaseError extends Error {
     this.code = init.code ?? null;
     this.api_release = init.api_release ?? null;
     this.extra = init.extra ?? {};
+    this.headers = init.headers ?? null;
+    this.candidates = candidatesOf(this.extra["candidates"]);
+    this.successor = stringOrUndefined(this.extra["successor"]);
+    this.unit = stringOrUndefined(this.extra["unit"]);
+    this.cap = numberOrUndefined(this.extra["cap"]);
+    this.resets_at = stringOrUndefined(this.extra["resets_at"]);
+    this.retryAfterSeconds =
+      numberOrUndefined(this.extra["retry_after_seconds"]) ?? init.retry_after_seconds ?? null;
+    this.retryable = isRetryableStatus(this.status, this instanceof TransportError);
+  }
+
+  /**
+   * True for any {@link KlaracaseError}, also one made by another copy of this package. Prefer it
+   * to `instanceof` when your app may load the ESM and the CJS build, or two versions.
+   */
+  static is(error: unknown): error is KlaracaseError {
+    return typeof error === "object" && error !== null && KLARACASE_ERROR in error;
   }
 }
 
+Object.defineProperty(KlaracaseError.prototype, KLARACASE_ERROR, {
+  value: true,
+  enumerable: false,
+});
+
 /** 401. The token is missing, expired or revoked. */
-export class AuthenticationError extends KlaracaseError {}
+export class AuthenticationError extends KlaracaseError {
+  override name = "AuthenticationError";
+}
 
 /** 402. The organization has too few credits. Never retried. */
 export class InsufficientCreditsError extends KlaracaseError {
+  override name = "InsufficientCreditsError";
   readonly cost: number | null;
   readonly balance: number | null;
 
@@ -120,6 +186,7 @@ export class InsufficientCreditsError extends KlaracaseError {
 
 /** 403. The token lacks an ability, or the organization refuses it. */
 export class PermissionError extends KlaracaseError {
+  override name = "PermissionError";
   /** The ability the endpoint needs, when the code is `token_ability_missing`. */
   readonly required_ability: string | null;
 
@@ -131,16 +198,21 @@ export class PermissionError extends KlaracaseError {
 }
 
 /** 404. */
-export class NotFoundError extends KlaracaseError {}
+export class NotFoundError extends KlaracaseError {
+  override name = "NotFoundError";
+}
 
 /** 409. */
-export class ConflictError extends KlaracaseError {}
+export class ConflictError extends KlaracaseError {
+  override name = "ConflictError";
+}
 
 /**
  * 422 from the API, or a client-side check that failed before any request (`code` is then
  * `client_validation` and `status` is `null`).
  */
 export class ValidationError extends KlaracaseError {
+  override name = "ValidationError";
   /** Map from field name to a list of messages. Empty when the server sent none. */
   readonly errors: Record<string, string[]>;
 
@@ -153,6 +225,7 @@ export class ValidationError extends KlaracaseError {
 
 /** 429. Includes the daily `volume_cap`. */
 export class RateLimitError extends KlaracaseError {
+  override name = "RateLimitError";
   /** Seconds to wait: the body value, else the `Retry-After` header, else `null`. */
   readonly retry_after_seconds: number | null;
 
@@ -165,13 +238,23 @@ export class RateLimitError extends KlaracaseError {
 }
 
 /** 503. */
-export class ServiceUnavailableError extends KlaracaseError {}
+export class ServiceUnavailableError extends KlaracaseError {
+  override name = "ServiceUnavailableError";
+}
 
 /** Any other error status. */
-export class ApiError extends KlaracaseError {}
+export class ApiError extends KlaracaseError {
+  override name = "ApiError";
+}
+
+/** 500, 502, 504 and every other 5xx except 503. The SDK does not retry these. */
+export class ServerError extends ApiError {
+  override name = "ServerError";
+}
 
 /** No usable answer: refused connection, DNS, TLS, a dropped socket. Wraps the cause. */
 export class TransportError extends KlaracaseError {
+  override name = "TransportError";
   constructor(init: ProblemInit = {}) {
     super({ title: "Transport error", ...init });
   }
@@ -179,6 +262,7 @@ export class TransportError extends KlaracaseError {
 
 /** The answer took longer than the `timeout` option. */
 export class TimeoutError extends TransportError {
+  override name = "TimeoutError";
   constructor(init: ProblemInit = {}) {
     super({ title: "Timeout", ...init });
   }
@@ -193,6 +277,7 @@ export interface DocumentReceiptLike {
 
 /** `waitUntilReady` saw the upload end in the `failed` status. */
 export class DocumentFailedError extends KlaracaseError {
+  override name = "DocumentFailedError";
   /** The reason the upload failed, for example `encrypted_pdf`. Same as `code`. */
   readonly error_code: string | null;
   /** The last receipt. */
@@ -211,6 +296,7 @@ export class DocumentFailedError extends KlaracaseError {
 
 /** `waitUntilReady` ran out of time before the upload reached a terminal status. */
 export class DocumentTimeoutError extends KlaracaseError {
+  override name = "DocumentTimeoutError";
   /** The last receipt. */
   readonly document: DocumentReceiptLike;
 
@@ -229,6 +315,11 @@ export class DocumentTimeoutError extends KlaracaseError {
  * {@link KlaracaseError}. Raised by the constructor, before any request.
  */
 export class ConfigurationError extends Error {
+  /** True for any {@link ConfigurationError}, also one made by another copy of this package. */
+  static is(error: unknown): error is ConfigurationError {
+    return typeof error === "object" && error !== null && CONFIGURATION_ERROR_BRAND in error;
+  }
+
   /** `client_validation` when the setup is unsafe or invalid for this host, else `null`. */
   readonly code: string | null;
 
@@ -239,10 +330,43 @@ export class ConfigurationError extends Error {
   }
 }
 
+Object.defineProperty(ConfigurationError.prototype, CONFIGURATION_ERROR_BRAND, {
+  value: true,
+  enumerable: false,
+});
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function numberOrNull(value: unknown): number | null {
   return typeof value === "number" ? value : null;
+}
+
+function stringOrUndefined(value: unknown): string | undefined {
+  return typeof value === "string" ? value : undefined;
+}
+
+function numberOrUndefined(value: unknown): number | undefined {
+  return typeof value === "number" ? value : undefined;
+}
+
+function candidatesOf(value: unknown): AmbiguousCandidate[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  return value.filter(isRecord).map((item) => ({
+    id: String(item["id"] ?? ""),
+    court: stringOrNull(item["court"]),
+    date: stringOrNull(item["date"]),
+    aktenzeichen: stringOrNull(item["aktenzeichen"]),
+  }));
+}
+
+function stringOrNull(value: unknown): string | null {
+  return typeof value === "string" ? value : null;
+}
+
+function isRetryableStatus(status: number | null, isTransport: boolean): boolean {
+  if (isTransport) return true;
+  if (status === null) return false;
+  return status === 429 || status >= 500;
 }

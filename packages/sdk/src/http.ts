@@ -9,6 +9,7 @@ import {
   NotFoundError,
   PermissionError,
   RateLimitError,
+  ServerError,
   ServiceUnavailableError,
   TimeoutError,
   TransportError,
@@ -174,7 +175,7 @@ export class Transport {
     const apiRelease = response.headers.get("x-klaracase-api-release");
     const body = parseJson(text);
     const init = isProblem(body)
-      ? problemInit(body, status, apiRelease)
+      ? problemInit(body, status, apiRelease, response.headers)
       : ({
           type: "about:blank",
           title: `HTTP ${status}`,
@@ -182,6 +183,7 @@ export class Transport {
           detail: truncate(text),
           code: "unknown",
           api_release: apiRelease,
+          headers: response.headers,
         } satisfies ProblemInit);
 
     if (status === 401) return new AuthenticationError(init);
@@ -197,6 +199,7 @@ export class Transport {
       });
     }
     if (status === 503) return new ServiceUnavailableError(init);
+    if (status >= 500) return new ServerError(init);
     return new ApiError(init);
   }
 
@@ -216,7 +219,12 @@ export class Transport {
   }
 }
 
-function problemInit(body: JsonObject, status: number, apiRelease: string | null): ProblemInit {
+function problemInit(
+  body: JsonObject,
+  status: number,
+  apiRelease: string | null,
+  headers: Headers,
+): ProblemInit {
   const { type, title, status: _status, detail, code, ...extra } = body;
   return {
     type: typeof type === "string" ? type : "about:blank",
@@ -226,6 +234,8 @@ function problemInit(body: JsonObject, status: number, apiRelease: string | null
     code: code as string,
     api_release: apiRelease,
     extra,
+    headers,
+    retry_after_seconds: parseWholeSeconds(headers.get("retry-after")),
   };
 }
 

@@ -263,8 +263,8 @@ try {
     console.log(error.errors); // field name to a list of messages
   } else if (error instanceof TransportError) {
     console.log("no answer:", error.message); // also covers TimeoutError
-  } else if (error instanceof KlaracaseError) {
-    console.log(error.status, error.code, error.detail);
+  } else if (KlaracaseError.is(error)) {
+    console.log(error.status, error.code, error.detail, error.retryable);
   } else {
     throw error;
   }
@@ -281,13 +281,26 @@ try {
 | `ValidationError`                             | 422, with `errors`. Also raised before any request. |
 | `RateLimitError`                              | 429, with `retry_after_seconds`                     |
 | `ServiceUnavailableError`                     | 503                                                 |
+| `ServerError`                                 | 5xx except 503. It extends `ApiError`.              |
 | `ApiError`                                    | any other status                                    |
 | `TransportError`, `TimeoutError`              | no answer from the server                           |
 | `DocumentFailedError`, `DocumentTimeoutError` | `waitUntilReady` ended without a ready upload       |
 | `ConfigurationError`                          | bad client setup. Not a `KlaracaseError`.           |
 
-An error has `type`, `title`, `status`, `detail`, `code`, `api_release` and `extra`. `extra` holds
-every other member of the problem body. If the server answers with something that is not a problem
+An error has `type`, `title`, `status`, `detail`, `code`, `api_release`, `headers` and `extra`.
+`extra` holds every other member of the problem body. A few members are also typed fields:
+
+| Field                      | When                                                                 |
+| -------------------------- | -------------------------------------------------------------------- |
+| `candidates`               | `ambiguous_aktenzeichen`: the decisions that share the Aktenzeichen  |
+| `successor`                | `statute_superseded`: the statute that replaced the cited one        |
+| `unit`, `cap`, `resets_at` | `volume_cap`: what the daily cap counts, its size and when it resets |
+| `retryable`                | `true` when the same request may succeed later (429, 5xx, transport) |
+| `retryAfterSeconds`        | seconds the server asked you to wait, or `null`                      |
+
+Use `KlaracaseError.is(error)` instead of `instanceof` when your app may load both the ESM and the
+CommonJS build of the package, or two versions of it. Each copy has its own classes, so
+`instanceof` can be false for an error from the other copy. `is` checks a shared brand. If the server answers with something that is not a problem
 body, such as an HTML page from a proxy, `code` is `unknown` and `detail` holds the first 1,000
 characters of the body.
 
