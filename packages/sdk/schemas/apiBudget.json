@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "cents": {
+      "type": "number"
+    },
+    "rate_cents_per_credit": {
+      "type": "number"
+    },
+    "credits_at_rate": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "cents",
+    "rate_cents_per_credit",
+    "credits_at_rate"
+  ],
+  "additionalProperties": {},
+  "title": "apiBudget"
+}

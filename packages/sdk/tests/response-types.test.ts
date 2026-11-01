@@ -42,6 +42,7 @@ import crossTypeSearch from "./fixtures/examples/search.json";
 
 import bodyCoverageNotMetered from "./fixtures/conformance/bodies/corpus.coverage.not_metered.json";
 import bodyFacetsCitedNorms from "./fixtures/conformance/bodies/corpus.facets.cited_norms.json";
+import bodySearchApiBudget from "./fixtures/conformance/bodies/decisions.search.api_budget.json";
 import bodySearchFutureKey from "./fixtures/conformance/bodies/decisions.search.future_key.json";
 import bodyDocExtracting from "./fixtures/conformance/bodies/documents.extracting.json";
 import bodyDocFailed from "./fixtures/conformance/bodies/documents.failed.encrypted_pdf.json";
@@ -86,6 +87,7 @@ describe("example bodies fit the response types", () => {
   it("assigns every conformance body to its type", () => {
     expectTypeOf(bodyCoverageNotMetered).toExtend<Widen<CorpusCoverageResponse>>();
     expectTypeOf(bodyFacetsCitedNorms).toExtend<Widen<CorpusFacetsResponse>>();
+    expectTypeOf(bodySearchApiBudget).toExtend<Widen<DecisionSearchResponse>>();
     expectTypeOf(bodySearchFutureKey).toExtend<Widen<DecisionSearchResponse>>();
     expectTypeOf(bodyDocExtracting).toExtend<Widen<DocumentReceipt>>();
     expectTypeOf(bodyDocFailed).toExtend<Widen<DocumentReceipt>>();
@@ -134,6 +136,11 @@ const samples: Sample[] = [
     file: "conformance/bodies/corpus.facets.cited_norms",
     body: bodyFacetsCitedNorms,
     keys: corpusFacetsKeys,
+  },
+  {
+    file: "conformance/bodies/decisions.search.api_budget",
+    body: bodySearchApiBudget,
+    keys: decisionSearchKeys,
   },
   {
     file: "conformance/bodies/decisions.search.future_key",

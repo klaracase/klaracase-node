@@ -15,7 +15,7 @@
  * const input = z.parse(searchDecisionsInputSchema, { query: "Untreue", limit: 5 });
  * ```
  */
-export { countSchema, creditsSchema, open } from "./common.js";
+export { apiBudgetSchema, countSchema, creditsSchema, open } from "./common.js";
 export * from "./requests.js";
 export * from "./responses.js";
 export { toJsonSchema } from "./json-schema.js";

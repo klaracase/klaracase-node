@@ -103,11 +103,35 @@ export interface Count {
   is_floor: boolean;
 }
 
-/** Credit use of one call. `cost` and `credits_remaining` are `null` for an unmetered caller. */
+/**
+ * The prepaid API budget of the organization after one call (API release 0.96.0). It pays for API
+ * and MCP calls once the plan credits are used up. The web app never draws on it. All values are
+ * integers.
+ */
+export interface ApiBudget {
+  /** The budget after this call, in euro cents. It can be negative after a lost payment. */
+  cents: number;
+  /** What one credit costs from the budget, in whole euro cents, for this organization. */
+  rate_cents_per_credit: number;
+  /** How many further credits the spendable part of the budget pays for. 0 when empty or on hold. */
+  credits_at_rate: number;
+}
+
+/**
+ * Credit use of one call. `cost` and `credits_remaining` are `null` for an unmetered caller.
+ *
+ * `cost` counts plan credits and API budget credits together. `credits_remaining` is the plan
+ * credits left in the credit period and never counts the API budget.
+ */
 export interface Credits {
   metered: boolean;
   cost: number | null;
   credits_remaining: number | null;
+  /**
+   * The prepaid API budget. The key is absent when the organization has no budget and may not
+   * load one. It is never `null`. Check with `credits.api_budget !== undefined`.
+   */
+  api_budget?: ApiBudget | undefined;
 }
 
 /** Keys that every operation body carries. */

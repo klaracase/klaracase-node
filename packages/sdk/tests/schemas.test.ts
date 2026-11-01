@@ -14,6 +14,7 @@ import type {
   CrossTypeSearchFilters,
   CrossTypeSearchInput,
   CrossTypeSearchResponse,
+  ApiBudget,
   Credits,
   DatapackageCreateParams,
   DatapackageResponse,
@@ -120,6 +121,7 @@ describe("schema types equal the SDK types", () => {
 
   it("shared pieces and response bodies", () => {
     expectTypeOf<Infer<typeof schemas.countSchema>>().toEqualTypeOf<Known<Count>>();
+    expectTypeOf<Infer<typeof schemas.apiBudgetSchema>>().toEqualTypeOf<Known<ApiBudget>>();
     expectTypeOf<Infer<typeof schemas.creditsSchema>>().toEqualTypeOf<Known<Credits>>();
     expectTypeOf<Infer<typeof schemas.documentReceiptSchema>>().toEqualTypeOf<
       Known<DocumentReceipt>
@@ -172,6 +174,7 @@ const responseSamples: Array<[string, z.ZodMiniType]> = [
   ["examples/search", schemas.crossTypeSearchResponseSchema],
   ["conformance/bodies/corpus.coverage.not_metered", schemas.corpusCoverageResponseSchema],
   ["conformance/bodies/corpus.facets.cited_norms", schemas.corpusFacetsResponseSchema],
+  ["conformance/bodies/decisions.search.api_budget", schemas.decisionSearchResponseSchema],
   ["conformance/bodies/decisions.search.future_key", schemas.decisionSearchResponseSchema],
   ["conformance/bodies/documents.extracting", schemas.documentReceiptSchema],
   ["conformance/bodies/documents.failed.encrypted_pdf", schemas.documentReceiptSchema],

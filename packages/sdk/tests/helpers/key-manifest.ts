@@ -46,7 +46,12 @@ const count = { value: L, is_floor: L } as const;
 const envelope = {
   api_version: L,
   changelog_url: L,
-  credits: { metered: L, cost: L, credits_remaining: L },
+  credits: {
+    metered: L,
+    cost: L,
+    credits_remaining: L,
+    api_budget: { cents: L, rate_cents_per_credit: L, credits_at_rate: L },
+  },
   ignored_parameters: L,
 } as const;
 const snippet = { text: L, rn: L } as const;

@@ -320,7 +320,7 @@ describe("conformance pack", () => {
   const cases = loadCases();
 
   it("loads every case of the pack", () => {
-    expect(cases).toHaveLength(102);
+    expect(cases).toHaveLength(106);
   });
 
   for (const testCase of cases) {

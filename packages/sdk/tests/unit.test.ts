@@ -91,6 +91,53 @@ describe("injectable fetch", () => {
   });
 });
 
+describe("credits.api_budget (API release 0.96.0)", () => {
+  const withBudget = {
+    results: [],
+    credits: {
+      metered: true,
+      cost: 1,
+      credits_remaining: 0,
+      api_budget: { cents: 4991, rate_cents_per_credit: 9, credits_at_rate: 554 },
+    },
+  };
+
+  async function creditsOf(body: unknown) {
+    const fetchMock = async () =>
+      new Response(JSON.stringify(body), { status: 200, headers: jsonHeaders });
+    const client = new Klaracase({ token: "t", fetch: fetchMock as unknown as typeof fetch });
+    return (await client.decisions.search("Untreue")).credits;
+  }
+
+  it("reads the three integers of the budget", async () => {
+    const credits = await creditsOf(withBudget);
+    expect(credits.api_budget).toEqual({
+      cents: 4991,
+      rate_cents_per_credit: 9,
+      credits_at_rate: 554,
+    });
+    expect(credits.credits_remaining).toBe(0);
+  });
+
+  it("leaves the key absent, not null, when the body has none", async () => {
+    const credits = await creditsOf(JSON.parse(searchBody));
+    expect(credits.api_budget).toBeUndefined();
+    expect("api_budget" in credits).toBe(false);
+  });
+
+  it("keeps a key of the budget that a later release adds", async () => {
+    const later = {
+      ...withBudget,
+      credits: {
+        ...withBudget.credits,
+        api_budget: { ...withBudget.credits.api_budget, on_hold: true },
+      },
+    };
+    const credits = await creditsOf(later);
+    expect((credits.api_budget as unknown as Record<string, unknown>)["on_hold"]).toBe(true);
+  });
+});
+
 describe("request options", () => {
   it("passes an abort signal through and does not retry it", async () => {
     await withMock(

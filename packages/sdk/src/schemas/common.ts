@@ -35,11 +35,19 @@ export function described<T extends z.ZodMiniType>(schema: T, description: strin
 /** A count that may be a lower bound. */
 export const countSchema = z.looseObject({ value: z.number(), is_floor: z.boolean() });
 
-/** Credit use of one call. */
+/** The prepaid API budget after one call (API release 0.96.0). */
+export const apiBudgetSchema = z.looseObject({
+  cents: z.number(),
+  rate_cents_per_credit: z.number(),
+  credits_at_rate: z.number(),
+});
+
+/** Credit use of one call. `api_budget` is absent, never `null`, when there is no budget. */
 export const creditsSchema = z.looseObject({
   metered: z.boolean(),
   cost: z.nullable(z.number()),
   credits_remaining: z.nullable(z.number()),
+  api_budget: z.optional(apiBudgetSchema),
 });
 
 /** Keys that every operation body carries. */
