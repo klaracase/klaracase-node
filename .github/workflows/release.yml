@@ -23,6 +23,9 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
+      - run: pnpm --filter @klaracase/sdk run check-dist
+      - run: pnpm check-package
+      - run: pnpm docs:check
       # TODO: needs npm trusted publishing configured for @klaracase (npm org "klaracase", a
       # trusted publisher entry for this repository and the workflow file release.yml).
       # Until that exists, this step stays commented out and the workflow only builds.

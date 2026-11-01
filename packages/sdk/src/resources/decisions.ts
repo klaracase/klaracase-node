@@ -221,6 +221,10 @@ export interface DecisionCitationsResponse extends ApiEnvelope {
   fortgeltung_note: string;
 }
 
+/**
+ * Search, read and follow the citations of German court decisions. Reach it as
+ * `client.decisions`.
+ */
 export class Decisions {
   /** @internal */
   constructor(private readonly transport: Transport) {}

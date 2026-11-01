@@ -4,3 +4,4 @@ pnpm-lock.yaml
 packages/sdk/tests/fixtures
 readme-check
 packages/sdk/schemas
+api.md

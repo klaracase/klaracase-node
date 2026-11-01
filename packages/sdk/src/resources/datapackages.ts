@@ -62,6 +62,7 @@ export interface DatapackageResponse extends ApiEnvelope {
   assembled_at: string;
 }
 
+/** Bundle several decisions and their citations into one datapackage. Reach it as `client.datapackages`. */
 export class Datapackages {
   /** @internal */
   constructor(private readonly transport: Transport) {}

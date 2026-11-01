@@ -96,7 +96,9 @@
     "prepack": "node ../../scripts/copy-package-docs.mjs",
     "test:bun": "bun --bun ../../node_modules/vitest/vitest.mjs run",
     "test:edge": "vitest run --config vitest.edge.config.ts",
-    "schemas:generate": "tsdown && node scripts/generate-json-schemas.mjs"
+    "schemas:generate": "tsdown && node scripts/generate-json-schemas.mjs",
+    "check-package": "publint --strict && attw --pack . --profile node16",
+    "examples": "node examples/quickstart.mjs && node examples/citation-check.mjs && node examples/agent-tools.mjs"
   },
   "peerDependencies": {
     "zod": "^4.1.0"

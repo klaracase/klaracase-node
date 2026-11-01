@@ -26,6 +26,9 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - run: pnpm --filter @klaracase/sdk run check-dist
+      - run: pnpm check-package
+      - run: pnpm docs:check
+      - run: pnpm examples
 
   bun:
     name: Bun

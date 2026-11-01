@@ -48,6 +48,7 @@ export interface NormResponse extends ApiEnvelope {
   };
 }
 
+/** Read the text of statute norms. Reach it as `client.norms`. */
 export class Norms {
   /** @internal */
   constructor(private readonly transport: Transport) {}

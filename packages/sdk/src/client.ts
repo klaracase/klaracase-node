@@ -22,6 +22,7 @@ const DEFAULT_TIMEOUT_SECONDS = 30;
 const DEFAULT_MAX_RETRIES = 2;
 const TOKEN_ENV_VAR = "KLARACASE_API_TOKEN";
 
+/** Options of the {@link Klaracase} client. Every field is optional. */
 export interface KlaracaseOptions {
   /** API token (`klc_...`). Falls back to the `KLARACASE_API_TOKEN` environment variable. */
   token?: string | undefined;

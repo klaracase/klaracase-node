@@ -23,7 +23,11 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "typecheck": "pnpm -r run typecheck && node scripts/check-readme.mjs",
-    "smoke": "pnpm --filter @klaracase/sdk run smoke"
+    "smoke": "pnpm --filter @klaracase/sdk run smoke",
+    "docs:api": "node scripts/generate-api-docs.mjs",
+    "docs:check": "node scripts/generate-api-docs.mjs --check",
+    "check-package": "pnpm -r run check-package",
+    "examples": "pnpm --filter @klaracase/sdk run examples"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",

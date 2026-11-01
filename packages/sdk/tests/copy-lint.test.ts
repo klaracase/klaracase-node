@@ -39,7 +39,14 @@ function walk(dir: string, accept: (path: string) => boolean, out: string[] = []
 }
 
 function scannedFiles(): string[] {
-  const files = [join(root, "README.md"), join(root, "CHANGELOG.md"), join(root, "package.json")];
+  const files = [
+    join(root, "README.md"),
+    join(root, "CHANGELOG.md"),
+    join(root, "api.md"),
+    join(root, "package.json"),
+    join(root, "packages", "ai-sdk", "README.md"),
+  ];
+  walk(join(root, "packages", "sdk", "examples"), (path) => path.endsWith(".mjs"), files);
   for (const pkg of ["sdk", "ai-sdk"]) {
     const dir = join(root, "packages", pkg);
     files.push(join(dir, "package.json"));

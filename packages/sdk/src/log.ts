@@ -9,9 +9,13 @@ export const LOG_LEVELS = ["off", "error", "warn", "info", "debug"] as const;
 
 /** A console-like sink. `console` fits. */
 export interface Logger {
+  /** Log a failure. */
   error(...args: unknown[]): void;
+  /** Log something the caller should look at, such as a deprecation. */
   warn(...args: unknown[]): void;
+  /** Log one line per answer. */
   info(...args: unknown[]): void;
+  /** Log each retry. */
   debug(...args: unknown[]): void;
 }
 

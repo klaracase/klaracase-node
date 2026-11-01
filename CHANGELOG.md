@@ -57,6 +57,18 @@ All notable changes to this project are documented in this file. The format foll
   `CITATION_DIRECTIONS`, `DECISION_SECTIONS`, `FACET_FIELDS`, `MAX_CITED_STATUTES`.
 - Whole-input types such as `SearchDecisionsInput` and `GetDecisionInput`.
 
+- `api.md`, the API reference, generated with typedoc from the JSDoc. Every exported class,
+  function, interface, type alias and variable must have JSDoc, and `pnpm docs:api` fails when one
+  has none. `pnpm docs:check` fails when `api.md` is out of date.
+- `pnpm check-package` runs `publint --strict` and `attw` (Are the Types Wrong?) on both packages.
+  CI and the release workflow run it.
+- `publishConfig` with `access: public` and `provenance: true` on both packages.
+- `examples/` with three programs that run offline against a mock of the API: `quickstart.mjs`,
+  `citation-check.mjs` and `agent-tools.mjs`. CI runs them after the build.
+- README sections for requirements and runtimes, the browser and proxy pattern, pagination, errors,
+  logging, schemas and validation, tools for agents, advanced use and semantic versioning (the 0.x
+  policy).
+
 ### Changed
 
 - Documentation correction: paging the same query within a credit period costs no extra credits, so

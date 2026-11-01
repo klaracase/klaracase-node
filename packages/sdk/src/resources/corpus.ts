@@ -107,6 +107,7 @@ export interface CorpusFacetsResponse extends ApiEnvelope {
   norm?: string | undefined;
 }
 
+/** Corpus overview: what the index covers. Free of credits. Reach it as `client.corpus`. */
 export class Corpus {
   /** @internal */
   constructor(private readonly transport: Transport) {}

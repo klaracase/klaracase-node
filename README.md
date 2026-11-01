@@ -570,16 +570,44 @@ Pass `{ tools: ["searchDecisions", "getNorm"] }` to expose only some tools. See
 For an agent with an MCP client, connect the Klaracase MCP server at <https://klaracase.de/mcp> with
 the same token. The client itself does not speak MCP.
 
+## Semantic versioning
+
+This SDK follows [semantic versioning](https://semver.org), with the usual 0.x rule.
+
+- Before 1.0, a minor version (0.1 to 0.2) may change the public surface. A patch version (0.1.0 to
+  0.1.1) only fixes bugs. Pin the minor version: `"@klaracase/sdk": "~0.1.0"`.
+- After 1.0, a breaking change needs a major version.
+- The public surface is what the package exports from `@klaracase/sdk`, `@klaracase/sdk/schemas`
+  and `@klaracase/sdk/tools`, and what [`api.md`](api.md) lists. Anything marked `@internal` is not
+  part of it.
+- An unknown field in a response, or a new value in a response enum, is not a breaking change. The
+  response types are open for this reason. Write code that handles a value it does not know.
+- Every change is listed in [CHANGELOG.md](CHANGELOG.md). All Klaracase SDKs bump together when the
+  API contract changes.
+
 ## Stability and privacy
 
-This SDK is 0.x and tracks API release 0.95.0. Minor versions may change the public surface until
-1.0. Every change is listed in [CHANGELOG.md](CHANGELOG.md). All Klaracase SDKs bump together when
-the API contract changes.
+This SDK is 0.x and tracks API release 0.95.0.
 
 The SDK sends no telemetry. The only thing it adds to a request is the User-Agent header
 `klaracase-node/<version> <runtime>/<version>`, for example `klaracase-node/0.1.0 node/22.12.0`.
 
 Klaracase is not affiliated with any court or with the federal government.
+
+## Examples
+
+Three programs in [`packages/sdk/examples`](packages/sdk/examples) show the common paths:
+`quickstart.mjs`, `citation-check.mjs` (upload, poll, read the verdicts) and `agent-tools.mjs`.
+They run offline against a small mock of the API, so they cost nothing.
+
+```sh
+pnpm build
+node packages/sdk/examples/quickstart.mjs
+node packages/sdk/examples/citation-check.mjs
+node packages/sdk/examples/agent-tools.mjs
+```
+
+Add `--live` to call the real API with `KLARACASE_API_TOKEN`. That spends credits.
 
 ## Smoke test
 
@@ -595,11 +623,19 @@ KLARACASE_API_TOKEN=<token> pnpm smoke
 ```sh
 pnpm install
 pnpm typecheck && pnpm lint && pnpm test && pnpm build
+pnpm check-package   # publint and Are the Types Wrong? on both packages
+pnpm docs:api        # regenerate api.md; fails when an export has no JSDoc
+pnpm docs:check      # fail when api.md is out of date
+pnpm examples        # run the three examples against the mock
 ```
+
+`pnpm --filter @klaracase/sdk run test:bun` runs the tests on Bun, and `test:edge` runs them in the
+Vercel Edge runtime.
 
 ## More
 
 - API reference: <https://klaracase.de/docs/api>
+- SDK reference, generated from the JSDoc: [api.md](api.md)
 - MCP tools: <https://klaracase.de/docs/mcp>
 - Support: support@klaracase.de
 - Changes: [CHANGELOG.md](CHANGELOG.md)

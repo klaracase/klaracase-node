@@ -47,6 +47,7 @@ export interface DocumentReceipt extends ApiEnvelope {
   created_at: string;
 }
 
+/** Options of `citationCheckDocuments.waitUntilReady`. */
 export interface WaitUntilReadyOptions {
   /** Seconds between polls. Default 2. */
   pollInterval?: number | undefined;
@@ -54,6 +55,10 @@ export interface WaitUntilReadyOptions {
   timeout?: number | undefined;
 }
 
+/**
+ * Uploads of documents (PDF, DOCX, text) for a citation check. Reach it as
+ * `client.citationCheckDocuments`.
+ */
 export class CitationCheckDocuments {
   /** @internal */
   constructor(

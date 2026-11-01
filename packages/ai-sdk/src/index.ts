@@ -18,6 +18,7 @@ import * as z from "zod/mini";
 export type KlaracaseToolClient = ToolClient;
 
 export type { CallToolOptions, ToolBudget, ToolName } from "@klaracase/sdk/tools";
+/** The name of one of the four tools. */
 export type KlaracaseToolName = ToolName;
 
 /** Input schema of the `searchDecisions` tool. Mirrors `GET /decisions/search`. */

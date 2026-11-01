@@ -155,6 +155,10 @@ export interface CreateFromFileOptions extends UploadOptions {
   reference_date?: string | undefined;
 }
 
+/**
+ * Citation checks: send a text or an uploaded document, read the verdict for each citation.
+ * Reach it as `client.citationChecks`.
+ */
 export class CitationChecks {
   /** @internal */
   constructor(

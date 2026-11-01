@@ -61,7 +61,8 @@
     "build": "tsdown",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "prepack": "node ../../scripts/copy-package-docs.mjs"
+    "prepack": "node ../../scripts/copy-package-docs.mjs",
+    "check-package": "publint --strict && attw --pack . --profile node16"
   },
   "peerDependencies": {
     "@klaracase/sdk": "^0.1.0",
