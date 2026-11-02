@@ -26,7 +26,20 @@ jobs:
       - run: pnpm --filter @klaracase/sdk run check-dist
       - run: pnpm check-package
       - run: pnpm docs:check
-      # TODO: needs npm trusted publishing configured for @klaracase (npm org "klaracase", a
-      # trusted publisher entry for this repository and the workflow file release.yml).
-      # Until that exists, this step stays commented out and the workflow only builds.
-      # - run: pnpm -r publish --provenance --access public --no-git-checks
+      # Trusted publishing (OIDC): both packages trust this repository and release.yml on npm
+      # (owner 2026-11-02, allowed action "npm publish"). No token exists. OIDC needs npm 11.5.1
+      # or later, so npm publishes the tarballs that pnpm packs (pnpm pack rewrites workspace:).
+      - run: npm install -g npm@^11.5.1
+      - name: The tag matches the package versions
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          for p in sdk ai-sdk; do
+            v=$(node -p "require('./packages/$p/package.json').version")
+            [ "$v" = "$tag" ] || { echo "packages/$p is $v, tag is $tag"; exit 1; }
+          done
+      - name: Publish to npm
+        run: |
+          mkdir -p .release
+          for p in sdk ai-sdk; do (cd "packages/$p" && pnpm pack --pack-destination ../../.release); done
+          npm publish .release/klaracase-sdk-*.tgz --provenance --access public
+          npm publish .release/klaracase-ai-sdk-*.tgz --provenance --access public

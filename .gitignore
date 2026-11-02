@@ -11,3 +11,4 @@ packages/*/LICENSE
 packages/*/CHANGELOG.md
 packages/sdk/README.md
 readme-check/
+.release/
