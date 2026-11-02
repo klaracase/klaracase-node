@@ -9,6 +9,8 @@
  * types do. Nothing is renamed.
  */
 
+import type { ApiBudget } from "./types.js";
+
 /** Error codes the API and the SDK use. Unknown codes are possible, so the type stays open. */
 export type KlaracaseErrorCode =
   | "unauthenticated"
@@ -214,6 +216,13 @@ export class InsufficientCreditsError extends KlaracaseError {
    * agent, only show it to the user.
    */
   readonly topUpUrl: string | undefined;
+  /**
+   * The API budget as it stands, the same object as `credits.api_budget` on an answer (API
+   * release 0.96.0). The API serves it only while the API budget is available and the
+   * organization holds a budget or may load one. `undefined` when the body has no `api_budget`
+   * object.
+   */
+  readonly apiBudget: ApiBudget | undefined;
 
   constructor(init: ProblemInit = {}) {
     super(init);
@@ -221,6 +230,7 @@ export class InsufficientCreditsError extends KlaracaseError {
     this.balance = numberOrNull(this.extra["balance"]);
     this.reason = stringOrUndefined(this.extra["reason"]);
     this.topUpUrl = stringOrUndefined(this.extra["top_up_url"]);
+    this.apiBudget = apiBudgetOf(this.extra["api_budget"]);
   }
 }
 
@@ -443,6 +453,10 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function numberOrNull(value: unknown): number | null {
   return typeof value === "number" ? value : null;
+}
+
+function apiBudgetOf(value: unknown): ApiBudget | undefined {
+  return isRecord(value) ? (value as unknown as ApiBudget) : undefined;
 }
 
 function stringOrUndefined(value: unknown): string | undefined {

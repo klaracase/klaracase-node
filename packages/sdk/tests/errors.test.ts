@@ -227,13 +227,27 @@ describe("402 insufficient_credits with a reason (API release 0.96.0)", () => {
     expect(error.cost).not.toBeNull();
   });
 
+  it("reads apiBudget from the optional api_budget member", async () => {
+    const budget = { cents: 0, rate_cents_per_credit: 25, credits_at_rate: 0 };
+    const error = (await failureOf(
+      clientAnswering({ ...budgetEmpty, api_budget: budget }).corpus.coverage(),
+    )) as InsufficientCreditsError;
+    expect(error.apiBudget).toEqual(budget);
+    expect(error.extra["api_budget"]).toEqual(budget);
+    const without = (await failureOf(
+      clientAnswering(budgetEmpty).corpus.coverage(),
+    )) as InsufficientCreditsError;
+    expect(without.apiBudget).toBeUndefined();
+  });
+
   it("ignores members of the wrong type", () => {
     const error = new InsufficientCreditsError({
       status: 402,
-      extra: { reason: 3, top_up_url: false },
+      extra: { reason: 3, top_up_url: false, api_budget: "free" },
     });
     expect(error.reason).toBeUndefined();
     expect(error.topUpUrl).toBeUndefined();
+    expect(error.apiBudget).toBeUndefined();
   });
 });
 

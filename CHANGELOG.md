@@ -63,6 +63,8 @@ All notable changes to this project are documented in this file. The format foll
 - `InsufficientCreditsError.reason` (open: `api_budget_empty`, `api_budget_not_available`, and the
   reserved `plan_credits_exhausted`) and `InsufficientCreditsError.topUpUrl`. The README says the
   URL is for a human admin and an agent must never open it.
+- `InsufficientCreditsError.apiBudget`, the optional `api_budget` member of the 402 problem as an
+  `ApiBudget`, `undefined` when the problem has none.
 - `TokenLimitReachedError` for the 402 code `token_limit_reached`, with `unit`, `cap`, `spent`,
   `resets_at`, `resetsAt` (a `Date`) and `settingsUrl`. It extends `InsufficientCreditsError`, so
   existing handlers still catch it. `cost` and `balance` are `null` on it.
